@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BattleUI_CameraMove : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class BattleUI_CameraMove : MonoBehaviour
 
     private float startSize = 2.0f; // 시작 카메라 사이즈
     private float targetSize = 1.02f; // 목표 카메라 사이즈
+
+    public string uiSceneName = "BattleUIScene";
+    private bool isUISceneLoaded  = false;
 
     private void Start()
     {
@@ -58,9 +62,15 @@ public class BattleUI_CameraMove : MonoBehaviour
 
         isMoving = false;
         isZoomin = true;
+
+        SceneManager.LoadScene(uiSceneName,LoadSceneMode.Additive);
+        isUISceneLoaded = true;
     }
     IEnumerator MoveCamera_Out()
     {
+        SceneManager.UnloadSceneAsync(uiSceneName); // 씬 끄기(임시, 다른 코드로 옮겨야함.)
+        isUISceneLoaded = false;
+
         isMoving = true;
         Vector3 startPosition = transform.position;
         Vector3 targetPosition = MainCameraPos;
@@ -83,5 +93,7 @@ public class BattleUI_CameraMove : MonoBehaviour
 
         isMoving = false;
         isZoomin = false;
+
+        
     }
 }
