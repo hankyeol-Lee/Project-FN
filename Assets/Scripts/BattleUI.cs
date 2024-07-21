@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BattleUI : MonoBehaviour
@@ -8,6 +9,8 @@ public class BattleUI : MonoBehaviour
     public GameObject[] secondbuttons;
     public GameObject StatusPanel;
     public GameObject exitButton;
+
+    public GameObject[] SkillButton; // 스킬버튼을 누르면 나올 창들 모음.    
 
     private void Start()
     {
@@ -33,6 +36,10 @@ public class BattleUI : MonoBehaviour
         Debug.Log("스킬 잘 눌림");
         HideFirstButtons();
         exitButton.SetActive(true);
+        foreach (var skill in SkillButton)
+        {
+            skill.gameObject.SetActive(true);
+        }
     }
     public void ItemOnClick() //아이템 버튼 클릭시
     {

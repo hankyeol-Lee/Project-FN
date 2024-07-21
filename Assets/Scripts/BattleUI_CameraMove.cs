@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class BattleUI_CameraMove : MonoBehaviour
 {
     public Transform playertransform; // HeroKnight의 Transform
-    private float duration = 1.0f; // 이동에 걸리는 시간. 작을수록 속도가 빨라짐
+    private float duration = 0.5f; // 이동에 걸리는 시간. 작을수록 속도가 빨라짐
 
     public Vector3 MainCameraPos; // 처음 카메라 위치(줌아웃 되어있을때)
 
@@ -19,7 +19,7 @@ public class BattleUI_CameraMove : MonoBehaviour
     private float targetSize = 1.02f; // 목표 카메라 사이즈
 
     public string uiSceneName = "BattleUIScene";
-    private bool isUISceneLoaded  = false;
+    private bool isUISceneLoaded = false;
 
     private void Start()
     {
@@ -33,7 +33,7 @@ public class BattleUI_CameraMove : MonoBehaviour
         }
         if (isZoomin && !isMoving && Input.GetKeyDown(KeyCode.E))
         {
-            StartCoroutine (MoveCamera_Out());
+            StartCoroutine(MoveCamera_Out());
         }
     }
 
@@ -44,15 +44,17 @@ public class BattleUI_CameraMove : MonoBehaviour
         Vector3 startPosition = transform.position;
         Vector3 targetPosition = new Vector3(playertransform.position.x + deltax, playertransform.position.y + deltay, transform.position.z);
         float elapsedTime = 0f;
+        float power = 2.0f; // 비선형 보간의 강도 조절 변수
 
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
             float t = Mathf.Clamp01(elapsedTime / duration);
 
-            // 선형 보간 (Lerp)
-            transform.position = Vector3.Lerp(startPosition, targetPosition, t);
-            Camera.main.orthographicSize = Mathf.Lerp(startSize, targetSize, t);
+            // 비선형 보간 (t^power)
+            float powT = Mathf.Pow(t, power);
+            transform.position = Vector3.Lerp(startPosition, targetPosition, powT);
+            Camera.main.orthographicSize = Mathf.Lerp(startSize, targetSize, powT);
 
             yield return null;
         }
@@ -63,9 +65,10 @@ public class BattleUI_CameraMove : MonoBehaviour
         isMoving = false;
         isZoomin = true;
 
-        SceneManager.LoadScene(uiSceneName,LoadSceneMode.Additive);
+        SceneManager.LoadScene(uiSceneName, LoadSceneMode.Additive);
         isUISceneLoaded = true;
     }
+
     IEnumerator MoveCamera_Out()
     {
         SceneManager.UnloadSceneAsync(uiSceneName); // 씬 끄기(임시, 다른 코드로 옮겨야함.)
@@ -75,15 +78,17 @@ public class BattleUI_CameraMove : MonoBehaviour
         Vector3 startPosition = transform.position;
         Vector3 targetPosition = MainCameraPos;
         float elapsedTime = 0f;
+        float power = 2.0f; // 비선형 보간의 강도 조절 변수
 
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
             float t = Mathf.Clamp01(elapsedTime / duration);
 
-            // 선형 보간 (Lerp)
-            transform.position = Vector3.Lerp(startPosition, targetPosition, t);
-            Camera.main.orthographicSize = Mathf.Lerp(targetSize, startSize, t);
+            // 비선형 보간 (t^power)
+            float powT = Mathf.Pow(t, power);
+            transform.position = Vector3.Lerp(startPosition, targetPosition, powT);
+            Camera.main.orthographicSize = Mathf.Lerp(targetSize, startSize, powT);
 
             yield return null;
         }
@@ -93,7 +98,5 @@ public class BattleUI_CameraMove : MonoBehaviour
 
         isMoving = false;
         isZoomin = false;
-
-        
     }
 }
