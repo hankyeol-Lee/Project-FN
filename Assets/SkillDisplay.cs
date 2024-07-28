@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI; 
 using GameSkill;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class SkillDisplay : MonoBehaviour
+public class SkillDisplay : MonoBehaviour, IPointerEnterHandler
 {
-    public Skill thisskill = null;
+    public Skill thisSkill = null;
     public TextMeshProUGUI skillDisplay = null;
     // Start is called before the first frame update
     public void GetSkillInfo(Skill skill)
@@ -17,7 +18,7 @@ public class SkillDisplay : MonoBehaviour
         {
             skillDisplay = GetComponentInChildren<TextMeshProUGUI>();
         }
-        thisskill = skill; // 스킬 저장.
+        thisSkill = skill; // 스킬 저장.
         Debug.Log("스킬 저장까지도 OK");
         //스킬 이름 보여주는 코드
         if (skillDisplay != null)
@@ -28,4 +29,13 @@ public class SkillDisplay : MonoBehaviour
         }
         
     }
+   
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        SkillHoverEvent.TriggerSkillHover(thisSkill);
+    }
+
+    
+    
+
 }
