@@ -46,11 +46,14 @@ public class SkillPanel_Anim_Fade : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             Skill skill = playerSkillList.playerSkills[i]; //n번 칸에 스킬이 있다 -> n번째 childrenskill을 활성화.
-            SkillDisplay skillDisplay = skillChildren[i].GetComponent<SkillDisplay>();
+            //SkillDisplay skillDisplay = skillChildren[i].GetComponent<SkillDisplay>();
+            //Debug.Log(skillDisplay);
             if (skill != null)
             {
                 skillChildren[i].SetActive(true);
-                skillDisplay.GetSkillInfo(skill);
+                Debug.Log("여기까지는 ok");
+                skillChildren[i].GetComponent<SkillDisplay>().GetSkillInfo(skill);
+                //skillDisplay.GetSkillInfo(skill);
 
             }
         }
