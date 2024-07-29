@@ -8,75 +8,120 @@ public class BattleUI : MonoBehaviour
     public GameObject[] firstbuttons;
     public GameObject[] secondbuttons;
     public GameObject StatusPanel;
-    public GameObject exitButton;
+
+    public bool isClicked = false;
 
     public GameObject[] SkillButton; // 스킬버튼을 누르면 나올 창들 모음.    
 
     private void Start()
     {
-        StatusPanel.SetActive(false);
-        exitButton.SetActive(false);
+        HideSecondButtons();
     }
     public void StatusOnClick() //스탯 버튼 클릭시
     {
-        Debug.Log("스탯 잘 눌림");
-        HideFirstButtons();
-        StatusPanel.SetActive(true);
-        exitButton.SetActive(true);
+        if (!isClicked)
+        {
+            HideFirstButtons();
+            /* 
+             foreach (var status in statusButton)
+            {
+                status.gameObject.SetActive(true);
+            }
+             
+             */
+            firstbuttons[0].gameObject.SetActive(true);
+            firstbuttons[0].GetComponent<Status_Anim_OnEnable>().OnStatusClick_Move(isClicked); //이 객체의 OnSkillClick_Move() 함수를 실행
+            isClicked = true;
+        }
+        else
+        {
+            HideSecondButtons();
+            ShowFirstButtons();
+            isClicked = false;
+        }
+        
     }
-    public void MoveOnClick()
-    {
-        //이동 버튼 클릭시, 
-        Debug.Log("이동 잘 눌림");
-        HideFirstButtons();
-        exitButton.SetActive(true);
-    }
+
     public void SkillOnClick() //스킬 버튼 클릭시
     {
-        Debug.Log("스킬 잘 눌림");
-        HideFirstButtons();
-        exitButton.SetActive(true);
-        foreach (var skill in SkillButton)
+        if (!isClicked)
         {
-            skill.gameObject.SetActive(true);
+            //Debug.Log(isClicked);
+            HideFirstButtons();
+            foreach (var skill in SkillButton)
+            {
+                skill.gameObject.SetActive(true);
+            }
+            firstbuttons[1].gameObject.SetActive(true); //이 코드를 수행한 객체를 활성화
+            firstbuttons[1].GetComponent<Skill_Anim_OnEnable>().OnSkillClick_Move(isClicked); //이 객체의 OnSkillClick_Move() 함수를 실행
+            isClicked = true;
+            //isClicked = false; // 눌렸으니 눌렸다고 ㅇㅇ 
         }
+        else
+        {
+            firstbuttons[1].GetComponent<Skill_Anim_OnEnable>().OnSkillClick_Move(isClicked); //이 객체의 OnSkillClick_Move() 함수를 실행
+            HideSecondButtons();
+            ShowFirstButtons();
+            isClicked = false;
+        }
+
     }
     public void ItemOnClick() //아이템 버튼 클릭시
     {
-        Debug.Log("아이템 잘 눌림");
-        HideFirstButtons();
-        exitButton.SetActive(true);
+        Debug.Log(isClicked);
+
+        if (!isClicked)
+        {
+            //Debug.Log(isClicked);
+            HideFirstButtons();
+            foreach (var skill in SkillButton)
+            {
+                skill.gameObject.SetActive(true);
+            }
+            firstbuttons[2].gameObject.SetActive(true); //이 코드를 수행한 객체를 활성화
+            firstbuttons[2].GetComponent<Item_Anim_OnEnable>().OnItemClick_Move(isClicked); //이 객체의 OnSkillClick_Move() 함수를 실행
+            isClicked = true;
+        }
+        else
+        {
+            firstbuttons[2].GetComponent<Item_Anim_OnEnable>().OnItemClick_Move(isClicked); //이 객체의 OnSkillClick_Move() 함수를 실행
+            HideSecondButtons();
+            ShowFirstButtons();
+            isClicked = false;
+        }
     }
     public void exitButtonOnClick()
     {
-        Debug.Log("뒤로가기 버튼 잘 눌림");
+
         HideSecondButtons();
         ShowFirstButtons();
         //exitButton.SetActive(false);
     }
     private void ShowFirstButtons()
     {
-        Debug.Log("스탯/이동/공격/아이템 잘 나옴");
-        foreach (var button in firstbuttons) 
-        { 
+
+        foreach (var button in firstbuttons)
+        {
             button.gameObject.SetActive(true);
         }
+        //isClicked = false;
     }
     private void HideFirstButtons()
     {
-        Debug.Log("스탯/이동/공격/아이템 잘 지워짐");
+
         foreach (var button in firstbuttons)
         {
             button.gameObject.SetActive(false);
         }
+        //isClicked = false;
     }
     private void HideSecondButtons()
     {
-        Debug.Log("스탯상태창/스킬창/아이템창 잘 지워짐");
+
         foreach (var button in secondbuttons)
         {
             button.gameObject.SetActive(false);
         }
     }
-    
+
 }
