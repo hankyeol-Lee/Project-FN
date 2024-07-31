@@ -36,9 +36,10 @@ public class GameManager_Move : MonoBehaviour
 
             if (returnCell.HasValue)
             {
+                HashSet<Hex> obstacles = new HashSet<Hex>();
                 targetCell = returnCell.Value;
                 //tilemap.SetTile(targetCell, tile);
-                List<Vector3Int> playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell);
+                List<Vector3Int> playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell, obstacles);
                 Debug.Log($"플레이어의 셀 좌표 : {playerCellPos}");
                 Debug.Log($"마우스로 클릭한 셀의 좌표 : {targetCell}");
                 // 경로 디버깅 출력

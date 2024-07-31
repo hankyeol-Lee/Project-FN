@@ -183,8 +183,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cellTag: Cell
   tilemap: {fileID: 1559665090}
-  tile: {fileID: 11400000, guid: 53ae3c457d7676240a2cc18b5fd7db87, type: 2}
   player: {fileID: 458961136}
+  playerCellPos: {x: 0, y: 0, z: 0}
 --- !u!1 &458961136
 GameObject:
   m_ObjectHideFlags: 0
