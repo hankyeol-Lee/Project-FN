@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -7,13 +8,18 @@ public class GameManager_Move : MonoBehaviour
     public string cellTag = "Cell";
     public Tilemap tilemap;
     public TileBase tile;
+    public GameObject player;
+
+
+    private Vector3Int targetPos;
+
 
     private void Update()
     {
-        GetRayCell();
+        targetPos = GetRayCell(); // 
     }
 
-    public void GetRayCell() // 우클릭을 하면, 마우스 위치에 있는 타일을 가져오는 함수
+    Vector3Int GetRayCell() // 우클릭을 하면, 마우스 위치에 있는 타일을 가져오는 함수
     {
         if (Input.GetMouseButtonDown(1))
         {
@@ -31,9 +37,18 @@ public class GameManager_Move : MonoBehaviour
                 Vector3Int TargetCell = returnCell.Value;
                 Debug.Log($"타겟셀 : {TargetCell}");
                 tilemap.SetTile(TargetCell, tile);
+                return TargetCell;
             }
 
+            //a star algorithm으로 경로 찾기,
+            Vector3Int playerpos = GetPlayerPos();
+            Vector3Int[] onway = null;
+
+
+
+
         }
+        return targetPos;
     }
 
 
@@ -51,5 +66,10 @@ public class GameManager_Move : MonoBehaviour
         }
         return null;
     }
-
+    Vector3Int GetPlayerPos()
+    {
+        Vector3Int playercellpos = tilemap.WorldToCell(player.transform.position);
+        Debug.Log($"플레이어 셀 좌표 : {playercellpos}");
+        return playercellpos;
+    }
 }
