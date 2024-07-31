@@ -1,75 +1,109 @@
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using HexClass;
+using TMPro;
+using System.IO;
 
 public class GameManager_Move : MonoBehaviour
 {
     public string cellTag = "Cell";
     public Tilemap tilemap;
-    public TileBase tile;
+    //public TileBase tile;
     public GameObject player;
 
+    private Vector3Int targetCell;
 
-    private Vector3Int targetPos;
-
+    public Vector3Int playerCellPos;
 
     private void Update()
     {
-        targetPos = GetRayCell(); // 
+        GetRayCell();
     }
 
-    Vector3Int GetRayCell() // 우클릭을 하면, 마우스 위치에 있는 타일을 가져오는 함수
+    private void GetRayCell() // 우클릭을 하면, 마우스 위치에 있는 타일을 가져오는 함수
     {
         if (Input.GetMouseButtonDown(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Debug.Log("ray 쐈어");
+            RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray);
 
-            RaycastHit2D[] hit = Physics2D.GetRayIntersectionAll(ray); //ray를 받은 '모든' 객체를 hit 변수에 저장.
-            Debug.Log("hit에 넣었어");
-            Vector3Int? returnCell = CheckCell(hit); //받아온 셀
+            Vector3Int? returnCell = CheckCell(hits);
+            playerCellPos = GetPlayerPos();
 
-
-            //받아온 셀의 좌표 출력 및 settile로 이미지 변경.
             if (returnCell.HasValue)
             {
-                Vector3Int TargetCell = returnCell.Value;
-                Debug.Log($"타겟셀 : {TargetCell}");
-                tilemap.SetTile(TargetCell, tile);
-                return TargetCell;
+                targetCell = returnCell.Value;
+                //tilemap.SetTile(targetCell, tile);
+                List<Vector3Int> playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell);
+                Debug.Log($"플레이어의 셀 좌표 : {playerCellPos}");
+                Debug.Log($"마우스로 클릭한 셀의 좌표 : {targetCell}");
+                // 경로 디버깅 출력
+                Debug.Log("경로 출력:");
+                foreach (var step in playerPath)
+                {
+                    Debug.Log(step);
+                }
+                StartCoroutine(MovePath(playerPath));
+
             }
-
-            //a star algorithm으로 경로 찾기,
-            Vector3Int playerpos = GetPlayerPos();
-            Vector3Int[] onway = null;
-
-
-
-
         }
-        return targetPos;
     }
 
 
-    Vector3Int? CheckCell(RaycastHit2D[] hit) //ray hit에서 cell만 걸러내는 함수. cell은 단 하나여야함.
+    Vector3Int? CheckCell(RaycastHit2D[] hit) // ray hit에서 cell만 걸러내는 함수. cell은 단 하나여야 함.
     {
         foreach (var cell in hit)
         {
-            if (cell.collider.CompareTag(cellTag)) // cellTag랑 똑같으면.
+            if (cell.collider.CompareTag(cellTag)) // cellTag와 일치하면
             {
                 Vector3 worldPosition = cell.point;
                 Vector3Int cellPosition = tilemap.WorldToCell(worldPosition);
-                Debug.Log($"리턴 셀좌표 : {cellPosition}");
+                //Debug.Log($"리턴 셀좌표 : {cellPosition}");
                 return cellPosition;
             }
         }
         return null;
     }
+
     Vector3Int GetPlayerPos()
     {
-        Vector3Int playercellpos = tilemap.WorldToCell(player.transform.position);
-        Debug.Log($"플레이어 셀 좌표 : {playercellpos}");
-        return playercellpos;
+        Vector3Int playerCellPos = tilemap.WorldToCell(player.transform.position);
+        //Debug.Log($"플레이어 셀 좌표 : {playerCellPos}");
+        return playerCellPos;
+    }
+
+    IEnumerator MovePath(List<Vector3Int> path)
+    {
+        foreach (var cell in path)
+        {
+            playerCellPos = GetPlayerPos();
+            Vector3 startWorldPos = tilemap.CellToWorld(playerCellPos); // 플레이어가 있는 셀의 정중앙 좌표를 가져옴. 
+            Vector3 endWorldPos = tilemap.CellToWorld(cell); // cell. 즉 다음 셀의 중앙좌표를 가져옴.
+
+            yield return MoveCell(startWorldPos, endWorldPos);
+        }
+    }
+
+
+    private IEnumerator MoveCell(Vector3 startWorldPos, Vector3 endWorldPos)
+    {
+        float elapsedTime = 0f;
+        float duration = 0.5f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / duration;
+            player.transform.position = Vector3.Lerp(startWorldPos, endWorldPos, t);
+            yield return null; 
+        }
+
+        // 정확히 목표 위치로 설정
+        player.transform.position = endWorldPos;
+        //Debug.Log("플레이어 위치가 셀 중심에 도달했습니다.");
     }
 }
