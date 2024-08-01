@@ -16,12 +16,32 @@ public class GameManager_Move : MonoBehaviour
     public GameObject player;
 
     private Vector3Int targetCell;
+    public TileBase highlightTile; // 강조할 타일
 
     public Vector3Int playerCellPos;
 
     private void Update()
     {
         GetRayCell();
+        /*Vector3Int newPlayerCellPos = GetPlayerPos();
+        if (newPlayerCellPos != playerCellPos)
+        {
+            playerCellPos = newPlayerCellPos;
+            //HighlightNeighborCells(playerCellPos);
+        }
+        */
+    }
+
+    public void HighlightNeighborCells(Vector3Int playerCellPos)
+    {
+        Hex playerHex = new Hex(playerCellPos.x, playerCellPos.y);
+        List<Hex> neighbors = playerHex.GetNeighbors();
+
+        foreach (Hex neighbor in neighbors)
+        {
+            Vector3Int neighborPos = new Vector3Int(neighbor.q, neighbor.r, 0);
+            tilemap.SetTile(neighborPos, highlightTile); // 이웃 셀에 강조 타일 설정
+        }
     }
 
     private void GetRayCell() // 우클릭을 하면, 마우스 위치에 있는 타일을 가져오는 함수
@@ -49,7 +69,7 @@ public class GameManager_Move : MonoBehaviour
                     Debug.Log(step);
                 }
                 StartCoroutine(MovePath(playerPath));
-
+                
             }
         }
     }
@@ -84,7 +104,7 @@ public class GameManager_Move : MonoBehaviour
             playerCellPos = GetPlayerPos();
             Vector3 startWorldPos = tilemap.CellToWorld(playerCellPos); // 플레이어가 있는 셀의 정중앙 좌표를 가져옴. 
             Vector3 endWorldPos = tilemap.CellToWorld(cell); // cell. 즉 다음 셀의 중앙좌표를 가져옴.
-
+            //Debug.DrawLine(startWorldPos, endWorldPos);
             yield return MoveCell(startWorldPos, endWorldPos);
         }
     }
