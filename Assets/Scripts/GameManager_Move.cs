@@ -17,7 +17,6 @@ public class GameManager_Move : MonoBehaviour
 
     private Vector3Int targetCell;
     public TileBase highlightTile; // 강조할 타일
-
     public Vector3Int playerCellPos;
 
     private void Update()
@@ -60,8 +59,8 @@ public class GameManager_Move : MonoBehaviour
                 targetCell = returnCell.Value;
                 //tilemap.SetTile(targetCell, tile);
                 List<Vector3Int> playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell, obstacles);
-                Debug.Log($"플레이어의 셀 좌표 : {playerCellPos}");
-                Debug.Log($"마우스로 클릭한 셀의 좌표 : {targetCell}");
+                //Debug.Log($"플레이어의 셀 좌표 : {playerCellPos}");
+                //Debug.Log($"마우스로 클릭한 셀의 좌표 : {targetCell}");
                 // 경로 디버깅 출력
                 Debug.Log("경로 출력:");
                 foreach (var step in playerPath)
@@ -110,7 +109,7 @@ public class GameManager_Move : MonoBehaviour
     }
 
 
-    private IEnumerator MoveCell(Vector3 startWorldPos, Vector3 endWorldPos)
+    public IEnumerator MoveCell(Vector3 startWorldPos, Vector3 endWorldPos)
     {
         float elapsedTime = 0f;
         float duration = 0.5f;
