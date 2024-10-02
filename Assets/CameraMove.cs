@@ -8,9 +8,7 @@ public class CameraMove : MonoBehaviour
     public GameObject player;
     private bool isAnchored = true;
 
-    private double dx = 1.9;
     private double dy = 20.14;
-    private double dz = -17.36;
 
     // Start is called before the first frame update
 
