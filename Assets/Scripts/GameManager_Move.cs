@@ -7,6 +7,7 @@ using UnityEngine.Tilemaps;
 using HexClass;
 using TMPro;
 using System.IO;
+using System.Linq;
 
 public class GameManager_Move : MonoBehaviour
 {
@@ -16,9 +17,15 @@ public class GameManager_Move : MonoBehaviour
     public GameObject player;
 
     private Vector3Int targetCell;
+    private Vector3Int currentTargetCell; // 현재 플레이어 이동의 목적 타일
+    private bool is_P_Moving; // 플레이어가 타일 이동 중인지 판별
     public TileBase highlightTile; // 강조할 타일
     public Vector3Int playerCellPos;
 
+    private void Start()
+    {
+        is_P_Moving = false;
+    }
     private void Update()
     {
         GetRayCell();
@@ -57,8 +64,20 @@ public class GameManager_Move : MonoBehaviour
             {
                 HashSet<Hex> obstacles = new HashSet<Hex>();
                 targetCell = returnCell.Value;
+                List<Vector3Int> playerPath = new List<Vector3Int>(); 
                 //tilemap.SetTile(targetCell, tile);
-                List<Vector3Int> playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell, obstacles);
+                //List<Vector3Int> playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell, obstacles);
+                if (! is_P_Moving)
+                {
+                    playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell, obstacles); // 이동 중 아니라면 현재 타일부터 playerPath 시작
+                    currentTargetCell = targetCell;
+                    is_P_Moving = true;
+                }
+                else
+                {
+                    playerPath = HexClass.HexPathfinding.FindPath(currentTargetCell, targetCell, obstacles); // 이동 중 이라면 현재 향하는 목적 타일부터 playerPath 시작
+          
+                }
                 //Debug.Log($"플레이어의 셀 좌표 : {playerCellPos}");
                 //Debug.Log($"마우스로 클릭한 셀의 좌표 : {targetCell}");
                 // 경로 디버깅 출력
@@ -106,6 +125,7 @@ public class GameManager_Move : MonoBehaviour
             //Debug.DrawLine(startWorldPos, endWorldPos);
             yield return MoveCell(startWorldPos, endWorldPos);
         }
+        is_P_Moving = false;
     }
 
 
