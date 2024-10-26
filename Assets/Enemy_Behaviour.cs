@@ -20,7 +20,7 @@ public class Enemy_Behaviour : MonoBehaviour
         
         Vector3Int playerPos = tilemap.WorldToCell(playertransform.position);
         Vector3Int thisObjPos = tilemap.WorldToCell(transform.position);
-
+        
         if (playerPos.y < thisObjPos.y) // 플레이어가 더 왼쪽에 있을 경우
         {
             //에너미는 왼쪽으로 이동.주의:path를 신경쓸 필요 없음. 
