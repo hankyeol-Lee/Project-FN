@@ -399,6 +399,7 @@ GameObject:
   m_Component:
   - component: {fileID: 829895503}
   - component: {fileID: 829895502}
+  - component: {fileID: 829895504}
   m_Layer: 0
   m_Name: miniMap_Camera
   m_TagString: Untagged
@@ -433,21 +434,21 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.75
     y: 0
-    width: 1
-    height: 1
+    width: 0.25
+    height: 0.4
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 0494779fc4ddc1e49bbc5b856fe011b2, type: 2}
+  m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -465,13 +466,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 829895501}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.41469327, y: 0, z: 0, w: 0.9099613}
-  m_LocalPosition: {x: 6.6, y: 18.55, z: -17.36}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: -1.24, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 49, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &829895504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829895501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1cb9f336b444e847bb8cb679aa3bafa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Camera_Pos: {fileID: 0}
 --- !u!1 &895478805
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,12 +499,12 @@ GameObject:
   - component: {fileID: 895478808}
   - component: {fileID: 895478807}
   m_Layer: 5
-  m_Name: Image
+  m_Name: minimap_ui_cameraUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &895478806
 RectTransform:
   m_ObjectHideFlags: 0
@@ -508,8 +522,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1007, y: -443}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchoredPosition: {x: -300, y: -539}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &895478807
 MonoBehaviour:
@@ -544,7 +558,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
