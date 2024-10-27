@@ -22,9 +22,12 @@ public class GameManager_Move : MonoBehaviour
     public TileBase highlightTile; // 강조할 타일
     public Vector3Int playerCellPos;
 
+    Animator playeranimator;
+
     private void Start()
     {
         is_P_Moving = false;
+        playeranimator = player.GetComponent<Animator>();
     }
     private void Update()
     {
@@ -80,12 +83,7 @@ public class GameManager_Move : MonoBehaviour
                 }
                 //Debug.Log($"플레이어의 셀 좌표 : {playerCellPos}");
                 //Debug.Log($"마우스로 클릭한 셀의 좌표 : {targetCell}");
-                // 경로 디버깅 출력
-                Debug.Log("경로 출력:");
-                foreach (var step in playerPath)
-                {
-                    Debug.Log(step);
-                }
+                
                 StartCoroutine(MovePath(playerPath));
                 
             }
@@ -115,8 +113,9 @@ public class GameManager_Move : MonoBehaviour
         return playerCellPos;
     }
 
-    IEnumerator MovePath(List<Vector3Int> path)
+    public IEnumerator MovePath(List<Vector3Int> path)
     {
+        playeranimator.Play("PLAYER_MOVE_ANIM");
         foreach (var cell in path)
         {
             playerCellPos = GetPlayerPos();
@@ -126,6 +125,7 @@ public class GameManager_Move : MonoBehaviour
             yield return MoveCell(player,startWorldPos, endWorldPos);
         }
         is_P_Moving = false;
+        playeranimator.Play("PLAYER_IDLE_ANIM");
     }
 
 

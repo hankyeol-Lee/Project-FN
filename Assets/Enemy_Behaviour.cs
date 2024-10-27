@@ -3,98 +3,140 @@ using System.Collections.Generic;
 using UnityEngine;
 using HexClass;
 using UnityEngine.Tilemaps;
-using JetBrains.Annotations;
-using System.Runtime.CompilerServices; // 타일맵 이동을 위한 hexclass 네임스페이스 사용
+using System;
+using static Enemy_Behaviour;
+
+public delegate IEnumerator CoroutineDelegate(EnemyState state);
+
 public class Enemy_Behaviour : MonoBehaviour
 {
-    public Transform playertransform; // 플레이어의 위치를 참조할 수 있게, 전역변수 선언.
+    public Transform playertransform; // 플레이어의 위치를 참조
     public Tilemap tilemap;
-    public GameObject gamemanager; // gamemanager여도 일단은 empty go로 생성했음.
+    public GameObject gamemanager;
+
+    // EnemyState 열거형 정의
+    public enum EnemyState
+    {
+        Wait,
+        Move,
+        Attack
+    };
+
+    // 상태 변수와 변경 이벤트
+    private EnemyState _enemystate; // 내부 상태 변수
+    public CoroutineDelegate OnStateChanged;
+
+    private EnemyState enemystate
+    { 
+        get { return _enemystate; }
+        set 
+        { 
+            if (_enemystate != value)
+            {
+                StartCoroutine(OnStateChanged(value)); // enemystate의 setter에 넣어도 될듯?
+                _enemystate = value;
+                Debug.Log($"내부변수 : {_enemystate}");
+            }
+        }
+    }
+
+
+    private void Awake()
+    {
+        // 상태 변경 이벤트 핸들러 등록
+        OnStateChanged = HandleStateChanged;
+        Debug.Log("핸들러 함수 등록");
+
+    }
 
     private void Start()
     {
-        InvokeRepeating("MoveToPlayerCellCoroutine", 0f, 2.0f); // InvokeRepeat을 이용해서 코루틴의 반복 실행(하지만 string이라 위험함.)
+        // 상태를 Move로 변경하여 이벤트 트리거
+        enemystate = EnemyState.Wait;
+        Debug.Log("wait할게요ㅕ");
+        //StartCoroutine(OnStateChanged(EnemyState.Move)); // enemystate의 setter에 넣어도 될듯?
+        enemystate = EnemyState.Move;
     }
 
-    public void MoveToPlayerCellCoroutine()
+    // 상태가 변경되었을 때 호출되는 함수
+    private IEnumerator HandleStateChanged(EnemyState newState)
     {
-        StartCoroutine(MoveToPlayerCell());
+        Debug.Log($"newstate : {newState}");
+        if (newState == EnemyState.Move)
+        {
+            Debug.Log("move로 전환됨. 코루틴시작!");
+            yield return StartCoroutine(MoveToPlayerCell());
+            // 여기에 이제 전역 변수 state를 wait으로 바꾸도록.
+            Debug.Log("나 움직였음");
+
+            //MoveToPlayerCellCoroutine(); // 상태가 Move로 변경되면 이동 코루틴 시작
+        }
     }
-    public IEnumerator MoveToPlayerCell() //
+
+    // 플레이어 위치로 이동하는 코루틴
+    public IEnumerator MoveToPlayerCell()
     {
         Vector3Int playerPos = tilemap.WorldToCell(playertransform.position);
         Vector3Int thisObjPos = tilemap.WorldToCell(transform.position);
         Vector3Int targetPos = thisObjPos; // 타겟 포지션 변수
 
-        Debug.Log($"플레이어위치 : {playerPos}, 내 위치 : {thisObjPos}");
+        Debug.Log($"플레이어 위치: {playerPos}, 적의 현재 위치: {thisObjPos}");
 
-        // 이동 조건을 세팅해야함.
-
-
+        // 이동할 타겟 포지션 설정
         void SettargetPos(Vector3Int thisObjPos, Vector3Int playerPos, ref Vector3Int targetPos)
         {
-            // 1. 현재 행이 홀수인지 짝수인지 체크
-            bool isOddRow = Mathf.Abs(thisObjPos.y % 2) == 1; // true이면 홀수 행, false이면 짝수 행
-           
+            bool isOddRow = Mathf.Abs(thisObjPos.y % 2) == 1; // 홀수 행인지 확인
+            bool isPlayerOnRight = playerPos.y > thisObjPos.y; // 플레이어가 더 오른쪽에 있는지 판단
 
-            // 2. 플레이어가 더 오른쪽에 있는지, 더 왼쪽에 있는지 판단
-            bool isPlayerOnRight = playerPos.y > thisObjPos.y;
-
-            // 3. y 좌표가 동일한 경우 x 좌표 비교로 이동 (세로로만 움직이는 경우)
-            if (playerPos.y == thisObjPos.y)
+            if (playerPos.y == thisObjPos.y) // 같은 행에 있는 경우
             {
-                // x 좌표 비교
-                if (playerPos.x > thisObjPos.x) // 플레이어가 더 위에 있으면
+                targetPos.x += (playerPos.x > thisObjPos.x) ? 1 : -1; // 플레이어가 위쪽이면 +1, 아니면 -1
+            }
+            else if (isPlayerOnRight) // 플레이어가 오른쪽에 있는 경우
+            {
+                targetPos.y += 1;
+                if (isOddRow) 
                 {
-                    targetPos.x += 1; // 올라오기
+                    targetPos.x += UnityEngine.Random.Range(0, 2) == 0 ? 1 : 0; 
                 }
                 else
                 {
-                    targetPos.x -= 1; // 아니면 내려가기.
+                    targetPos.x -= UnityEngine.Random.Range(0, 2) == 0 ? 1 : 0;
                 }
             }
-            else if (isPlayerOnRight) // 플레이어가 오른쪽에 있는경우
+            else // 플레이어가 왼쪽에 있는 경우
             {
-                targetPos.y += 1; // 위로 이동
+                targetPos.y -= 1;
 
                 if (isOddRow)
                 {
-                    targetPos.x += Random.Range(0, 2) == 0 ? 1 : 0;
-                }
-                else
-                {
-                    targetPos.x -= Random.Range(0, 2) == 0 ? 1 : 0;
-                }
-
-            }
-            else // playerPos.y < thisObjPos.y, 플레이어가 왼쪽에 있는 경우 
-            {
-                targetPos.y -= 1; // 더 왼쪽으로 이동
-                
-                if (isOddRow)
-                {
-                    targetPos.x += Random.Range(0, 2) == 0 ? 1 : 0;
+                    targetPos.x += UnityEngine.Random.Range(0, 2) == 0 ? 1 : 0;
 
                 }
                 else
                 {
-                    targetPos.x -= Random.Range(0, 2) == 0 ? 1 : 0;
-
+                    targetPos.x -= UnityEngine.Random.Range(0, 2) == 0 ? 1 : 0;
                 }
 
             }
         }
 
-        SettargetPos(thisObjPos,playerPos,ref targetPos); // 참조자로 실제 변수값도 변경. 
-        Debug.Log($"이동할 위치 : {targetPos.x}, {targetPos.y},{targetPos.z}");
-        //MoveCell은 월드좌표 기반이기 때문에, 월드좌표로 변경해주어야 함. 기존 MovePath에서는 미리 변경해서 보내줬지만, 여기선 그런게 없었음.
+        // 목표 위치 계산
+        SettargetPos(thisObjPos, playerPos, ref targetPos);
+        Debug.Log($"이동할 위치: {targetPos}");
+
+        // 타일맵 좌표를 월드 좌표로 변환
         Vector3 thisObjworldPos = tilemap.CellToWorld(targetPos);
         Vector3 targetworldPos = tilemap.CellToWorld(targetPos);
-        StartCoroutine(gamemanager.GetComponent<GameManager_Move>().MoveCell(this.gameObject, thisObjworldPos, targetworldPos)); // this.gameObject는 이 스크립트가 부착된 객체를 참조
-                                                                                                                       // 코루틴 호출
-        thisObjPos = tilemap.WorldToCell(transform.position);
 
-        Debug.Log($"현재 위치 : {thisObjPos}");
-        yield return null;
+        thisObjPos = tilemap.WorldToCell(transform.position); // 현재 위치 갱신
+
+        Debug.Log($"현재 위치: {thisObjPos}");
+
+        new WaitForSecondsRealtime(1.0f);
+        yield return StartCoroutine(gamemanager.GetComponent<GameManager_Move>().MoveCell(this.gameObject, thisObjworldPos, targetworldPos));
+        // 이동 코루틴 호출
+        
+
     }
 }

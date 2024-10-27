@@ -54,7 +54,7 @@ namespace HexClass // pathfinding 메소드는 다른 객체에서도 사용 가능하도록, name
             List<Hex> neighbors = new List<Hex>();
 
             bool oddRow = Mathf.Abs(r % 2) == 1;
-            Debug.Log($"Current Hex: ({q}, {r}), Odd Row: {oddRow}");
+            //Debug.Log($"Current Hex: ({q}, {r}), Odd Row: {oddRow}");
 
             if (oddRow)
             {
@@ -66,7 +66,7 @@ namespace HexClass // pathfinding 메소드는 다른 객체에서도 사용 가능하도록, name
                 neighbors.Add(new Hex(q + 1, r - 1)); // 오른쪽 아래
                 neighbors.Add(new Hex(q + 1, r + 1)); // 오른쪽 위
 
-                Debug.Log($"Neighbors for Odd Row: ({q + 1}, {r}), ({q - 1}, {r}), ({q}, {r + 1}), ({q}, {r - 1}), ({q + 1}, {r - 1}), ({q + 1}, {r + 1})");
+                //Debug.Log($"Neighbors for Odd Row: ({q + 1}, {r}), ({q - 1}, {r}), ({q}, {r + 1}), ({q}, {r - 1}), ({q + 1}, {r - 1}), ({q + 1}, {r + 1})");
             }
             else
             {
@@ -78,7 +78,7 @@ namespace HexClass // pathfinding 메소드는 다른 객체에서도 사용 가능하도록, name
                 neighbors.Add(new Hex(q - 1, r - 1)); // 왼쪽 아래
                 neighbors.Add(new Hex(q - 1, r + 1)); // 왼쪽 위
 
-                Debug.Log($"Neighbors for Even Row: ({q + 1}, {r}), ({q - 1}, {r}), ({q}, {r + 1}), ({q}, {r - 1}), ({q - 1}, {r - 1}), ({q - 1}, {r + 1})");
+                //Debug.Log($"Neighbors for Even Row: ({q + 1}, {r}), ({q - 1}, {r}), ({q}, {r + 1}), ({q}, {r - 1}), ({q - 1}, {r - 1}), ({q - 1}, {r + 1})");
             }
 
             return neighbors;
