@@ -88,6 +88,7 @@ public class GameManager_Move : MonoBehaviour
                 }
                 StartCoroutine(MovePath(playerPath));
                 
+                
             }
         }
     }
