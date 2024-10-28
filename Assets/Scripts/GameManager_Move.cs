@@ -22,9 +22,12 @@ public class GameManager_Move : MonoBehaviour
     public TileBase highlightTile; // 강조할 타일
     public Vector3Int playerCellPos;
 
+    Animator playeranimator;
+
     private void Start()
     {
         is_P_Moving = false;
+        playeranimator = player.GetComponent<Animator>();
     }
     private void Update()
     {
@@ -80,12 +83,7 @@ public class GameManager_Move : MonoBehaviour
                 }
                 //Debug.Log($"플레이어의 셀 좌표 : {playerCellPos}");
                 //Debug.Log($"마우스로 클릭한 셀의 좌표 : {targetCell}");
-                // 경로 디버깅 출력
-                Debug.Log("경로 출력:");
-                foreach (var step in playerPath)
-                {
-                    Debug.Log(step);
-                }
+                
                 StartCoroutine(MovePath(playerPath));
                 
                 
@@ -116,21 +114,23 @@ public class GameManager_Move : MonoBehaviour
         return playerCellPos;
     }
 
-    IEnumerator MovePath(List<Vector3Int> path)
+    public IEnumerator MovePath(List<Vector3Int> path)
     {
+        playeranimator.Play("PLAYER_MOVE_ANIM");
         foreach (var cell in path)
         {
             playerCellPos = GetPlayerPos();
             Vector3 startWorldPos = tilemap.CellToWorld(playerCellPos); // 플레이어가 있는 셀의 정중앙 좌표를 가져옴. 
             Vector3 endWorldPos = tilemap.CellToWorld(cell); // cell. 즉 다음 셀의 중앙좌표를 가져옴.
             //Debug.DrawLine(startWorldPos, endWorldPos);
-            yield return MoveCell(startWorldPos, endWorldPos);
+            yield return MoveCell(player,startWorldPos, endWorldPos);
         }
         is_P_Moving = false;
+        playeranimator.Play("PLAYER_IDLE_ANIM");
     }
 
 
-    public IEnumerator MoveCell(Vector3 startWorldPos, Vector3 endWorldPos)
+    public IEnumerator MoveCell(GameObject mover, Vector3 startWorldPos, Vector3 endWorldPos) // MoveCell 을 수정해서, 플레이어 말고 다른 객체도 움직일 수 있도록.
     {
         float elapsedTime = 0f;
         float duration = 0.5f;
@@ -139,12 +139,12 @@ public class GameManager_Move : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / duration;
-            player.transform.position = Vector3.Lerp(startWorldPos, endWorldPos, t);
+            mover.transform.position = Vector3.Lerp(startWorldPos, endWorldPos, t);
             yield return null; 
         }
 
         // 정확히 목표 위치로 설정
-        player.transform.position = endWorldPos;
+        mover.transform.position = endWorldPos;
         //Debug.Log("플레이어 위치가 셀 중심에 도달했습니다.");
     }
 }
