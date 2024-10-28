@@ -34,8 +34,9 @@ public class Enemy_Behaviour : MonoBehaviour
             if (_enemystate != value)
             {
                 StartCoroutine(OnStateChanged(value)); // enemystate의 setter에 넣어도 될듯?
+                //MoveToPlayerCell();
                 _enemystate = value;
-                Debug.Log($"내부변수 : {_enemystate}");
+                Debug.Log($"10. 내부변수 : {_enemystate}");
             }
         }
     }
@@ -45,7 +46,7 @@ public class Enemy_Behaviour : MonoBehaviour
     {
         // 상태 변경 이벤트 핸들러 등록
         OnStateChanged = HandleStateChanged;
-        Debug.Log("핸들러 함수 등록");
+        Debug.Log("1. 핸들러 함수 등록");
 
     }
 
@@ -53,34 +54,36 @@ public class Enemy_Behaviour : MonoBehaviour
     {
         // 상태를 Move로 변경하여 이벤트 트리거
         enemystate = EnemyState.Wait;
-        Debug.Log("wait할게요ㅕ");
+        Debug.Log($"3. enemySTATE를 wait으로 변경 끝. {enemystate}");
         //StartCoroutine(OnStateChanged(EnemyState.Move)); // enemystate의 setter에 넣어도 될듯?
         enemystate = EnemyState.Move;
+        Debug.Log($"11. enemySTATE를 Move으로 변경 끝. {enemystate}");
+
     }
 
     // 상태가 변경되었을 때 호출되는 함수
     private IEnumerator HandleStateChanged(EnemyState newState)
     {
-        Debug.Log($"newstate : {newState}");
+        Debug.Log($"2,4 이벤트핸들러의 newstate : {newState}");
         if (newState == EnemyState.Move)
         {
-            Debug.Log("move로 전환됨. 코루틴시작!");
-            yield return StartCoroutine(MoveToPlayerCell());
+            Debug.Log("5. move로 전환됨. 코루틴시작!");
+            MoveToPlayerCell();
             // 여기에 이제 전역 변수 state를 wait으로 바꾸도록.
-            Debug.Log("나 움직였음");
-
+            Debug.Log("9. 나 움직였음");
+            yield return null;
             //MoveToPlayerCellCoroutine(); // 상태가 Move로 변경되면 이동 코루틴 시작
         }
     }
 
     // 플레이어 위치로 이동하는 코루틴
-    public IEnumerator MoveToPlayerCell()
+    public void MoveToPlayerCell()
     {
         Vector3Int playerPos = tilemap.WorldToCell(playertransform.position);
         Vector3Int thisObjPos = tilemap.WorldToCell(transform.position);
         Vector3Int targetPos = thisObjPos; // 타겟 포지션 변수
 
-        Debug.Log($"플레이어 위치: {playerPos}, 적의 현재 위치: {thisObjPos}");
+        Debug.Log($"6. 플레이어 위치: {playerPos}, 적의 현재 위치: {thisObjPos}");
 
         // 이동할 타겟 포지션 설정
         void SettargetPos(Vector3Int thisObjPos, Vector3Int playerPos, ref Vector3Int targetPos)
@@ -123,7 +126,7 @@ public class Enemy_Behaviour : MonoBehaviour
 
         // 목표 위치 계산
         SettargetPos(thisObjPos, playerPos, ref targetPos);
-        Debug.Log($"이동할 위치: {targetPos}");
+        Debug.Log($"7. 이동할 위치: {targetPos}");
 
         // 타일맵 좌표를 월드 좌표로 변환
         Vector3 thisObjworldPos = tilemap.CellToWorld(targetPos);
@@ -131,10 +134,10 @@ public class Enemy_Behaviour : MonoBehaviour
 
         thisObjPos = tilemap.WorldToCell(transform.position); // 현재 위치 갱신
 
-        Debug.Log($"현재 위치: {thisObjPos}");
+        Debug.Log($"8. 현재 위치: {thisObjPos}");
 
         new WaitForSecondsRealtime(1.0f);
-        yield return StartCoroutine(gamemanager.GetComponent<GameManager_Move>().MoveCell(this.gameObject, thisObjworldPos, targetworldPos));
+        StartCoroutine(gamemanager.GetComponent<GameManager_Move>().MoveCell(this.gameObject, thisObjworldPos, targetworldPos));
         // 이동 코루틴 호출
         
 
