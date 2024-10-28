@@ -27,19 +27,27 @@ public class Enemy_Behaviour : MonoBehaviour
     public CoroutineDelegate OnStateChanged;
 
     private EnemyState enemystate
-    { 
+    {
         get { return _enemystate; }
-        set 
-        { 
+        set
+        {
             if (_enemystate != value)
             {
-                StartCoroutine(OnStateChanged(value)); // enemystate의 setter에 넣어도 될듯?
-                //MoveToPlayerCell();
+                if (OnStateChanged != null)
+                {
+                    StartCoroutine(OnStateChanged(value));  // null 체크 추가
+                }
+                else
+                {
+                    Debug.LogWarning("OnStateChanged가 null입니다.");
+                }
+
                 _enemystate = value;
                 Debug.Log($"10. 내부변수 : {_enemystate}");
             }
         }
     }
+
 
 
     private void Awake()
@@ -50,29 +58,39 @@ public class Enemy_Behaviour : MonoBehaviour
 
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
-        // 상태를 Move로 변경하여 이벤트 트리거
+        // 상태를 Wait로 설정하고 잠시 대기
         enemystate = EnemyState.Wait;
         Debug.Log($"3. enemySTATE를 wait으로 변경 끝. {enemystate}");
-        //StartCoroutine(OnStateChanged(EnemyState.Move)); // enemystate의 setter에 넣어도 될듯?
+
+        // Wait 상태에서 약간의 대기
+        yield return new WaitForSeconds(1f);
+
+        // 상태를 Move로 변경하여 이벤트 트리거
         enemystate = EnemyState.Move;
         Debug.Log($"11. enemySTATE를 Move으로 변경 끝. {enemystate}");
-
     }
+
 
     // 상태가 변경되었을 때 호출되는 함수
     private IEnumerator HandleStateChanged(EnemyState newState)
     {
-        Debug.Log($"2,4 이벤트핸들러의 newstate : {newState}");
         if (newState == EnemyState.Move)
         {
+            Debug.Log($"4 이벤트핸들러의 newstate : {newState}");
+
             Debug.Log("5. move로 전환됨. 코루틴시작!");
             MoveToPlayerCell();
             // 여기에 이제 전역 변수 state를 wait으로 바꾸도록.
             Debug.Log("9. 나 움직였음");
             yield return null;
             //MoveToPlayerCellCoroutine(); // 상태가 Move로 변경되면 이동 코루틴 시작
+        }
+        if (newState == EnemyState.Wait)
+        {
+            Debug.Log($"2. 이벤트 핸들러의 newState : {newState}");
+            yield return null;
         }
     }
 
@@ -136,7 +154,7 @@ public class Enemy_Behaviour : MonoBehaviour
 
         Debug.Log($"8. 현재 위치: {thisObjPos}");
 
-        new WaitForSecondsRealtime(1.0f);
+        //new WaitForSecondsRealtime(1.0f);
         StartCoroutine(gamemanager.GetComponent<GameManager_Move>().MoveCell(this.gameObject, thisObjworldPos, targetworldPos));
         // 이동 코루틴 호출
         
