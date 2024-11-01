@@ -3175,8 +3175,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1590556515}
-  - component: {fileID: 1590556516}
   - component: {fileID: 1590556517}
+  - component: {fileID: 1590556516}
   m_Layer: 0
   m_Name: EnemyState
   m_TagString: Untagged
@@ -3263,7 +3263,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63e7de5892873444397b33731818d2c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemystate: 0
+  enemyState: 0
+  enemy: {fileID: 1819096076}
+  playertransform: {fileID: 458961138}
+  nextCellPosition: {x: 0, y: 0, z: 0}
+  tilemap: {fileID: 1559665090}
 --- !u!1 &1802346489
 GameObject:
   m_ObjectHideFlags: 0
