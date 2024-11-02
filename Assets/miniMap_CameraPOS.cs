@@ -24,7 +24,7 @@ public class miniMap_CameraPOS : MonoBehaviour
         }
         else
         {
-            Camera_Pos.position = new Vector3(Camera_Pos.position.x + test_SCRIPT.delta_MiniMap_POS.x , Camera_Pos.position.y + test_SCRIPT.delta_MiniMap_POS.y, -6);
+            //Camera_Pos.position = new Vector3(Player_Pos.position.x + test_SCRIPT.delta_MiniMap_POS.x , Player_Pos.position.y + test_SCRIPT.delta_MiniMap_POS.y, -6);
             
         }
         

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class miniCamUI_test : MonoBehaviour
 {
-    public RectTransform miniMap_CamUI_POS;
+    public static RectTransform miniMap_CamUI_POS;
     private UnityEngine.UI.Image miniMap_UI_Image;
     // Start is called before the first frame update
     void Start()
@@ -15,7 +15,6 @@ public class miniCamUI_test : MonoBehaviour
         miniMap_CamUI_POS = GetComponent<RectTransform>();
         miniMap_UI_Image = GetComponent<UnityEngine.UI.Image>();
         
-
     }
 
     // Update is called once per frame
@@ -26,7 +25,8 @@ public class miniCamUI_test : MonoBehaviour
         if (test_SCRIPT.is_MiniMap_Touch)
         {
             miniMap_UI_Image.enabled = true;
-            miniMap_CamUI_POS.position = new Vector3(test_SCRIPT.Current_MiniMap_Touch_POS.x, test_SCRIPT.Current_MiniMap_Touch_POS.y, -6);
+            
+            miniMap_CamUI_POS.position = new Vector3(Mathf.Clamp(test_SCRIPT.Current_MiniMap_Touch_POS.x, Screen.width - test_SCRIPT.MiniMap_UI_RT.sizeDelta.x, Screen.width), Mathf.Clamp(test_SCRIPT.Current_MiniMap_Touch_POS.y, 0, test_SCRIPT.MiniMap_UI_RT.sizeDelta.y), -6);
             Debug.Log(miniMap_CamUI_POS.position);
         }
         else
