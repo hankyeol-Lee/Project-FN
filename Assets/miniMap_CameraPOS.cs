@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 
 public class miniMap_CameraPOS : MonoBehaviour
@@ -18,13 +19,13 @@ public class miniMap_CameraPOS : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!test_SCRIPT.is_MiniMap_Touch)
+        if (!miniMap_UI_Touch.is_MiniMap_Touch)
         {
             Camera_Pos.position = new Vector3(Player_Pos.position.x, Player_Pos.position.y, -6);
         }
         else
         {
-            Camera_Pos.position = new Vector3(Camera_Pos.position.x + test_SCRIPT.delta_MiniMap_POS.x , Camera_Pos.position.y + test_SCRIPT.delta_MiniMap_POS.y, -6);
+            //Camera_Pos.position = new Vector3(Player_Pos.position.x + test_SCRIPT.delta_MiniMap_POS.x , Player_Pos.position.y + test_SCRIPT.delta_MiniMap_POS.y, -6);
             
         }
         
