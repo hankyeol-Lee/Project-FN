@@ -6,10 +6,10 @@ namespace GameSkill
         public string Description { get; private set; }
         public float Damage { get; private set; }
         public int Cost { get; private set; }
-        public int Range { get; private set; }
+        public float Range { get; private set; }
         public string DisplayString { get; private set; }  // 설명문구
 
-        public Skill(string name, string description,float damage, int cost, int range,string displayString)
+        public Skill(string name, string description,float damage, int cost, float range,string displayString)
         {
             Name = name;
             Description = description;

@@ -32,12 +32,12 @@ public class EnemyStateScript : MonoBehaviour
                     // Wait 상태에서는 2초를 대기
                     yield return new WaitForSeconds(2f);
                     enemyState = EnemyState.Move; // 상태를 Move로 변경
-                    Debug.Log($"2초 지남. 현재 EnemyState : {enemyState}");
+                    //Debug.Log($"2초 지남. 현재 EnemyState : {enemyState}");
                     break;
 
                 case EnemyState.Move:
                     // 이동 상태로 전환하면 이동 코루틴 실행
-                    Debug.Log($"현재 EnemyState : {enemyState}");
+                    //Debug.Log($"현재 EnemyState : {enemyState}");
                     //Vector3 startWorldPos = enemy.transform.position;
                     yield return StartCoroutine(MoveCell(enemy, CellCenterPos(enemy.transform.position), nextCellPos()));
 
@@ -96,7 +96,7 @@ public class EnemyStateScript : MonoBehaviour
         Vector3Int playerPos = tilemap.WorldToCell(playertransform.position);
         Vector3Int targetPos = enemyPos;
         SettargetPos(enemyPos,playerPos,ref targetPos); // targetPos의 위치를 제대로 정함.
-        Debug.Log($"다음에 이동할 곳 : {targetPos}");
+        //Debug.Log($"다음에 이동할 곳 : {targetPos}");
         return tilemap.CellToWorld(targetPos); // targetPos를 월드좌표로 변환.
     }
     
