@@ -609,7 +609,7 @@ GameObject:
   - component: {fileID: 952545045}
   - component: {fileID: 952545047}
   m_Layer: 5
-  m_Name: Image
+  m_Name: minimap_UI_Touch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -681,7 +681,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 952545042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb5f29ad1ab970d4bb4d6729e6a28171, type: 3}
+  m_Script: {fileID: 11500000, guid: 30adc3558e41f994dba82746a84a6a7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &964442080
@@ -697,7 +697,7 @@ GameObject:
   - component: {fileID: 964442083}
   - component: {fileID: 964442085}
   m_Layer: 5
-  m_Name: minimap_camUI_test
+  m_Name: miniMap_CamUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -769,7 +769,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 964442080}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30adc3558e41f994dba82746a84a6a7d, type: 3}
+  m_Script: {fileID: 11500000, guid: eb5f29ad1ab970d4bb4d6729e6a28171, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1230108135
