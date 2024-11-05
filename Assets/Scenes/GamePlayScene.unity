@@ -607,7 +607,7 @@ GameObject:
   - component: {fileID: 952545043}
   - component: {fileID: 952545046}
   - component: {fileID: 952545045}
-  - component: {fileID: 952545044}
+  - component: {fileID: 952545047}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -634,20 +634,6 @@ RectTransform:
   m_AnchoredPosition: {x: -240.9065, y: 218}
   m_SizeDelta: {x: 481.813, y: 436.0031}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &952545044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 952545042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a1fea0289dbbb449b9726c322b7e534, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Default_MiniMap_Touch_POS: {x: 0, y: 0, z: 0}
-  Current_MiniMap_Touch_POS: {x: 0, y: 0, z: 0}
 --- !u!114 &952545045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -686,6 +672,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 952545042}
   m_CullTransparentMesh: 1
+--- !u!114 &952545047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952545042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb5f29ad1ab970d4bb4d6729e6a28171, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &964442080
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,7 +695,7 @@ GameObject:
   - component: {fileID: 964442081}
   - component: {fileID: 964442084}
   - component: {fileID: 964442083}
-  - component: {fileID: 964442082}
+  - component: {fileID: 964442085}
   m_Layer: 5
   m_Name: minimap_camUI_test
   m_TagString: Untagged
@@ -724,19 +722,6 @@ RectTransform:
   m_AnchoredPosition: {x: 753, y: -298}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &964442082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 964442080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fd9ad102c450cf40944cd4b857ebad5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  miniMap_CamUI_POS: {fileID: 0}
 --- !u!114 &964442083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -775,6 +760,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 964442080}
   m_CullTransparentMesh: 1
+--- !u!114 &964442085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964442080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30adc3558e41f994dba82746a84a6a7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1230108135
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,6 +880,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1386699901}
+  - component: {fileID: 1386699902}
   m_Layer: 0
   m_Name: SkillManager
   m_TagString: Untagged
@@ -905,6 +903,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1386699902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386699899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93151f57b492e2f478ffe2b0c787fdad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 458961136}
+  tilemap: {fileID: 1559665090}
+  skillRange: {fileID: 2084322874}
 --- !u!1 &1512204297
 GameObject:
   m_ObjectHideFlags: 0
@@ -3714,4 +3727,3 @@ SceneRoots:
   - {fileID: 1802346493}
   - {fileID: 918526542}
   - {fileID: 829895503}
-  - {fileID: 1124549836}
