@@ -12,10 +12,10 @@ public class PlayerSkill : MonoBehaviour
 
     public Skill[] playerSkills = new Skill[5]; //1.
 
-    private void Start()
+    private void Awake()
     {
-        //AddSkill(0, "블리자드");
-        //AddSkill(1,"화염구");
+        AddSkill(0, "블리자드");
+        AddSkill(1,"화염구");
     }
 
     private void Update()

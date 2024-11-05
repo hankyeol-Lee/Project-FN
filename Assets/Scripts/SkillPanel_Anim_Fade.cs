@@ -51,7 +51,7 @@ public class SkillPanel_Anim_Fade : MonoBehaviour
             if (skill != null)
             {
                 skillChildren[i].SetActive(true);
-                Debug.Log("여기까지는 ok");
+                //Debug.Log("여기까지는 ok");
                 skillChildren[i].GetComponent<SkillDisplay>().GetSkillInfo(skill);
                 //skillDisplay.GetSkillInfo(skill);
 
