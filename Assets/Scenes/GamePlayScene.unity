@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 458961136}
+  tilemap: {fileID: 1559665090}
 --- !u!4 &212323813
 Transform:
   m_ObjectHideFlags: 0
@@ -201,7 +202,7 @@ GameObject:
   - component: {fileID: 458961141}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -881,6 +882,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1386699901}
   - component: {fileID: 1386699902}
+  - component: {fileID: 1386699903}
   m_Layer: 0
   m_Name: SkillManager
   m_TagString: Untagged
@@ -918,6 +920,19 @@ MonoBehaviour:
   player: {fileID: 458961136}
   tilemap: {fileID: 1559665090}
   skillRange: {fileID: 2084322874}
+  skillTargetObject: {fileID: 0}
+--- !u!114 &1386699903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386699899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3c58b779b7906e408b7d73d5f328fee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1512204297
 GameObject:
   m_ObjectHideFlags: 0
@@ -3505,7 +3520,7 @@ GameObject:
   - component: {fileID: 1819096077}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

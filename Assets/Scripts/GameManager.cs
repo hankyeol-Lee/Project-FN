@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour 
 {
-    public static GameManager Instance { get; private set; } //싱글톤 패턴 사용
+    public static GameManager Instance { get; private set; } //싱글톤 패턴 사용, 전역으로 접근할 오브젝트들 추가
 
     public GameObject player; // 플레이어 객체
+
+    public Tilemap tilemap; // 
 
     void Awake()
     {
@@ -18,6 +21,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject); // 중복된 인스턴스가 있다면 파괴
         }
+
+
         SceneManager.LoadScene("BattleUIScene",LoadSceneMode.Additive);
        
     }
