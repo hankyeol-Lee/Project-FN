@@ -18,6 +18,7 @@ public class SkillData : ScriptableObject // ActiveSkill.cs에 있는 변수들을 여기
     public int distance; // 스킬 사거리
     public bool isTargetCell; // 셀지정 O, X의 boolean
     public skillType skilltype; // 스킬의 type을 지정하는거.
+    public int skillcelldist; // 스킬 자체의 셀 사거리.
 
     public Tile tile; // Tile prefab을 만들어서 적용해줘야함.
 

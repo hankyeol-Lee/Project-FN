@@ -9,7 +9,7 @@ public class SkillSystem : MonoBehaviour
 {
     public GameObject player; // 여기에서 플레이어의 스킬 목록도 따올거임.
     public Tilemap tilemap;
-    public GameObject skillRange;
+    public GameObject skillRange; // 사거리.
     private PlayerSkill playerskill;
     public ActiveSkill[] skills;
     public GameObject skillTargetObject; // 대상지정 스킬의 타겟
@@ -28,51 +28,38 @@ public class SkillSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             ShowSkillRange(skills[0]);
-            //skills[0];
-            //if (skillRange.activeSelf == true) { Debug.Log("이건 ok"); }
-            thisSkill = skills[0]; // 
-
+            thisSkill = skills[0]; 
         }
         if (skillRange.activeSelf == true ) // 사거리가 켜져있는데, 좌클릭도 눌렀으면.
         {
             Vector3Int? checkMouseCell = CheckMouseInCircle();
-
             if (checkMouseCell.HasValue)
             {
                 if (thisSkill.isTargetCell)
                 {
+                    thisSkill.ShowRange(checkMouseCell.Value);
                     Debug.Log($"스킬을 쓴 위치는 :{checkMouseCell}");
-                    //TODO : 1. 스킬 쓴 위치 주변으로 사거리 표시. 사거리는 skill에 있어야함.
-                    //2. 이제 skill을 캐스팅해야함.캐스팅하는 로직? 도 생각하셈.
-                    //thisSkill을 cast해야함.
-                    thisSkill.ShowRange(); // 사거리 표시 메소드 호출
                     if (Input.GetMouseButton(0))
                     {
                         thisSkill.CastSkill(thisSkill, player, checkMouseCell.Value);
-                        skillRange.SetActive(false);
+                        skillRange.SetActive(false); 
+                        //GameManager.Instance.skillHexRadius.Disable();
                     }
                 }
                 else
                 {
-                    // 대상지정된 오브젝트에게 스킬 써야함. skillTargetObject
-                    thisSkill.ShowRange();
+                    thisSkill.ShowRange(checkMouseCell.Value);
                     if (Input.GetMouseButton(0))
                     {
                         Debug.Log($"이 스킬 이름? : 로그로 말할게 {thisSkill}");
                         thisSkill.CastSkill(thisSkill, player, skillTargetObject); // 대상지정 스킬 사용
-                        skillRange.SetActive(true);   
+                        skillRange.SetActive(false);
+                        //GameManager.Instance.skillHexRadius.Disable();
                     }
                 }
-
             }
         }
 
-        /*
-        if (skillRange.activeSelf && Input.GetMouseButton(1))
-        {
-            skillRange.SetActive(false);
-        }
-        */
 
     }
     private void ShowSkillRange(ActiveSkill skill)

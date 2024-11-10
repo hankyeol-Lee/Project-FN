@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 
     public Tilemap tilemap; // 
 
+    public skillHexRadius skillHexRadius;
+
     void Awake()
     {
         if (Instance == null)

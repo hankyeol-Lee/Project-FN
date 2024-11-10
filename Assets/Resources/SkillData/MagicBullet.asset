@@ -22,4 +22,7 @@ MonoBehaviour:
   distance: 3
   isTargetCell: 0
   skilltype: 1
-  tile: {fileID: 11400000, guid: 927183b80b7622d458c4357367988740, type: 2}
+  skillcelldist: 0
+  tile: {fileID: 11400000, guid: eb5a40703ede4bf40b2151cd81fb3670, type: 2}
+  SkillRangeList: []
+  offset: {x: 0, y: 0, z: 0}

@@ -17,12 +17,17 @@ public abstract class ActiveSkill // 사용할 스킬을 지정한
     internal int playerCastTime;
     internal int coolDown;
     internal int playerCost;
-    internal int distance; // 스킬 사거리
+    internal int distance; // 사거리. 스킬 키를 누르면 표시되는 스킬 원형 모양의 반지름.
+    internal int skillcelldist; // 스킬 각각의 사거리. 예를 들어서, 사거리가 1이면 중앙 한 셀인거고 사거리가 2이면 중앙 셀을 기준으로 2칸까지의 셀 
+
     internal bool isTargetCell; // 셀지정 O, X의 boolean
     internal skillType skilltype; // 스킬의 type을 지정하는거.
     internal static Tile newTile;
 
-    internal List<Vector3Int> skillRange; // TODO : 이거 어떤 방식으로 설정할지. 스킬 범위를 저장하는 리스트
+    private Dictionary<Vector3Int, TileBase> previousSkillTiles = new Dictionary<Vector3Int, TileBase>();
+
+
+    internal List<Vector3Int> skillRange; // TODO : 이거 어떤 방식으로 설정할지. 적용되는 스킬 범위 셀을 저장하는 리스트
 
     public enum skillType
     {
@@ -49,6 +54,7 @@ public abstract class ActiveSkill // 사용할 스킬을 지정한
             skilltype = data.skilltype;
             newTile = data.tile;
             skillRange = new List<Vector3Int>(); // 리스트 초기화
+            skillcelldist = data.skillcelldist;
     }
         catch (NullReferenceException)
         {
@@ -67,22 +73,48 @@ public abstract class ActiveSkill // 사용할 스킬을 지정한
 
     }
 
-    //showRange : 스킬 범위를 보여주는 메소드. 이걸 어떤 식으로 스킬 칸을 관리할 지 모르곘음.
-    public void ShowRange()
+    //showdistance : 스킬 범위를 보여주는 메소드. 이걸 어떤 식으로 스킬 칸을 관리할 지 모르곘음.
+    public void ShowRange(Vector3Int mouseCellPos)
     {
-        if (skillRange != null)
+        Tilemap tilemap = GameManager.Instance.tilemap;
+        //GameManager.Instance.skillHexRadius.ScaleHex(mouseCellPos,this.skillcelldist);
+
+        int distance = skillcelldist;
+
+        // 이전 스킬 범위 타일을 원래 상태로 복원
+        foreach (var cell in previousSkillTiles.Keys)
         {
-            foreach (var cell in skillRange)
+            tilemap.SetTile(cell, previousSkillTiles[cell]);
+        }
+        previousSkillTiles.Clear(); // 초기화 후 딕셔너리 비우기
+        skillRange.Clear(); // 새로운 스킬 범위 계산 전 초기화
+
+        // 범위 내 셀 계산
+        Vector3Int centerCell = mouseCellPos;
+        for (int x = -distance; x <= distance; x++)
+        {
+            for (int y = -distance; y <= distance; y++)
             {
-                GameManager.Instance.tilemap.SetTile(cell, newTile);
-                Debug.Log($"스킬범위 {newTile} 지정됨");
+                if (Mathf.Abs(x + y) <= distance)
+                {
+                    Vector3Int offset = new Vector3Int(y, x, 0);
+                    Vector3Int cell = centerCell + offset;
+                    skillRange.Add(cell);
+
+                    // 기존 타일을 저장하여 나중에 복원 가능하게 함
+                    if (!previousSkillTiles.ContainsKey(cell))
+                    {
+                        previousSkillTiles[cell] = tilemap.GetTile(cell);
+                    }
+                }
             }
         }
-        else
+
+        // 새로운 범위 타일 설정
+        foreach (var cell in skillRange)
         {
-            Debug.Log("스킬 범위가 지정 안되어있음");
+            tilemap.SetTile(cell, newTile);
+            Debug.Log($"스킬범위 {cell} 에 지정됨");
         }
     }
-
-
 }
