@@ -45,14 +45,14 @@ public class SkillPanel_Anim_Fade : MonoBehaviour
         //활성화할 스킬창 찾기. 근데 순서대로 되어야하니 stack 자료구조 사용해야할듯. 추후 수정 요망
         for (int i = 0; i < 5; i++)
         {
-            Skill skill = playerSkillList.playerSkills[i]; //n번 칸에 스킬이 있다 -> n번째 childrenskill을 활성화.
+            ActiveSkill skill = playerSkillList.playerSkills[i]; //n번 칸에 스킬이 있다 -> n번째 childrenskill을 활성화.
             //SkillDisplay skillDisplay = skillChildren[i].GetComponent<SkillDisplay>();
             //Debug.Log(skillDisplay);
             if (skill != null)
             {
                 skillChildren[i].SetActive(true);
                 //Debug.Log("여기까지는 ok");
-                skillChildren[i].GetComponent<SkillDisplay>().GetSkillInfo(skill);
+                //skillChildren[i].GetComponent<SkillDisplay>().GetSkillInfo(skill);
                 //skillDisplay.GetSkillInfo(skill);
 
             }
