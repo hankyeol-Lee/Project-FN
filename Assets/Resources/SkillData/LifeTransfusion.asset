@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d0e2b1be3ed02c4fa3bdfe66eec0a2c, type: 3}
+  m_Name: LifeTransfusion
+  m_EditorClassIdentifier: 
+  skillName: LifeTransfusion
+  coefficient: 1
+  displayString: "\uC0C1\uB300\uC758 \uC0DD\uBA85\uB825\uC744 \uC9C0\uC18D\uC801\uC73C\uB85C
+    \uC804\uD658\uD568"
+  enemyCastTime: 0
+  playerCastTime: 0
+  coolDown: 8
+  playerCost: 4
+  distance: 2
+  isTargetCell: 0
+  skilltype: 1
+  skillcelldist: 0
+  tile: {fileID: 0}
+  SkillRangeList: []
+  offset: {x: 0, y: 0, z: 0}

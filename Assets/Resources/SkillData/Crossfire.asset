@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d0e2b1be3ed02c4fa3bdfe66eec0a2c, type: 3}
+  m_Name: Crossfire
+  m_EditorClassIdentifier: 
+  skillName: Crossfire
+  coefficient: 1.8
+  displayString: "\uC801\uC774 \uC788\uB294 \uC704\uCE58\uB97C \uAC00\uB85C\uC9D3\uB294
+    \uAC15\uB825\uD55C \uACF5\uACA9\uC744 \uBC1C\uC0AC"
+  enemyCastTime: 0
+  playerCastTime: 20
+  coolDown: 20
+  playerCost: 0
+  distance: 4
+  isTargetCell: 0
+  skilltype: 1
+  skillcelldist: 0
+  tile: {fileID: 0}
+  SkillRangeList: []
+  offset: {x: 0, y: 0, z: 0}
