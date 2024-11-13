@@ -5,8 +5,9 @@ using Enemyspace;
 public class EnemyList
 {
     // 여기에 Enemy의 하위 class를 사용하면 됨. Enemy를 적어 놓을 듯.
-    public class GiantRat : Enemy
+    public class Slime : Enemy
     {
+        public Slime(EnemyData data) : base(data) { }
         /*
         public GiantRat(EnemyData data) { Initialize(data); }
         private void Initialize(EnemyData data)
@@ -18,7 +19,7 @@ public class EnemyList
                     this.AD = data.AD;
                     this.AP = data.AP;
                     this.AR = data.AR;
-                    this.MR = data.MR;
+                    this.MR = data.MR;  
                     this.Speed = data.Speed;
                 }
             }
@@ -31,8 +32,12 @@ public class EnemyList
         {
             
         }
-        
-        
+        public override void AddSkill()
+        {
+
+        }
+
+
     }
 
    

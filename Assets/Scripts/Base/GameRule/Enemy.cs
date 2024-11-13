@@ -15,11 +15,9 @@ namespace Enemyspace // Enemyspace로 Enemy클래스에 접근 가능하도록 제어.
         protected int MR; // Magic Resistance, 마법저항력.
         protected float Speed; // 이동속도.
 
-        public List<SkillData> skillDataList; // 적 개체가 쓸 skilldata의 list를 참조.
-        protected List<Skill> skills = new List<Skill>();
+        public List<ActiveSkill> enemySkillList; 
 
-
-        protected void Initialize(EnemyData data)
+        public Enemy(EnemyData data)
         {
             if (data != null)
             {
@@ -29,7 +27,6 @@ namespace Enemyspace // Enemyspace로 Enemy클래스에 접근 가능하도록 제어.
                 this.AR = data.AR;
                 this.MR = data.MR;
                 this.Speed = data.Speed;
-
             }
         }
 
@@ -47,6 +44,8 @@ namespace Enemyspace // Enemyspace로 Enemy클래스에 접근 가능하도록 제어.
             // Enemy가 죽으면 공통적으로 하는 것들을 적으면 됨.
 
         }
+        public abstract void AddSkill();
+        
     }
 
 }
