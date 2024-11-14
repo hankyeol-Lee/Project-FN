@@ -7,7 +7,7 @@ public class SkillInstance : MonoBehaviour
 {
     public static Dictionary<string, ActiveSkill> skillInstances = new Dictionary<string, ActiveSkill>(); // 스킬을 저장하는 Active Skill 생성. 
 
-    private void Start()
+    private void Awake()
     {
         InitializeSkills();
     }
@@ -15,15 +15,7 @@ public class SkillInstance : MonoBehaviour
     {
         // Resources 폴더에서 모든 SkillData를 불러와서 인스턴스 생성
         SkillData[] allSkillData = Resources.LoadAll<SkillData>("SkillData");
-        Debug.Log(allSkillData.Length);
-        if (allSkillData != null)
-        {
-            Debug.Log("제대로 불러옴");
-        }        
-        else
-        {
-            Debug.Log("제대로 못불러옴");
-        }
+
         foreach (var data in allSkillData)
         {
             // 스킬 이름에 따라 새로운 ActiveSkill 인스턴스 생성

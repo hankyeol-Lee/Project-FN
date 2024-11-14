@@ -10,11 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d72c5d3b875a8b04b9d787e5fca2c37f, type: 3}
-  m_Name: GiantRat
+  m_Name: Slime
   m_EditorClassIdentifier: 
-  Name: GiantRat
+  Name: Slime
   HP: 50
-  AD: 5
+  AD: 2
   AP: 0
-  AR: 5
-  MR: 5
+  AR: 8
+  MR: 8
+  Speed: 0.4
+  enemySkillString:
+  - Decay

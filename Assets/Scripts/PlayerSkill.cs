@@ -18,7 +18,6 @@ public class PlayerSkill : MonoBehaviour
     private void Awake()
     {
         allSkillLists = SkillInstance.skillInstances; // SkillInstanceÀÇ µñ¼Å³Ê¸®¸¦ °¡Á®¿È
-        Debug.Log("playerskill : allskillList °¡Á®¿È");
     }
 
     private void Update()

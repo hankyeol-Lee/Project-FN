@@ -2,21 +2,29 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
-
+using Enemyspace;
 public class EnemyStateScript : MonoBehaviour
 {
     // 상태를 정의하는 enum
     public enum EnemyState { Wait, Move, Attack }
     public EnemyState enemyState = EnemyState.Wait; // 초기 상태는 Wait
 
-    public GameObject enemy; // Enemy 객체
+    public GameObject enemyobject; // Enemy 객체
     public Transform playertransform;
     public Vector3 nextCellPosition; // 다음 이동할 Cell의 위치
-
+    public Enemy enemy;
     public Tilemap tilemap;
+
+    public ActiveSkill thisSkill;
 
     private void Start()
     {
+        enemyobject = transform.parent.gameObject;
+        if(EnemyInstances.enemyDict.TryGetValue(enemyobject.name,out Enemy enemy))
+        {
+            this.enemy = enemy;
+        }
+        thisSkill = enemy.enemySkillList[0];
         // 코루틴을 시작해서 2초 후 상태를 Move로 바꿈
         StartCoroutine(StateManager());
     }
@@ -33,13 +41,14 @@ public class EnemyStateScript : MonoBehaviour
                     yield return new WaitForSeconds(2f);
                     enemyState = EnemyState.Move; // 상태를 Move로 변경
                     //Debug.Log($"2초 지남. 현재 EnemyState : {enemyState}");
+                    //TODO : 여기에서 2초 기다리는 애니메이션 실행해야함 ㅇㅇ
                     break;
 
                 case EnemyState.Move:
                     // 이동 상태로 전환하면 이동 코루틴 실행
                     //Debug.Log($"현재 EnemyState : {enemyState}");
                     //Vector3 startWorldPos = enemy.transform.position;
-                    yield return StartCoroutine(MoveCell(enemy, CellCenterPos(enemy.transform.position), nextCellPos()));
+                    yield return StartCoroutine(MoveCell(enemyobject, CellCenterPos(enemyobject.transform.position), nextCellPos()));
 
                     // 이동이 끝나면 다시 Wait 상태로 전환하고 2초 대기
                     enemyState = EnemyState.Wait;
@@ -48,6 +57,7 @@ public class EnemyStateScript : MonoBehaviour
 
                 // 필요한 경우 Attack 상태를 추가적으로 구현할 수 있음
                 case EnemyState.Attack:
+                    //enemy.Attack();
                     // Attack 상태에서의 로직 (추가적인 조건에 따라 구현)
                     break;
             }
@@ -92,7 +102,7 @@ public class EnemyStateScript : MonoBehaviour
                 }
             }
         }
-        Vector3Int enemyPos = tilemap.WorldToCell(enemy.transform.position);
+        Vector3Int enemyPos = tilemap.WorldToCell(enemyobject.transform.position);
         Vector3Int playerPos = tilemap.WorldToCell(playertransform.position);
         Vector3Int targetPos = enemyPos;
         SettargetPos(enemyPos,playerPos,ref targetPos); // targetPos의 위치를 제대로 정함.

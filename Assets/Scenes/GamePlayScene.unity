@@ -775,6 +775,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5f29ad1ab970d4bb4d6729e6a28171, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1136494322
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1136494323}
+  - component: {fileID: 1136494324}
+  - component: {fileID: 1136494325}
+  m_Layer: 0
+  m_Name: EnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1136494323
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136494322}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.7615929, y: -1.1326182, z: -0.63914263}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1136494324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136494322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4c8bf5bd3e95c947ae565d80ccdf251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1136494325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136494322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f5f13ec91929094d81fb29907fec085, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1386699899
 GameObject:
   m_ObjectHideFlags: 0
@@ -3318,7 +3375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyState: 0
-  enemy: {fileID: 1819096076}
+  enemyobject: {fileID: 0}
   playertransform: {fileID: 458961138}
   nextCellPosition: {x: 0, y: 0, z: 0}
   tilemap: {fileID: 1559665090}
@@ -3435,8 +3492,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1819096078}
   - component: {fileID: 1819096077}
+  - component: {fileID: 1819096079}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Slime
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3510,6 +3568,18 @@ Transform:
   - {fileID: 1590556515}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1819096079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819096076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7daa11e4fc6b5343b171c62681cabaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1912134968
 GameObject:
   m_ObjectHideFlags: 0
@@ -3755,3 +3825,4 @@ SceneRoots:
   - {fileID: 1802346493}
   - {fileID: 918526542}
   - {fileID: 829895503}
+  - {fileID: 1136494323}
