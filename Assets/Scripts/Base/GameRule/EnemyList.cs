@@ -14,7 +14,8 @@ public class EnemyList
 
         public override void Attack(GameObject attacker)
         {
-            //enemySkillList[0].CastSkill(enemySkillList[0],attacker,);
+            Debug.Log("여기까지 됨");
+            enemySkillList[0].CastSkill(enemySkillList[0],attacker);
         }
         
     }
