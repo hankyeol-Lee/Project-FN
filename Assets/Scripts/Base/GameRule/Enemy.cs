@@ -67,6 +67,18 @@ namespace Enemyspace // Enemyspace로 Enemy클래스에 접근 가능하도록 제어.
                 enemySkillList.Add(thisSkill);
             }
         }
+        public float returnADAP(ActiveSkill.skillType skillType)
+        {
+            if(skillType == ActiveSkill.skillType.Physics)
+            {
+                return AD;
+            }
+            else if (skillType == ActiveSkill.skillType.Magic)
+            {
+                return AP;
+            }
+            return 0.0f;
+        }
         
     }
 

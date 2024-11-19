@@ -1,3 +1,4 @@
+using Enemyspace;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public MagicBullet(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Bite : ActiveSkill
@@ -17,7 +18,15 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Bite(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) // enemy만 사용하는 skill 오버로딩.
+        {
+            //
+            //여기에 스킬 이펙트 입력 ( 전역 싱글톤 정의된 함수를 사용해야함)
+            //대상지정 스킬의 경우)
+            EnemyInstances.enemyDict.TryGetValue(skillCaster.name, out Enemy enemy); // 1. enemy 객체에 스킬 시전자의 정보를 enemyDict에서 받아옴.(복붙)
+            float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, enemy.returnADAP(useSkill.skilltype)); // 스킬계수 * 공격력(혹은 AP)
+            GameManager.Instance.player.GetComponent<PlayerStatus>().PlayerGetDamage(initdamage, skilltype); // 플레이어에게 직접 데미지를 주는 코드
+        }
     }
 
     public class Decay : ActiveSkill
@@ -25,7 +34,21 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Decay(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) 
+        {
+
+            // 셀 타겟팅
+            EnemyInstances.enemyDict.TryGetValue(skillCaster.name, out Enemy enemy);
+                //TODO : 플레이어 위치 찾고, 플레이어의 셀에 공격하거나 ㅇㅇ 
+            Vector3Int playerCellPos = GameManager.Instance.PlayerWorldToCell(GameManager.Instance.player.transform.position);
+            bool? isfuck = GameManager.Instance.IsTargetOnCell(playerCellPos); // 그 셀 위에 플레이어가 있다면(플레이어가 있는 셀 위치 == IstargetOnCell())
+            if (isfuck.HasValue) // 만약에 스킬 범위 안에 있다면.
+            {
+                float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient,useSkill.skilltype,enemy.returnADAP(useSkill.skilltype));
+                // 플레이어에게 데미지 주는 함수.
+                GameManager.Instance.player.GetComponent<PlayerStatus>().PlayerGetDamage(initdamage,skilltype);
+            }
+        }   
     }
 
     public class ManaDrain : ActiveSkill
@@ -33,7 +56,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public ManaDrain(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Smash : ActiveSkill
@@ -41,7 +64,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Smash(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Harden : ActiveSkill
@@ -49,7 +72,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Harden(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Ambush : ActiveSkill
@@ -57,7 +80,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Ambush(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class VenomousFang : ActiveSkill
@@ -65,7 +88,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public VenomousFang(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Aftershock : ActiveSkill
@@ -73,7 +96,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Aftershock(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class GhostlyGrasp : ActiveSkill
@@ -81,7 +104,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public GhostlyGrasp(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Fireball : ActiveSkill
@@ -89,7 +112,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Fireball(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Rage : ActiveSkill
@@ -97,7 +120,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Rage(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Flame : ActiveSkill
@@ -105,7 +128,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Flame(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class IronShield : ActiveSkill
@@ -113,7 +136,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public IronShield(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Sweep : ActiveSkill
@@ -121,7 +144,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Sweep(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class IceArrow : ActiveSkill
@@ -129,7 +152,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public IceArrow(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class CloakAndReveal : ActiveSkill
@@ -137,7 +160,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public CloakAndReveal(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class LifeTransfusion : ActiveSkill
@@ -145,7 +168,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public LifeTransfusion(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class GreatMagicShield : ActiveSkill
@@ -153,7 +176,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public GreatMagicShield(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Vampirism : ActiveSkill
@@ -161,7 +184,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Vampirism(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class RapidStrike : ActiveSkill
@@ -169,7 +192,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public RapidStrike(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Tear : ActiveSkill
@@ -177,7 +200,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Tear(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Scream : ActiveSkill
@@ -185,7 +208,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Scream(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class AcidicBody : ActiveSkill
@@ -193,7 +216,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public AcidicBody(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class UnstableMixture : ActiveSkill
@@ -201,7 +224,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public UnstableMixture(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class FlameCharge : ActiveSkill
@@ -209,7 +232,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public FlameCharge(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class FlameClaws : ActiveSkill
@@ -217,7 +240,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public FlameClaws(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Aiming : ActiveSkill
@@ -225,7 +248,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Aiming(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Calcification : ActiveSkill
@@ -233,7 +256,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Calcification(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Intimidate : ActiveSkill
@@ -241,7 +264,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Intimidate(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Plunder : ActiveSkill
@@ -249,7 +272,8 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Plunder(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
+
     }
 
     public class Ignite : ActiveSkill
@@ -257,7 +281,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Ignite(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class FlamePillar : ActiveSkill
@@ -265,7 +289,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public FlamePillar(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Possession : ActiveSkill
@@ -273,7 +297,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Possession(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class CursedSword : ActiveSkill
@@ -281,7 +305,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public CursedSword(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Blizzard : ActiveSkill
@@ -289,7 +313,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Blizzard(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Frostbite : ActiveSkill
@@ -297,7 +321,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Frostbite(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class FlameBreath : ActiveSkill
@@ -305,7 +329,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public FlameBreath(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class ForwardThrust : ActiveSkill
@@ -313,7 +337,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public ForwardThrust(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class SpearOfBlood : ActiveSkill
@@ -321,7 +345,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public SpearOfBlood(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class MistForm : ActiveSkill
@@ -329,7 +353,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public MistForm(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class SlashAndCut : ActiveSkill
@@ -337,7 +361,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public SlashAndCut(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Howl : ActiveSkill
@@ -345,7 +369,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Howl(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Rake : ActiveSkill
@@ -353,7 +377,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Rake(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class EarthOfFire : ActiveSkill
@@ -361,7 +385,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public EarthOfFire(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class WeaponOfFire : ActiveSkill
@@ -369,7 +393,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public WeaponOfFire(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Volcano : ActiveSkill
@@ -377,7 +401,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Volcano(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Crossfire : ActiveSkill
@@ -385,7 +409,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Crossfire(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class ExecutionersGreatSword : ActiveSkill
@@ -393,7 +417,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public ExecutionersGreatSword(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 
     public class Execution : ActiveSkill
@@ -401,6 +425,6 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Execution(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
 }

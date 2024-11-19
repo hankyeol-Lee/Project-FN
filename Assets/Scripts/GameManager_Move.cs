@@ -107,7 +107,7 @@ public class GameManager_Move : MonoBehaviour
         return null;
     }
 
-    Vector3Int GetPlayerPos()
+    public Vector3Int GetPlayerPos()
     {
         Vector3Int playerCellPos = tilemap.WorldToCell(player.transform.position);
         //Debug.Log($"ÇÃ·¹ÀÌ¾î ¼¿ ÁÂÇ¥ : {playerCellPos}");

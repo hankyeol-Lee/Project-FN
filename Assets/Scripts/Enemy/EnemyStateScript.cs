@@ -20,11 +20,19 @@ public class EnemyStateScript : MonoBehaviour
     private void Start()
     {
         enemyobject = transform.parent.gameObject;
+        playertransform = GameManager.Instance.player.GetComponent<Transform>();
+        tilemap = GameManager.Instance.tilemap;
+        Debug.Log(enemyobject.name);
         if(EnemyInstances.enemyDict.TryGetValue(enemyobject.name,out Enemy enemy))
         {
             this.enemy = enemy;
+            thisSkill = enemy.enemySkillList[0];
         }
-        thisSkill = enemy.enemySkillList[0];
+        else
+        {
+            Debug.LogWarning($"{enemyobject}제대로 지정 안됐어요.");
+        }
+
         // 코루틴을 시작해서 2초 후 상태를 Move로 바꿈
         StartCoroutine(StateManager());
     }
@@ -39,7 +47,18 @@ public class EnemyStateScript : MonoBehaviour
                 case EnemyState.Wait:
                     // Wait 상태에서는 2초를 대기
                     yield return new WaitForSeconds(2f);
-                    enemyState = EnemyState.Move; // 상태를 Move로 변경
+                    // 만약 플레이어와의 셀 거리가 thisskill.skillcelldist 이하라면 if (thisSkill.skillcelldist)
+                    if (checkDistancetoPlayer())
+                    {
+                        enemyState = EnemyState.Attack;
+                        Debug.Log(enemyState);
+                    }
+                    else
+                    {
+                        enemyState = EnemyState.Move; // 상태를 Move로 변경
+                        //Debug.Log(enemyState);
+                    }
+                    //Debug.Log(enemyState);
                     //Debug.Log($"2초 지남. 현재 EnemyState : {enemyState}");
                     //TODO : 여기에서 2초 기다리는 애니메이션 실행해야함 ㅇㅇ
                     break;
@@ -52,12 +71,14 @@ public class EnemyStateScript : MonoBehaviour
 
                     // 이동이 끝나면 다시 Wait 상태로 전환하고 2초 대기
                     enemyState = EnemyState.Wait;
+                    Debug.Log(enemyState);
                     yield return new WaitForSeconds(2f);
                     break;
 
-                // 필요한 경우 Attack 상태를 추가적으로 구현할 수 있음
                 case EnemyState.Attack:
-                    //enemy.Attack();
+                    yield return new WaitForSeconds(1f);
+                    enemy.Attack(enemyobject);
+                    enemyState = EnemyState.Wait;
                     // Attack 상태에서의 로직 (추가적인 조건에 따라 구현)
                     break;
             }
@@ -134,5 +155,46 @@ public class EnemyStateScript : MonoBehaviour
         Vector3Int cellPos = tilemap.WorldToCell(worldTransform);
 
         return tilemap.CellToWorld(cellPos); // 월드좌표로 반환.
+    }
+    
+    private bool checkDistancetoPlayer()
+    {
+        int GetHexTileDistance(Vector3 enemyWorldPos, Vector3 playerWorldPos)
+        {
+            // 적과 플레이어의 셀 중심 좌표 계산
+            Vector3 enemyCellCenter = CellCenterPos(enemyWorldPos);
+            Vector3 playerCellCenter = CellCenterPos(playerWorldPos);
+
+            // 셀 좌표를 큐브 좌표로 변환하는 함수
+            Vector3Int CubeCoordinates(Vector3Int cellPos)
+            {
+                int x = cellPos.x;
+                int z = cellPos.y - (cellPos.x + (cellPos.x & 1)) / 2; // Even-r 기준
+                int y = -x - z;
+                return new Vector3Int(x, y, z);
+            }
+
+            // 월드 좌표 -> 셀 좌표 변환
+            Vector3Int enemyCell = tilemap.WorldToCell(enemyCellCenter);
+            Vector3Int playerCell = tilemap.WorldToCell(playerCellCenter);
+
+            // 셀 좌표 -> 큐브 좌표 변환
+            Vector3Int enemyCube = CubeCoordinates(enemyCell);
+            Vector3Int playerCube = CubeCoordinates(playerCell);
+
+            // 큐브 거리 계산
+            int distance = Mathf.Max(
+                Mathf.Abs(enemyCube.x - playerCube.x),
+                Mathf.Abs(enemyCube.y - playerCube.y),
+                Mathf.Abs(enemyCube.z - playerCube.z)
+            );
+
+            return distance;
+        }
+        if (GetHexTileDistance(enemyobject.transform.position,GameManager.Instance.player.transform.position) <= thisSkill.distance)
+        {
+            return true;
+        }
+        return false;
     }
 }

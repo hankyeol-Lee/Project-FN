@@ -25,6 +25,7 @@ public class SkillInstance : MonoBehaviour
             }
             else if (data.skillName == "Bite")
             {
+                Debug.Log("bite »ý¼º");
                 skillInstances[data.skillName] = new Bite(data);
             }
             else if (data.skillName == "Decay")
