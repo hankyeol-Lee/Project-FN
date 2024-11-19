@@ -18,7 +18,12 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Bite(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) 
+        {
+            EnemyInstances.enemyDict.TryGetValue(skillCaster.name, out Enemy enemy);
+            float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, enemy.returnADAP(useSkill.skilltype));
+            GameManager.Instance.player.GetComponent<PlayerStatus>().PlayerGetDamage(initdamage, skilltype);
+        }
     }
 
     public class Decay : ActiveSkill

@@ -13,6 +13,8 @@ public class PlayerStatus : MonoBehaviour
 
     public float costResilience; // 코스트 회복력.
 
+    public GameObject floatingtextmanager;
+
     private void Start()
     {
         playerHP = 100;
@@ -36,6 +38,9 @@ public class PlayerStatus : MonoBehaviour
         }
         playerHP -= damage;
         Debug.Log("플레이어 체력 변동 : "+ playerHP);
+        FloatingTextManager floatingtextmanagerscript = floatingtextmanager.GetComponent<FloatingTextManager>();
+        floatingtextmanagerscript.ShowFloatingText(GameManager.Instance.player.transform.position, damage);
+
     }
     
 }

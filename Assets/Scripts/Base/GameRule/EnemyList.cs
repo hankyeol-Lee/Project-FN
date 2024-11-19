@@ -19,6 +19,17 @@ public class EnemyList
         }
         
     }
+    public class GiantRat : Enemy
+    {
+        public GiantRat(EnemyData data) : base(data)
+        {
+
+        }
+        public override void Attack(GameObject attacker)
+        {
+            enemySkillList[0].CastSkill(enemySkillList[0], attacker);
+        }
+    }
 
    
 }

@@ -20,11 +20,19 @@ public class EnemyStateScript : MonoBehaviour
     private void Start()
     {
         enemyobject = transform.parent.gameObject;
+        playertransform = GameManager.Instance.player.GetComponent<Transform>();
+        tilemap = GameManager.Instance.tilemap;
+        Debug.Log(enemyobject.name);
         if(EnemyInstances.enemyDict.TryGetValue(enemyobject.name,out Enemy enemy))
         {
             this.enemy = enemy;
+            thisSkill = enemy.enemySkillList[0];
         }
-        thisSkill = enemy.enemySkillList[0];
+        else
+        {
+            Debug.LogWarning($"{enemyobject}제대로 지정 안됐어요.");
+        }
+
         // 코루틴을 시작해서 2초 후 상태를 Move로 바꿈
         StartCoroutine(StateManager());
     }
