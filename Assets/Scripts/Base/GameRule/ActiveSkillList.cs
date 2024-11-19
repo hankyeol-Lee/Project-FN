@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActiveSkillList // ½ÇÁ¦·Î ¾µ ½ºÅ³µé ¸ñ·ÏÀ» Áý¾î³Ö´Â °÷.
+public class ActiveSkillList // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½.
 {
     public class MagicBullet : ActiveSkill
     {
@@ -33,21 +33,21 @@ public class ActiveSkillList // ½ÇÁ¦·Î ¾µ ½ºÅ³µé ¸ñ·ÏÀ» Áý¾î³Ö´Â °÷.
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) 
         {
-            Debug.Log("castskill ¾È");
+            Debug.Log("castskill ï¿½ï¿½");
             //Enemy enemy = skillCaster.GetComponent<Enemy>();
             Debug.Log(skillCaster.name);
             EnemyInstances.enemyDict.TryGetValue(skillCaster.name, out Enemy enemy);
             Debug.Log(enemy);
-                //TODO : ÇÃ·¹ÀÌ¾î À§Ä¡ Ã£°í, ÇÃ·¹ÀÌ¾îÀÇ ¼¿¿¡ °ø°ÝÇÏ°Å³ª ¤·¤· 
+                //TODO : ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ä¡ Ã£ï¿½ï¿½, ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°Å³ï¿½ ï¿½ï¿½ï¿½ï¿½ 
             Vector3Int playerCellPos = GameManager.Instance.PlayerWorldToCell(GameManager.Instance.player.transform.position);
             Debug.Log(playerCellPos);
             bool? isfuck = GameManager.Instance.IsTargetOnCell(playerCellPos);
-            if (isfuck.HasValue) // ¸¸¾à¿¡ ½ºÅ³ ¹üÀ§ ¾È¿¡ ÀÖ´Ù¸é.
+            if (isfuck.HasValue) // ï¿½ï¿½ï¿½à¿¡ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ ï¿½È¿ï¿½ ï¿½Ö´Ù¸ï¿½.
             {
-                Debug.Log("¾È¿¡ ÀÖÀ½?");
+                Debug.Log("ï¿½È¿ï¿½ ï¿½ï¿½ï¿½ï¿½?");
                 float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient,useSkill.skilltype,enemy.returnADAP(useSkill.skilltype));
                 Debug.Log(initdamage);
-                // ÇÃ·¹ÀÌ¾î¿¡°Ô µ¥¹ÌÁö ÁÖ´Â ÇÔ¼ö.
+                // ï¿½Ã·ï¿½ï¿½Ì¾î¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½.
                 GameManager.Instance.player.GetComponent<PlayerStatus>().PlayerGetDamage(initdamage,skilltype);
             }
         }   

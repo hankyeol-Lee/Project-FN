@@ -7,7 +7,6 @@ namespace Enemyspace // Enemyspace로 Enemy클래스에 접근 가능하도록 제어.
     public abstract class Enemy
     {
         // Enemy Class 안에 필요한 속성, 메소드 추가
-        //TODO : 
         protected float HP;
         protected float AD;
         protected float AP;

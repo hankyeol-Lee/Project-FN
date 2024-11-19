@@ -26,7 +26,7 @@ public abstract class ActiveSkill // 사용할 스킬을 지정한
     private Dictionary<Vector3Int, TileBase> previousSkillTiles = new Dictionary<Vector3Int, TileBase>();
 
 
-    internal List<Vector3Int> skillRange; // TODO : 이거 어떤 방식으로 설정할지. 적용되는 스킬 범위 셀을 저장하는 리스트
+    internal List<Vector3Int> skillRange; 
 
     public enum skillType
     {

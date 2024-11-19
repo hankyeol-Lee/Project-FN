@@ -4,20 +4,31 @@ using UnityEngine;
 using Enemyspace;
 public class EnemyList
 {
-    // ¿©±â¿¡ EnemyÀÇ ÇÏÀ§ class¸¦ »ç¿ëÇÏ¸é µÊ. Enemy¸¦ Àû¾î ³õÀ» µí.
+    // ï¿½ï¿½ï¿½â¿¡ Enemyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ classï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½. Enemyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½.
     public class Slime : Enemy
     {
-        public Slime(EnemyData data) : base(data) // »ý¼ºÀÚ¿¡¼­ ½ºÅ³ ¸®½ºÆ®¿¡ ÀûÈù ÀÌ¸§µé·Î µÈ ÀÎ½ºÅÏ½º, enemySkillList¿¡ Ãß°¡ 
+        public Slime(EnemyData data) : base(data) // ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½, enemySkillListï¿½ï¿½ ï¿½ß°ï¿½ 
         {
             
         }
 
         public override void Attack(GameObject attacker)
         {
-            Debug.Log("¿©±â±îÁö µÊ");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½");
             enemySkillList[0].CastSkill(enemySkillList[0],attacker);
         }
         
+    }
+    public class GiantRat : Enemy
+    {
+        public GiantRat(EnemyData data) : base(data)
+        {
+
+        }
+        public override void Attack(GameObject attacker)
+        {
+            enemySkillList[0].CastSkill(enemySkillList[0], attacker);
+        }
     }
     public class GiantRat : Enemy
     {

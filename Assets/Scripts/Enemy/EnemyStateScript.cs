@@ -5,13 +5,13 @@ using UnityEngine.UIElements;
 using Enemyspace;
 public class EnemyStateScript : MonoBehaviour
 {
-    // »óÅÂ¸¦ Á¤ÀÇÇÏ´Â enum
+    // ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ enum
     public enum EnemyState { Wait, Move, Attack }
-    public EnemyState enemyState = EnemyState.Wait; // ÃÊ±â »óÅÂ´Â Wait
+    public EnemyState enemyState = EnemyState.Wait; // ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½Â´ï¿½ Wait
 
-    public GameObject enemyobject; // Enemy °´Ã¼
+    public GameObject enemyobject; // Enemy ï¿½ï¿½Ã¼
     public Transform playertransform;
-    public Vector3 nextCellPosition; // ´ÙÀ½ ÀÌµ¿ÇÒ CellÀÇ À§Ä¡
+    public Vector3 nextCellPosition; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ Cellï¿½ï¿½ ï¿½ï¿½Ä¡
     public Enemy enemy;
     public Tilemap tilemap;
 
@@ -30,14 +30,14 @@ public class EnemyStateScript : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"{enemyobject}Á¦´ë·Î ÁöÁ¤ ¾ÈµÆ¾î¿ä.");
+            Debug.LogWarning($"{enemyobject}ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ÈµÆ¾ï¿½ï¿½.");
         }
 
-        // ÄÚ·çÆ¾À» ½ÃÀÛÇØ¼­ 2ÃÊ ÈÄ »óÅÂ¸¦ Move·Î ¹Ù²Þ
+        // ï¿½Ú·ï¿½Æ¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ 2ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ Moveï¿½ï¿½ ï¿½Ù²ï¿½
         StartCoroutine(StateManager());
     }
 
-    // »óÅÂ¸¦ °ü¸®ÇÏ´Â ÄÚ·çÆ¾
+    // ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ú·ï¿½Æ¾
     private IEnumerator StateManager()
     {
         while (true)
@@ -45,9 +45,9 @@ public class EnemyStateScript : MonoBehaviour
             switch (enemyState)
             {
                 case EnemyState.Wait:
-                    // Wait »óÅÂ¿¡¼­´Â 2ÃÊ¸¦ ´ë±â
+                    // Wait ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½ï¿½ï¿½ 2ï¿½Ê¸ï¿½ ï¿½ï¿½ï¿½
                     yield return new WaitForSeconds(2f);
-                    // ¸¸¾à ÇÃ·¹ÀÌ¾î¿ÍÀÇ ¼¿ °Å¸®°¡ thisskill.skillcelldist ÀÌÇÏ¶ó¸é if (thisSkill.skillcelldist)
+                    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ thisskill.skillcelldist ï¿½ï¿½ï¿½Ï¶ï¿½ï¿½ if (thisSkill.skillcelldist)
                     if (checkDistancetoPlayer())
                     {
                         enemyState = EnemyState.Attack;
@@ -55,21 +55,21 @@ public class EnemyStateScript : MonoBehaviour
                     }
                     else
                     {
-                        enemyState = EnemyState.Move; // »óÅÂ¸¦ Move·Î º¯°æ
+                        enemyState = EnemyState.Move; // ï¿½ï¿½ï¿½Â¸ï¿½ Moveï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                         Debug.Log(enemyState);
                     }
                     Debug.Log(enemyState);
-                    //Debug.Log($"2ÃÊ Áö³². ÇöÀç EnemyState : {enemyState}");
-                    //TODO : ¿©±â¿¡¼­ 2ÃÊ ±â´Ù¸®´Â ¾Ö´Ï¸ÞÀÌ¼Ç ½ÇÇàÇØ¾ßÇÔ ¤·¤·
+                    //Debug.Log($"2ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ EnemyState : {enemyState}");
+                    //TODO : ï¿½ï¿½ï¿½â¿¡ï¿½ï¿½ 2ï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     break;
 
                 case EnemyState.Move:
-                    // ÀÌµ¿ »óÅÂ·Î ÀüÈ¯ÇÏ¸é ÀÌµ¿ ÄÚ·çÆ¾ ½ÇÇà
-                    //Debug.Log($"ÇöÀç EnemyState : {enemyState}");
+                    // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯ï¿½Ï¸ï¿½ ï¿½Ìµï¿½ ï¿½Ú·ï¿½Æ¾ ï¿½ï¿½ï¿½ï¿½
+                    //Debug.Log($"ï¿½ï¿½ï¿½ï¿½ EnemyState : {enemyState}");
                     //Vector3 startWorldPos = enemy.transform.position;
                     yield return StartCoroutine(MoveCell(enemyobject, CellCenterPos(enemyobject.transform.position), nextCellPos()));
 
-                    // ÀÌµ¿ÀÌ ³¡³ª¸é ´Ù½Ã Wait »óÅÂ·Î ÀüÈ¯ÇÏ°í 2ÃÊ ´ë±â
+                    // ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ Wait ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯ï¿½Ï°ï¿½ 2ï¿½ï¿½ ï¿½ï¿½ï¿½
                     enemyState = EnemyState.Wait;
                     Debug.Log(enemyState);
                     yield return new WaitForSeconds(2f);
@@ -79,25 +79,25 @@ public class EnemyStateScript : MonoBehaviour
                     yield return new WaitForSeconds(1f);
                     enemy.Attack(enemyobject);
                     enemyState = EnemyState.Wait;
-                    // Attack »óÅÂ¿¡¼­ÀÇ ·ÎÁ÷ (Ãß°¡ÀûÀÎ Á¶°Ç¿¡ µû¶ó ±¸Çö)
+                    // Attack ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
                     break;
             }
 
-            // ¹«ÇÑ ·çÇÁ°¡ ¾Æ´Ï¶ó Æ¯Á¤ Á¶°Ç¿¡¼­ Á¾·áÇÏ°í ½Í´Ù¸é Á¾·á Á¶°Ç Ãß°¡ °¡´É
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½ Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½Ç¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Í´Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
     }
     
-    private Vector3 nextCellPos() // Enemy°¡ ÀÌµ¿ÇÒ ´ÙÀ½ cellÀ» Á¤ÇÏ´Â ÄÚµå.
+    private Vector3 nextCellPos() // Enemyï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ cellï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Úµï¿½.
     {
         void SettargetPos(Vector3Int thisObjPos, Vector3Int playerPos, ref Vector3Int targetPos)
         {
-            bool isOddRow = Mathf.Abs(thisObjPos.y % 2) == 1; // È¦¼ö ÇàÀÎÁö È®ÀÎ
-            bool isPlayerOnRight = playerPos.y > thisObjPos.y; // ÇÃ·¹ÀÌ¾î°¡ ´õ ¿À¸¥ÂÊ¿¡ ÀÖ´ÂÁö ÆÇ´Ü
-            if (playerPos.y == thisObjPos.y) // °°Àº Çà¿¡ ÀÖ´Â °æ¿ì
+            bool isOddRow = Mathf.Abs(thisObjPos.y % 2) == 1; // È¦ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+            bool isPlayerOnRight = playerPos.y > thisObjPos.y; // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ê¿ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½
+            if (playerPos.y == thisObjPos.y) // ï¿½ï¿½ï¿½ï¿½ ï¿½à¿¡ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½
             {
-                targetPos.x += (playerPos.x > thisObjPos.x) ? 1 : -1; // ÇÃ·¹ÀÌ¾î°¡ À§ÂÊÀÌ¸é +1, ¾Æ´Ï¸é -1
+                targetPos.x += (playerPos.x > thisObjPos.x) ? 1 : -1; // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ +1, ï¿½Æ´Ï¸ï¿½ -1
             }
-            else if (isPlayerOnRight) // ÇÃ·¹ÀÌ¾î°¡ ¿À¸¥ÂÊ¿¡ ÀÖ´Â °æ¿ì
+            else if (isPlayerOnRight) // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ê¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½
             {
                 targetPos.y += 1;
                 if (isOddRow)
@@ -109,7 +109,7 @@ public class EnemyStateScript : MonoBehaviour
                     targetPos.x -= UnityEngine.Random.Range(0, 2) == 0 ? 1 : 0;
                 }
             }
-            else // ÇÃ·¹ÀÌ¾î°¡ ¿ÞÂÊ¿¡ ÀÖ´Â °æ¿ì
+            else // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½Ê¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½
             {
                 targetPos.y -= 1;
                 if (isOddRow)
@@ -126,13 +126,13 @@ public class EnemyStateScript : MonoBehaviour
         Vector3Int enemyPos = tilemap.WorldToCell(enemyobject.transform.position);
         Vector3Int playerPos = tilemap.WorldToCell(playertransform.position);
         Vector3Int targetPos = enemyPos;
-        SettargetPos(enemyPos,playerPos,ref targetPos); // targetPosÀÇ À§Ä¡¸¦ Á¦´ë·Î Á¤ÇÔ.
-        //Debug.Log($"´ÙÀ½¿¡ ÀÌµ¿ÇÒ °÷ : {targetPos}");
-        return tilemap.CellToWorld(targetPos); // targetPos¸¦ ¿ùµåÁÂÇ¥·Î º¯È¯.
+        SettargetPos(enemyPos,playerPos,ref targetPos); // targetPosï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+        //Debug.Log($"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ : {targetPos}");
+        return tilemap.CellToWorld(targetPos); // targetPosï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½È¯.
     }
     
 
-    // °´Ã¼¸¦ ÀÌµ¿½ÃÅ°´Â MoveCell ÄÚ·çÆ¾
+    // ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½Å°ï¿½ï¿½ MoveCell ï¿½Ú·ï¿½Æ¾
     IEnumerator MoveCell(GameObject mover, Vector3 startWorldPos, Vector3 endWorldPos)
     {
         float elapsedTime = 0f;
@@ -146,43 +146,43 @@ public class EnemyStateScript : MonoBehaviour
             yield return null;
         }
 
-        // Á¤È®ÇÏ°Ô ¸ñÇ¥ À§Ä¡·Î ¼³Á¤
+        // ï¿½ï¿½È®ï¿½Ï°ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         mover.transform.position = endWorldPos;
     }
 
-    public Vector3 CellCenterPos(Vector3 worldTransform) // ÀÌ ÁÂÇ¥°¡ ÀÖ´Â ¼¿ÀÇ Áß¾Ó ÁÂÇ¥¸¦ ¹ÝÈ¯.
+    public Vector3 CellCenterPos(Vector3 worldTransform) // ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß¾ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½È¯.
     {
         Vector3Int cellPos = tilemap.WorldToCell(worldTransform);
 
-        return tilemap.CellToWorld(cellPos); // ¿ùµåÁÂÇ¥·Î ¹ÝÈ¯.
+        return tilemap.CellToWorld(cellPos); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½È¯.
     }
     
     private bool checkDistancetoPlayer()
     {
         int GetHexTileDistance(Vector3 enemyWorldPos, Vector3 playerWorldPos)
         {
-            // Àû°ú ÇÃ·¹ÀÌ¾îÀÇ ¼¿ Áß½É ÁÂÇ¥ °è»ê
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ß½ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½
             Vector3 enemyCellCenter = CellCenterPos(enemyWorldPos);
             Vector3 playerCellCenter = CellCenterPos(playerWorldPos);
 
-            // ¼¿ ÁÂÇ¥¸¦ Å¥ºê ÁÂÇ¥·Î º¯È¯ÇÏ´Â ÇÔ¼ö
+            // ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ Å¥ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
             Vector3Int CubeCoordinates(Vector3Int cellPos)
             {
                 int x = cellPos.x;
-                int z = cellPos.y - (cellPos.x + (cellPos.x & 1)) / 2; // Even-r ±âÁØ
+                int z = cellPos.y - (cellPos.x + (cellPos.x & 1)) / 2; // Even-r ï¿½ï¿½ï¿½ï¿½
                 int y = -x - z;
                 return new Vector3Int(x, y, z);
             }
 
-            // ¿ùµå ÁÂÇ¥ -> ¼¿ ÁÂÇ¥ º¯È¯
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ -> ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½È¯
             Vector3Int enemyCell = tilemap.WorldToCell(enemyCellCenter);
             Vector3Int playerCell = tilemap.WorldToCell(playerCellCenter);
 
-            // ¼¿ ÁÂÇ¥ -> Å¥ºê ÁÂÇ¥ º¯È¯
+            // ï¿½ï¿½ ï¿½ï¿½Ç¥ -> Å¥ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½È¯
             Vector3Int enemyCube = CubeCoordinates(enemyCell);
             Vector3Int playerCube = CubeCoordinates(playerCell);
 
-            // Å¥ºê °Å¸® °è»ê
+            // Å¥ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½
             int distance = Mathf.Max(
                 Mathf.Abs(enemyCube.x - playerCube.x),
                 Mathf.Abs(enemyCube.y - playerCube.y),
