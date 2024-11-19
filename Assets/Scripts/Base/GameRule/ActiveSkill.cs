@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.VFX;
@@ -37,6 +36,7 @@ public abstract class ActiveSkill // 사용할 스킬을 지정한
     }
 
     public abstract void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell);
+    public abstract void CastSkill(ActiveSkill useSkill,GameObject skillCaster);
 
     public abstract void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget); // 타겟 대상 스킬 오버로딩
     public ActiveSkill(SkillData data) // 생성자 : SkillData를 객체가 component로 받아서, 그 값을 할당해줌.

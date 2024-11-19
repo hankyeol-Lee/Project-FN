@@ -13,6 +13,6 @@ public class EnemyData : ScriptableObject
     public int MR; // Magic Resistance, 마법저항력.
     public float Speed;
 
-    public List<SkillData> skills; // 적이 보유한 스킬 리스트.
-}
+    public List<string> enemySkillString; // 적이 보유한 스킬 리스트.    
+}   
 

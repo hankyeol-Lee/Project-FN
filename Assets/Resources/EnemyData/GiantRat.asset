@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: GiantRat
   HP: 50
-  AD: 5
+  AD: 15
   AP: 0
-  AR: 5
-  MR: 5
+  AR: 2
+  MR: 2
+  Speed: 0.5
+  enemySkillString:
+  - Bite

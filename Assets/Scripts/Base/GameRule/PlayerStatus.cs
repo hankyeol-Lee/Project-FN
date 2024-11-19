@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerStatus : MonoBehaviour
@@ -12,6 +13,8 @@ public class PlayerStatus : MonoBehaviour
 
     public float costResilience; // 코스트 회복력.
 
+    public GameObject floatingtextmanager;
+
     private void Start()
     {
         playerHP = 100;
@@ -22,4 +25,22 @@ public class PlayerStatus : MonoBehaviour
 
         costResilience = 140f;
     }
+    public void PlayerGetDamage(float damage,ActiveSkill.skillType skilltype) // 플레이어에게 데미지를 주는 함수. 여기에서 텍스트 애니메이션 관리
+    {
+        //플레이어 받는 데미지 계산식.
+        if (skilltype == ActiveSkill.skillType.Physics && damage > 0.0f)
+        {
+            damage += playerAR;
+        }
+        else if (skilltype == ActiveSkill.skillType.Magic && damage > 0.0f)
+        {
+            damage += playerMR;
+        }
+        playerHP -= damage;
+        Debug.Log("플레이어 체력 변동 : "+ playerHP);
+        FloatingTextManager floatingtextmanagerscript = floatingtextmanager.GetComponent<FloatingTextManager>();
+        floatingtextmanagerscript.ShowFloatingText(GameManager.Instance.player.transform.position, damage);
+
+    }
+    
 }

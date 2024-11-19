@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d0e2b1be3ed02c4fa3bdfe66eec0a2c, type: 3}
+  m_Name: Sweep
+  m_EditorClassIdentifier: 
+  skillName: Sweep
+  coefficient: 1.5
+  displayString: "\uB113\uC740 \uBC94\uC704\uC758 \uC801\uC744 \uD718\uB450\uB974\uBA70
+    \uC4F0\uB7EC\uB728\uB9BC"
+  enemyCastTime: 1
+  playerCastTime: 0
+  coolDown: 8
+  playerCost: 4
+  distance: 1
+  isTargetCell: 1
+  skilltype: 0
+  skillcelldist: 1
+  tile: {fileID: 0}
+  SkillRangeList: []
+  offset: {x: 0, y: 0, z: 0}
