@@ -25,7 +25,7 @@ public class PlayerStatus : MonoBehaviour
 
         costResilience = 140f;
     }
-    public void PlayerGetDamage(float damage,ActiveSkill.skillType skilltype)
+    public void PlayerGetDamage(float damage,ActiveSkill.skillType skilltype) // 플레이어에게 데미지를 주는 함수. 여기에서 텍스트 애니메이션 관리
     {
         //플레이어 받는 데미지 계산식.
         if (skilltype == ActiveSkill.skillType.Physics && damage > 0.0f)

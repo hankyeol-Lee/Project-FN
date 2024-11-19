@@ -56,9 +56,9 @@ public class EnemyStateScript : MonoBehaviour
                     else
                     {
                         enemyState = EnemyState.Move; // 상태를 Move로 변경
-                        Debug.Log(enemyState);
+                        //Debug.Log(enemyState);
                     }
-                    Debug.Log(enemyState);
+                    //Debug.Log(enemyState);
                     //Debug.Log($"2초 지남. 현재 EnemyState : {enemyState}");
                     //TODO : 여기에서 2초 기다리는 애니메이션 실행해야함 ㅇㅇ
                     break;
