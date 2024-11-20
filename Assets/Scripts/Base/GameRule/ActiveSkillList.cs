@@ -135,7 +135,12 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
     public class Flame : ActiveSkill
     {
         public Flame(SkillData data) : base(data) { }
-        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) 
+        { 
+            //1, 스킬 쓰는 셀 위에 enemy가 있는지 없는지 check해야함.
+            //2. 그 enemy 정보를 받아와야함.
+            //3. 만약 있다면 -> 데미지계산, 등등...
+        }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
