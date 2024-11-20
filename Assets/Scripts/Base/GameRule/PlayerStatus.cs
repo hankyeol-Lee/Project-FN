@@ -11,8 +11,8 @@ public class PlayerStatus : MonoBehaviour
     public float playerAR;
     public float playerMR;
 
-    public float costResilience; // ÄÚ½ºÆ® È¸º¹·Â.
-
+    public float costResilience; // ï¿½Ú½ï¿½Æ® È¸ï¿½ï¿½ï¿½ï¿½.
+    
     public GameObject floatingtextmanager;
 
     private void Start()
@@ -25,9 +25,9 @@ public class PlayerStatus : MonoBehaviour
 
         costResilience = 140f;
     }
-    public void PlayerGetDamage(float damage,ActiveSkill.skillType skilltype) // ÇÃ·¹ÀÌ¾î¿¡°Ô µ¥¹ÌÁö¸¦ ÁÖ´Â ÇÔ¼ö. ¿©±â¿¡¼­ ÅØ½ºÆ® ¾Ö´Ï¸ÞÀÌ¼Ç °ü¸®
+    public void PlayerGetDamage(float damage,ActiveSkill.skillType skilltype) // ï¿½Ã·ï¿½ï¿½Ì¾î¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½. ï¿½ï¿½ï¿½â¿¡ï¿½ï¿½ ï¿½Ø½ï¿½Æ® ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
-        //ÇÃ·¹ÀÌ¾î ¹Þ´Â µ¥¹ÌÁö °è»ê½Ä.
+        //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
         if (skilltype == ActiveSkill.skillType.Physics && damage > 0.0f)
         {
             damage += playerAR;
@@ -37,7 +37,7 @@ public class PlayerStatus : MonoBehaviour
             damage += playerMR;
         }
         playerHP -= damage;
-        Debug.Log("ÇÃ·¹ÀÌ¾î Ã¼·Â º¯µ¿ : "+ playerHP);
+        Debug.Log("ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ : "+ playerHP);
         FloatingTextManager floatingtextmanagerscript = floatingtextmanager.GetComponent<FloatingTextManager>();
         floatingtextmanagerscript.ShowFloatingText(GameManager.Instance.player.transform.position, damage);
 

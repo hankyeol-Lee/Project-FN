@@ -337,7 +337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68ccac4c2c3ae0d4096c647bf77d4f6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHP: 0
+  playerHP: 100
   playerAD: 0
   playerAP: 0
   playerAR: 0
@@ -1073,7 +1073,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1976773440}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1426603099
 AudioSource:
@@ -4306,3 +4306,7 @@ SceneRoots:
   - {fileID: 918526542}
   - {fileID: 829895503}
   - {fileID: 1136494323}
+  - {fileID: 1426603098}
+  - {fileID: 1686430653}
+  - {fileID: 2056441571}
+  - {fileID: 2087066125}
