@@ -21,11 +21,9 @@ public class EnemyInstances : MonoBehaviour
             {
                 case "Slime":
                     enemyDict[data.Name] = new Slime(data);
-                    Debug.Log("이거 나와요");
                     break;
                 case "GiantRat":
                     enemyDict[data.Name] = new GiantRat(data);
-                    Debug.Log($"{data.Name} 나와요");
                     break;
                 default:
                     Debug.LogWarning($"없는게 들어옴 {data.Name}");

@@ -46,7 +46,6 @@ public class BattleUI : MonoBehaviour
     {
         if (!isClicked)
         {
-            //Debug.Log(isClicked);
             HideFirstButtons();
             foreach (var skill in SkillButton)
             {
@@ -68,7 +67,6 @@ public class BattleUI : MonoBehaviour
     }
     public void ItemOnClick() //아이템 버튼 클릭시
     {
-        Debug.Log(isClicked);
 
         if (!isClicked)
         {

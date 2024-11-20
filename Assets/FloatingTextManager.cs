@@ -12,7 +12,6 @@ public class FloatingTextManager : MonoBehaviour
     public void ShowFloatingText(Vector3 position, float damage)
     {
         position = Camera.main.WorldToScreenPoint(position);
-        Debug.Log(position);
         GameObject floatingText = Instantiate(floatingTextPrefab, canvas.transform);
         floatingText.transform.position = position + offset;
 

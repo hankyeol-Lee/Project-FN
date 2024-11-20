@@ -22,7 +22,6 @@ public class EnemyStateScript : MonoBehaviour
         enemyobject = transform.parent.gameObject;
         playertransform = GameManager.Instance.player.GetComponent<Transform>();
         tilemap = GameManager.Instance.tilemap;
-        Debug.Log(enemyobject.name);
         if(EnemyInstances.enemyDict.TryGetValue(enemyobject.name,out Enemy enemy))
         {
             this.enemy = enemy;
@@ -51,27 +50,21 @@ public class EnemyStateScript : MonoBehaviour
                     if (checkDistancetoPlayer())
                     {
                         enemyState = EnemyState.Attack;
-                        Debug.Log(enemyState);
                     }
                     else
                     {
                         enemyState = EnemyState.Move; // 상태를 Move로 변경
-                        //Debug.Log(enemyState);
                     }
-                    //Debug.Log(enemyState);
-                    //Debug.Log($"2초 지남. 현재 EnemyState : {enemyState}");
                     //TODO : 여기에서 2초 기다리는 애니메이션 실행해야함 ㅇㅇ
                     break;
 
                 case EnemyState.Move:
                     // 이동 상태로 전환하면 이동 코루틴 실행
-                    //Debug.Log($"현재 EnemyState : {enemyState}");
                     //Vector3 startWorldPos = enemy.transform.position;
                     yield return StartCoroutine(MoveCell(enemyobject, CellCenterPos(enemyobject.transform.position), nextCellPos()));
 
                     // 이동이 끝나면 다시 Wait 상태로 전환하고 2초 대기
                     enemyState = EnemyState.Wait;
-                    Debug.Log(enemyState);
                     yield return new WaitForSeconds(2f);
                     break;
 
@@ -127,7 +120,6 @@ public class EnemyStateScript : MonoBehaviour
         Vector3Int playerPos = tilemap.WorldToCell(playertransform.position);
         Vector3Int targetPos = enemyPos;
         SettargetPos(enemyPos,playerPos,ref targetPos); // targetPos의 위치를 제대로 정함.
-        //Debug.Log($"다음에 이동할 곳 : {targetPos}");
         return tilemap.CellToWorld(targetPos); // targetPos를 월드좌표로 변환.
     }
     
