@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public GameManager_Move gameManagerMove; // GameManager_Move 참조
 
     public GameObject player; // 플레이어 객체
+    public GameObject floatingtextmanager; // 데미지 텍스트 띄우는 객체도 싱글톤으로 해야 함.
 
     public Tilemap tilemap; // 
 
@@ -47,8 +48,6 @@ public class GameManager : MonoBehaviour
     }
     public float DamageSystem(float skillcoef,ActiveSkill.skillType skilltype,float AttackPoint)
     {
-        Debug.Log("스킬계수 : " + skillcoef);
-        Debug.Log("공격력 : " + AttackPoint);
         return skillcoef * AttackPoint;
     }
     

@@ -23,9 +23,7 @@ public class PlayerSkill : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("인스턴스생성함");
             AddSkill("MagicBullet",0);
-            Debug.Log("스킬추가함.");
         }
         if (Input.GetKeyDown(KeyCode.R))
         {

@@ -42,9 +42,22 @@ namespace Enemyspace // Enemyspace로 Enemy클래스에 접근 가능하도록 제어.
         public abstract void Attack(GameObject attacker);
         
 
-        public virtual void TakeDamage(float damage)
+        public virtual void TakeDamage(Transform position,float damage,ActiveSkill.skillType skilltype)
         {
+            // 에너미의 마방 혹은 물리방어력으로 데미지 계산하고 HP 계산
+            if (skilltype == ActiveSkill.skillType.Physics && damage > 0.0f)
+            {
+                damage -= AR;
+            }
+            else if (skilltype == ActiveSkill.skillType.Magic && damage > 0.0f)
+            {
+                damage -= MR;
+            }
+            if (damage <= 0.0f) { damage = 0.0f; }
             HP -= damage;
+            FloatingTextManager floatingtextmanagerscript = GameManager.Instance.floatingtextmanager.GetComponent<FloatingTextManager>();
+            floatingtextmanagerscript.ShowFloatingText(position.transform.position, damage);
+
             if (HP < 0)
             {
                 Die();

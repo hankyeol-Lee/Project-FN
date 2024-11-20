@@ -16,7 +16,7 @@ public class CircleRangeSize : MonoBehaviour
     public void UpdateCircleSize(float range)
     {
         this.gameObject.SetActive(true);
-        Debug.Log(this.transform.position);
+        //Debug.Log(this.transform.position);
         float diameter = range / 2.25f; //TODO : 이 식 수정해야함. 동적으로변하게
         this.transform.localScale = new Vector3(diameter*currentScale.x, diameter*currentScale.y, diameter*currentScale.z); 
     }

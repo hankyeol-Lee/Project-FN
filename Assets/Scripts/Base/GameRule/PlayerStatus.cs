@@ -30,17 +30,30 @@ public class PlayerStatus : MonoBehaviour
         //플레이어 받는 데미지 계산식.
         if (skilltype == ActiveSkill.skillType.Physics && damage > 0.0f)
         {
-            damage += playerAR;
+            damage -= playerAR;
         }
         else if (skilltype == ActiveSkill.skillType.Magic && damage > 0.0f)
         {
-            damage += playerMR;
+            damage -= playerMR;
         }
+        if (damage <= 0.0f) { damage = 0.0f; }
         playerHP -= damage;
-        Debug.Log("플레이어 체력 변동 : "+ playerHP);
         FloatingTextManager floatingtextmanagerscript = floatingtextmanager.GetComponent<FloatingTextManager>();
         floatingtextmanagerscript.ShowFloatingText(GameManager.Instance.player.transform.position, damage);
 
     }
-    
+    public float returnADAP(ActiveSkill.skillType skillType)
+    {
+        if (skillType == ActiveSkill.skillType.Physics)
+        {
+            return playerAD;
+        }
+        else if (skillType == ActiveSkill.skillType.Magic)
+        {
+            return playerAP;
+        }
+        return 0.0f;
+    }
+
+
 }

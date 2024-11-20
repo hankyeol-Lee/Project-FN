@@ -81,8 +81,6 @@ public class GameManager_Move : MonoBehaviour
                     playerPath = HexClass.HexPathfinding.FindPath(currentTargetCell, targetCell, obstacles); // 이동 중 이라면 현재 향하는 목적 타일부터 playerPath 시작
           
                 }
-                //Debug.Log($"플레이어의 셀 좌표 : {playerCellPos}");
-                //Debug.Log($"마우스로 클릭한 셀의 좌표 : {targetCell}");
                 
                 StartCoroutine(MovePath(playerPath));
                 
@@ -100,7 +98,6 @@ public class GameManager_Move : MonoBehaviour
             {
                 Vector3 worldPosition = cell.point;
                 Vector3Int cellPosition = tilemap.WorldToCell(worldPosition);
-                //Debug.Log($"리턴 셀좌표 : {cellPosition}");
                 return cellPosition;
             }
         }
@@ -110,7 +107,6 @@ public class GameManager_Move : MonoBehaviour
     public Vector3Int GetPlayerPos()
     {
         Vector3Int playerCellPos = tilemap.WorldToCell(player.transform.position);
-        //Debug.Log($"플레이어 셀 좌표 : {playerCellPos}");
         return playerCellPos;
     }
 
@@ -145,6 +141,5 @@ public class GameManager_Move : MonoBehaviour
 
         // 정확히 목표 위치로 설정
         mover.transform.position = endWorldPos;
-        //Debug.Log("플레이어 위치가 셀 중심에 도달했습니다.");
     }
 }

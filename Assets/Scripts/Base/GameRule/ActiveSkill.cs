@@ -114,7 +114,7 @@ public abstract class ActiveSkill // 사용할 스킬을 지정한
         foreach (var cell in skillRange)
         {
             tilemap.SetTile(cell, newTile);
-            Debug.Log($"스킬범위 {cell} 에 지정됨");
+            //Debug.Log($"스킬범위 {cell} 에 지정됨");
         }
     }
 }
