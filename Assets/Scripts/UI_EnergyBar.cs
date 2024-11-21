@@ -13,6 +13,19 @@ public class UI_EnergyBar : MonoBehaviour
     private int maxHealth = 10;       // 최대 체력 칸 수
     private int currentHealth;        // 현재 체력 칸 수
     private bool canDecreaseHealth = true; // 체력 감소 가능 여부
+    public static UI_EnergyBar Instance { get; private set; }
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            //DontDestroyOnLoad(gameObject); // 씬 전환 시에도 유지
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -37,18 +50,18 @@ public class UI_EnergyBar : MonoBehaviour
         }
 
         // Q 키를 눌렀고 체력 감소가 가능한 경우 한 칸 감소
-        if (Input.GetKeyDown(KeyCode.Q) && canDecreaseHealth)
+        if (Input.GetKeyDown(KeyCode.E) && canDecreaseHealth)
         {
-            DecreaseHealth();
+            DecreaseHealth(2);
         }
     }
 
     // 체력 한 칸 줄이는 메서드
-    void DecreaseHealth()
+    public void DecreaseHealth(int cost)
     {
         if (currentHealth > 0)
         {
-            currentHealth -= 1;
+            currentHealth -= cost;
             UpdateHealthBar();
             UpdateHealthText();
             Debug.Log("Q 키가 눌려서 체력이 한 칸 줄었습니다. 현재 체력: " + currentHealth);
@@ -58,7 +71,10 @@ public class UI_EnergyBar : MonoBehaviour
             Invoke(nameof(EnableDecreaseHealth), 0.1f); // 0.1초 후 입력 재활성화
         }
     }
-
+    public int GetPlayerEnergy()
+    {
+        return currentHealth;
+    }
     // 체력바 업데이트
     void UpdateHealthBar()
     {

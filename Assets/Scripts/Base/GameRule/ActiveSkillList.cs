@@ -33,6 +33,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
             //여기에 스킬 이펙트 입력 ( 전역 싱글톤 정의된 함수를 사용해야함)
             //대상지정 스킬의 경우)
             EnemyInstances.enemyDict.TryGetValue(skillCaster.name, out Enemy enemy); // 1. enemy 객체에 스킬 시전자의 정보를 enemyDict에서 받아옴.(복붙)
+            Debug.Log($"useskill : {useSkill}, enemy : {enemy}, enemy returnadap : {enemy.returnADAP(useSkill.skilltype)}");
             float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, enemy.returnADAP(useSkill.skilltype)); // 스킬계수 * 공격력(혹은 AP)
             GameManager.Instance.player.GetComponent<PlayerStatus>().PlayerGetDamage(initdamage, skilltype); // 플레이어에게 직접 데미지를 주는 코드
         }
@@ -135,7 +136,12 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
     public class Flame : ActiveSkill
     {
         public Flame(SkillData data) : base(data) { }
-        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) 
+        { 
+            //1, 스킬 쓰는 셀 위에 enemy가 있는지 없는지 check해야함.
+            //2. 그 enemy 정보를 받아와야함.
+            //3. 만약 있다면 -> 데미지계산, 등등...
+        }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
     }
