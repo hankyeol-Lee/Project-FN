@@ -2,18 +2,14 @@ using UnityEngine;
 
 public class GameCondition : MonoBehaviour
 {
-    /*
-    public int CurrentCost { get; set; }
-    public int PlayerHealth { get; set; }
-    */
     public GameObject Player;
-    public float P_Health;
-    public float P_AD;
-    public float P_AP;
-    public float P_AR;
-    public float P_MR;
-    public int Cur_Cost;
-    public float Cost_Fill;
+    public float P_Health; // ÇÃ·¹ÀÌ¾îÀÇ Ã¼·Â
+    public float P_AD; // ÇÃ·¹ÀÌ¾îÀÇ ¹°¸®°ø°Ý·Â
+    public float P_AP; // ÇÃ·¹ÀÌ¾îÀÇ ¸¶¹ý°ø°Ý·Â, ¸¶·Â
+    public float P_AR; // ÇÃ·¹ÀÌ¾îÀÇ ¹°¸®¹æ¾î·Â
+    public float P_MR; // ÇÃ·¹ÀÌ¾îÀÇ ¸¶¹ý¹æ¾î·Â
+    public int Cur_Cost; // ÇöÀç ÄÚ½ºÆ®
+    public float Cost_Fill; // ÄÚ½ºÆ® È¸º¹·Â
 
 
 
@@ -26,47 +22,50 @@ public class GameCondition : MonoBehaviour
         P_MR = Player.GetComponent<PlayerStatus>().playerMR;
         Cur_Cost = UI_EnergyBar.Instance.currentHealth;
         Cost_Fill = UI_EnergyBar.Instance.fillSpeed;
-        //RelicManagerï¿½ï¿½ï¿½ï¿½ activeRelicsDictï¿½ï¿½ï¿½ï¿½ intï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
-        foreach(var relic in RelicManager.Instance.activeRelicsDIct)
+        
+        foreach(var relic in RelicManager.Instance.activeRelicsDict)
         {
-            if(relic.Value == 1) // Relic value : 0 : ï¿½ï¿½ï¿½ï¿½ È¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, 1 : È¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+            if(relic.Value == 0) // Relic value : 0 : À¯¹° È¿°ú Àû¿ëµÊ / 1: À¯¹° È¿°ú ¹ÌÀû¿ëµÊ
             {
-                RelicManager.Instance.activeRelicsDIct[relic.Key] = 0;
+                RelicManager.Instance.activeRelicsDict[relic.Key] = 1;
             }
         }
-        //RelicManager.Instance.CheckRelics(this);
+        RelicManager.Instance.CheckRelics(this);
         
 
     }
 
     private void Update()
     {
+        P_Health = Player.GetComponent<PlayerStatus>().playerHP;
+        P_AD = Player.GetComponent<PlayerStatus>().playerAD;
+        P_AP = Player.GetComponent<PlayerStatus>().playerAP;
+        P_AR = Player.GetComponent<PlayerStatus>().playerAR;
+        P_MR = Player.GetComponent<PlayerStatus>().playerMR;
+        Cur_Cost = UI_EnergyBar.Instance.currentHealth;
+        Cost_Fill = UI_EnergyBar.Instance.fillSpeed;
+
+        RelicManager.Instance.CheckRelics(this);
+
         /*
-        // Space Å°ï¿½ï¿½ ï¿½Ú½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ®
+         //À¯¹° Ãß°¡, È¿°ú Àû¿ë Å×½ºÆ®¿ë ÄÚµå
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            //Cur_Cost += 1;
-            //Debug.Log($"Current Cost: {CurrentCost}");
-            RelicManager.Instance.CheckRelics(this);
-        }
-
-        // H Å°ï¿½ï¿½ Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ®
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            PlayerHealth -= 10;
-            Debug.Log($"Player Health: {PlayerHealth}");
+            RelicManager.Instance.AddRelic("Emergency Charge");
             RelicManager.Instance.CheckRelics(this);
         }
         */
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            
-            RelicManager.Instance.AddRelic("Old Helmet");
-            P_Health = Player.GetComponent<PlayerStatus>().playerHP;
-            Debug.Log($"P_HP: {P_Health}");
-            RelicManager.Instance.CheckRelics(this);
-            Debug.Log($"P_HP!!!: {P_Health}");
+        
 
-        }
+        Player.GetComponent<PlayerStatus>().playerHP = P_Health;
+        Player.GetComponent<PlayerStatus>().playerAD = P_AD;
+        Player.GetComponent<PlayerStatus>().playerAP = P_AP;
+        Player.GetComponent<PlayerStatus>().playerAR = P_AR;
+        Player.GetComponent<PlayerStatus>().playerMR = P_MR;
+        UI_EnergyBar.Instance.currentHealth = Cur_Cost;
+        UI_EnergyBar.Instance.fillSpeed = Cost_Fill;
+
+        //Debug.Log(UI_EnergyBar.Instance.currentHealth);
+
     }
 }
