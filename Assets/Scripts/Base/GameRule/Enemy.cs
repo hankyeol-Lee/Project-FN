@@ -56,7 +56,7 @@ namespace Enemyspace // Enemyspace로 Enemy클래스에 접근 가능하도록 제어.
             if (damage <= 0.0f) { damage = 0.0f; }
             HP -= damage;
             FloatingTextManager floatingtextmanagerscript = GameManager.Instance.floatingtextmanager.GetComponent<FloatingTextManager>();
-            floatingtextmanagerscript.ShowFloatingText(position.transform.position, damage);
+            //floatingtextmanagerscript.ShowFloatingText(position.transform.position, damage);
                     
             if (HP < 0)
             {
