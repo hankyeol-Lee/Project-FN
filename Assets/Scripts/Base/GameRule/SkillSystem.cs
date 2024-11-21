@@ -187,7 +187,8 @@ public class SkillSystem : MonoBehaviour
         // �̵� �Ϸ� �� ������Ʈ ����
         if (skillInstance != null)
             Destroy(skillInstance);
-    }    public void SetTilemap(Tilemap currentTilemap)
+    }
+    public void SetTilemap(Tilemap currentTilemap)
     {
         tilemap = currentTilemap;
     }
