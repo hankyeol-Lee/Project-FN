@@ -5,12 +5,12 @@ using UnityEngine.Tilemaps;
 
 public class SkillSystem : MonoBehaviour
 {
-    public GameObject player; // ���⿡�� �÷��̾��� ��ų ��ϵ� ���ð���.
+    public GameObject player; // ���⿡�� �÷��̾��� ��ų ��ϵ�?���ð���.
     public Tilemap tilemap;
-    public GameObject skillRange; // ��Ÿ�.
+    public GameObject skillRange; // ��Ÿ�?
     private PlayerSkill playerskill;
     public ActiveSkill[] skills;
-    public GameObject skillTargetObject; // ������� ��ų�� Ÿ��
+    public GameObject skillTargetObject; // �������?��ų�� Ÿ��
     public ActiveSkill thisSkill; // Ű�� ������ ��, � ��ų�� ������ check�ϴ� ��ų�� ����Ű�� ����.
 
     private Vector3Int? lastMouseCell = null; // ���������� �ӹ����� �� ��ǥ ����
@@ -54,12 +54,12 @@ public class SkillSystem : MonoBehaviour
                 if (thisSkill.isTargetCell)
                 {
                     thisSkill.ShowRange(checkMouseCell.Value);
-                    //Debug.Log($"��ų�� ����� ��ġ: {checkMouseCell.Value}");
+                    //Debug.Log($"��ų�� �����?��ġ: {checkMouseCell.Value}");
 
                     // ��Ŭ�� ����
                     if (Input.GetMouseButton(0))
                     {
-                        //Debug.Log($"��ų ��� ��ġ: {checkMouseCell.Value}");
+                        //Debug.Log($"��ų ���?��ġ: {checkMouseCell.Value}");
                         //Debug.Log(UI_EnergyBar.Instance.GetPlayerEnergy());
 
                         if (thisSkill.playerCost <= UI_EnergyBar.Instance.GetPlayerEnergy()) // ��ų�ڽ�Ʈ�� �÷��̾� ������ ���������� ũ�ٸ� 
@@ -73,11 +73,10 @@ public class SkillSystem : MonoBehaviour
                 }
                 else
                 {
-                    // ��� ���� ��ų
+                    // ���?���� ��ų
                     thisSkill.ShowRange(checkMouseCell.Value);
                     if (Input.GetMouseButton(0))
                     {
-                        Debug.Log($"��� ���� ��ų ���: {thisSkill}");
                         Debug.Log(skillTargetObject.gameObject.name);
                         //Debug.Log(UI_EnergyBar.Instance.GetPlayerEnergy());
                         if (thisSkill.playerCost <= UI_EnergyBar.Instance.GetPlayerEnergy()) // ��ų�ڽ�Ʈ�� �÷��̾� ������ ���������� ũ�ٸ� 
@@ -87,7 +86,7 @@ public class SkillSystem : MonoBehaviour
                             thisSkill.CastSkill(thisSkill, player, skillTargetObject);
                             skillRange.SetActive(false);
                         }
-                        //�ڽ�Ʈ ���� ��� �����ؾ���
+                        //�ڽ�Ʈ ���� ���?�����ؾ���
                         //skillRange.SetActive(false);
                     }
                 }
@@ -98,7 +97,7 @@ public class SkillSystem : MonoBehaviour
     private void ShowSkillRange(ActiveSkill skill)
     {
         float skillrange = skill.distance;
-        //range��ŭ ���� ��Ÿ��� ǥ������� ��. -> skill ����� ������ �ٽ� deactivate �ؾ���.
+        //range��ŭ ���� ��Ÿ���?ǥ�������?��. -> skill �����?������ �ٽ� deactivate �ؾ���.
         skillRange.GetComponent<CircleRangeSize>().UpdateCircleSize(skillrange);
     }
 
@@ -109,16 +108,16 @@ public class SkillSystem : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray);
 
-        bool hitCircle = false; // ���콺�� skillRange�� ��Ҵ���
-        bool hitCell = false;   // ���콺�� Ÿ�� ���� ��Ҵ���
+        bool hitCircle = false; // ���콺�� skillRange�� ��Ҵ���?
+        bool hitCell = false;   // ���콺�� Ÿ�� ���� ��Ҵ���?
         Vector3Int? currentCell = null;
 
-        // Ray�� ���� ��� ������Ʈ Ȯ��
+        // Ray�� ���� ���?������Ʈ Ȯ��
         foreach (var hit in hits)
         {
             if (hit.collider.CompareTag("Enemy"))
             {
-                skillTargetObject = hit.collider.gameObject; // ��� ���� ������Ʈ
+                skillTargetObject = hit.collider.gameObject; // ���?���� ������Ʈ
             }
 
             if (hit.collider.CompareTag("skillRange"))
@@ -128,13 +127,13 @@ public class SkillSystem : MonoBehaviour
 
             if (hit.collider.CompareTag("Cell"))
             {
-                hitCell = true; // Ÿ�ϸʿ� �����
+                hitCell = true; // Ÿ�ϸʿ� �����?
                 Vector3 worldPosition = hit.point;
                 currentCell = tilemap.WorldToCell(worldPosition); // ���� �� ��ǥ
             }
         }
 
-        // ���콺�� Circle�� Ÿ��(Cell) ��ο� ��� �ִ� ���
+        // ���콺�� Circle�� Ÿ��(Cell) ��ο�?���?�ִ� ���?
         if (hitCircle && hitCell)
         {
             lastMouseCell = currentCell; // ������ ��ȿ �� ������Ʈ
@@ -142,15 +141,14 @@ public class SkillSystem : MonoBehaviour
             return currentCell;
         }
 
-        // ���콺�� Circle���� ��� �ִ� ���
+        // ���콺�� Circle���� ���?�ִ� ���?
         if (hitCircle && lastMouseCell.HasValue)
         {
             //Debug.Log($"���콺�� Circle���� ����. ������ ��ȿ �� ��ȯ: {lastMouseCell}");
             return lastMouseCell; // ������ ��ȿ �� ����
         }
 
-        // ���콺�� ��Ÿ� ������ ������ ���
-        Debug.Log("���콺�� ��ȿ�� Ÿ�� ������ ���.");
+        // ���콺�� ��Ÿ�?������ ������ ���?
         return null;
     }
     public void ShowSkillAnimation(string skillName, Vector3 Start, Vector3 End)
@@ -159,14 +157,9 @@ public class SkillSystem : MonoBehaviour
         if (skillPrefab != null)
         {
             GameObject skillAnimationInstance = Instantiate(skillPrefab, Start, Quaternion.identity);
-            Debug.Log($"{skillName} ��ų ������ ���� �Ϸ�");
 
             // ���� ���� ��Ʈ: �ڷ�ƾ ȣ��
             StartCoroutine(MoveSkillAnimation(skillAnimationInstance, Start, End, 0.3f)); 
-        }
-        else
-        {
-            Debug.Log($"{skillName} ��ų �������� �����ϴ�");
         }
     }
 
@@ -177,11 +170,11 @@ public class SkillSystem : MonoBehaviour
         // �̵� ó��
         while (elapsedTime < duration)
         {
-            if (skillInstance == null) yield break; // ������Ʈ�� ������ ��� �ڷ�ƾ ����
+            if (skillInstance == null) yield break; // ������Ʈ�� ������ ���?�ڷ�ƾ ����
             elapsedTime += Time.deltaTime;
             float t = Mathf.Clamp01(elapsedTime / duration); // 0���� 1������ ���� ����
             skillInstance.transform.position = Vector3.Lerp(start, end, t); // ���� ����
-            yield return null; // ���� �����ӱ��� ���
+            yield return null; // ���� �����ӱ��� ���?
         }
 
         // �̵� �Ϸ� �� ������Ʈ ����
