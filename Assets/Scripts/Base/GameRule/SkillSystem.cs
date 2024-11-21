@@ -1,17 +1,19 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class SkillSystem : MonoBehaviour
 {
-    public GameObject player; // ¿©±â¿¡¼­ ÇÃ·¹ÀÌ¾îÀÇ ½ºÅ³ ¸ñ·Ïµµ µû¿Ã°ÅÀÓ.
+    public GameObject player; // ï¿½ï¿½ï¿½â¿¡ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½Ïµï¿½ ï¿½ï¿½ï¿½Ã°ï¿½ï¿½ï¿½.
     public Tilemap tilemap;
-    public GameObject skillRange; // »ç°Å¸®.
+    public GameObject skillRange; // ï¿½ï¿½Å¸ï¿½.
     private PlayerSkill playerskill;
     public ActiveSkill[] skills;
-    public GameObject skillTargetObject; // ´ë»óÁöÁ¤ ½ºÅ³ÀÇ Å¸°Ù
-    public ActiveSkill thisSkill; // Å°¸¦ ´­·¶À» ¶§, ¾î¶² ½ºÅ³À» ¾²´ÂÁö checkÇÏ´Â ½ºÅ³À» °¡¸®Å°´Â º¯¼ö.
+    public GameObject skillTargetObject; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ï¿½ï¿½ Å¸ï¿½ï¿½
+    public ActiveSkill thisSkill; // Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½î¶² ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ checkï¿½Ï´ï¿½ ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
 
-    private Vector3Int? lastMouseCell = null; // ¸¶Áö¸·À¸·Î ¸Ó¹°·¶´ø ¼¿ ÁÂÇ¥ ÀúÀå
+    private Vector3Int? lastMouseCell = null; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ó¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½
 
     public static SkillSystem Instance;
 
@@ -21,10 +23,10 @@ public class SkillSystem : MonoBehaviour
         {
             Instance = this;
         }
-        playerskill = player.GetComponent<PlayerSkill>(); // playerskill.cs¸¦ °¡Á®¿È
+        playerskill = player.GetComponent<PlayerSkill>(); // playerskill.csï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (playerskill != null) //nullcheck
         {
-            skills = playerskill.playerSkills; // ¹è¿­ ÀÚÃ¼¸¦ Á÷Á¢ °¡Á®¿À±â
+            skills = playerskill.playerSkills; // ï¿½è¿­ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         }
         
     }
@@ -43,26 +45,27 @@ public class SkillSystem : MonoBehaviour
 
         if (skillRange.activeSelf == true)
         {
-            // CheckMouseInCircle È£Ãâ
+            // CheckMouseInCircle È£ï¿½ï¿½
             Vector3Int? checkMouseCell = CheckMouseInCircle();
 
             if (checkMouseCell.HasValue)
             {
-                // ½ºÅ³ ¹üÀ§ Ç¥½Ã
+                // ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½
                 if (thisSkill.isTargetCell)
                 {
                     thisSkill.ShowRange(checkMouseCell.Value);
-                    //Debug.Log($"½ºÅ³À» »ç¿ëÇÒ À§Ä¡: {checkMouseCell.Value}");
+                    //Debug.Log($"ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡: {checkMouseCell.Value}");
 
-                    // ÁÂÅ¬¸¯ °¨Áö
+                    // ï¿½ï¿½Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     if (Input.GetMouseButton(0))
                     {
-                        //Debug.Log($"½ºÅ³ »ç¿ë À§Ä¡: {checkMouseCell.Value}");
+                        //Debug.Log($"ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡: {checkMouseCell.Value}");
                         //Debug.Log(UI_EnergyBar.Instance.GetPlayerEnergy());
 
-                        if (thisSkill.playerCost <= UI_EnergyBar.Instance.GetPlayerEnergy()) // ½ºÅ³ÄÚ½ºÆ®°¡ ÇÃ·¹ÀÌ¾î ÇöÀçÀÇ ¿¡³ÊÁöº¸´Ù Å©´Ù¸é 
+                        if (thisSkill.playerCost <= UI_EnergyBar.Instance.GetPlayerEnergy()) // ï¿½ï¿½Å³ï¿½Ú½ï¿½Æ®ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½Ù¸ï¿½ 
                         {
                             UI_EnergyBar.Instance.DecreaseHealth(thisSkill.playerCost);
+                            ShowSkillAnimation(thisSkill.skillName, player.transform.position, checkMouseCell.Value);
                             thisSkill.CastSkill(thisSkill, player, checkMouseCell.Value);
                             skillRange.SetActive(false);
                         }
@@ -70,20 +73,21 @@ public class SkillSystem : MonoBehaviour
                 }
                 else
                 {
-                    // ´ë»ó ÁöÁ¤ ½ºÅ³
+                    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³
                     thisSkill.ShowRange(checkMouseCell.Value);
                     if (Input.GetMouseButton(0))
                     {
-                        Debug.Log($"´ë»ó ÁöÁ¤ ½ºÅ³ »ç¿ë: {thisSkill}");
+                        Debug.Log($"ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½: {thisSkill}");
                         Debug.Log(skillTargetObject.gameObject.name);
                         //Debug.Log(UI_EnergyBar.Instance.GetPlayerEnergy());
-                        if (thisSkill.playerCost <= UI_EnergyBar.Instance.GetPlayerEnergy()) // ½ºÅ³ÄÚ½ºÆ®°¡ ÇÃ·¹ÀÌ¾î ÇöÀçÀÇ ¿¡³ÊÁöº¸´Ù Å©´Ù¸é 
+                        if (thisSkill.playerCost <= UI_EnergyBar.Instance.GetPlayerEnergy()) // ï¿½ï¿½Å³ï¿½Ú½ï¿½Æ®ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½Ù¸ï¿½ 
                         {
                             UI_EnergyBar.Instance.DecreaseHealth(thisSkill.playerCost);
+                            ShowSkillAnimation(thisSkill.skillName, player.transform.position, skillTargetObject.gameObject.transform.position);
                             thisSkill.CastSkill(thisSkill, player, skillTargetObject);
                             skillRange.SetActive(false);
                         }
-                        //ÄÚ½ºÆ® ¾øÀ» °æ¿ì »ý°¢ÇØ¾ßÇÔ
+                        //ï¿½Ú½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½
                         //skillRange.SetActive(false);
                     }
                 }
@@ -94,63 +98,96 @@ public class SkillSystem : MonoBehaviour
     private void ShowSkillRange(ActiveSkill skill)
     {
         float skillrange = skill.distance;
-        //range¸¸Å­ ÀÌÁ¦ »ç°Å¸®¸¦ Ç¥½ÃÇØÁà¾ß ÇÔ. -> skill »ç¿ëÀÌ ³¡³ª¸é ´Ù½Ã deactivate ÇØ¾ßÇÔ.
+        //rangeï¿½ï¿½Å­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½. -> skill ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ deactivate ï¿½Ø¾ï¿½ï¿½ï¿½.
         skillRange.GetComponent<CircleRangeSize>().UpdateCircleSize(skillrange);
     }
 
 
     private Vector3Int? CheckMouseInCircle()
     {
-        // ¸¶¿ì½º À§Ä¡¸¦ ±âÁØÀ¸·Î Ray »ý¼º
+        // ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ray ï¿½ï¿½ï¿½ï¿½
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray);
 
-        bool hitCircle = false; // ¸¶¿ì½º°¡ skillRange¿¡ ´ê¾Ò´ÂÁö
-        bool hitCell = false;   // ¸¶¿ì½º°¡ Å¸ÀÏ ¼¿¿¡ ´ê¾Ò´ÂÁö
+        bool hitCircle = false; // ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ skillRangeï¿½ï¿½ ï¿½ï¿½Ò´ï¿½ï¿½ï¿½
+        bool hitCell = false;   // ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ò´ï¿½ï¿½ï¿½
         Vector3Int? currentCell = null;
 
-        // Ray°¡ ´êÀº ¸ðµç ¿ÀºêÁ§Æ® È®ÀÎ
+        // Rayï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® È®ï¿½ï¿½
         foreach (var hit in hits)
         {
             if (hit.collider.CompareTag("Enemy"))
             {
-                skillTargetObject = hit.collider.gameObject; // ´ë»ó ÁöÁ¤ ¿ÀºêÁ§Æ®
+                skillTargetObject = hit.collider.gameObject; // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
             }
 
             if (hit.collider.CompareTag("skillRange"))
             {
-                hitCircle = true; // skillRange ¹üÀ§ ¾È¿¡ ÀÖÀ½
+                hitCircle = true; // skillRange ï¿½ï¿½ï¿½ï¿½ ï¿½È¿ï¿½ ï¿½ï¿½ï¿½ï¿½
             }
 
             if (hit.collider.CompareTag("Cell"))
             {
-                hitCell = true; // Å¸ÀÏ¸Ê¿¡ ´ê¾ÒÀ½
+                hitCell = true; // Å¸ï¿½Ï¸Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
                 Vector3 worldPosition = hit.point;
-                currentCell = tilemap.WorldToCell(worldPosition); // ÇöÀç ¼¿ ÁÂÇ¥
+                currentCell = tilemap.WorldToCell(worldPosition); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ç¥
             }
         }
 
-        // ¸¶¿ì½º°¡ Circle°ú Å¸ÀÏ(Cell) ¸ðµÎ¿¡ ´ê¾Æ ÀÖ´Â °æ¿ì
+        // ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ Circleï¿½ï¿½ Å¸ï¿½ï¿½(Cell) ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½
         if (hitCircle && hitCell)
         {
-            lastMouseCell = currentCell; // ¸¶Áö¸· À¯È¿ ¼¿ ¾÷µ¥ÀÌÆ®
-            //Debug.Log($"¸¶¿ì½º°¡ Circle°ú Cell¿¡ ´êÀ½. ÇöÀç ¼¿: {currentCell}");
+            lastMouseCell = currentCell; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¿ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+            //Debug.Log($"ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ Circleï¿½ï¿½ Cellï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½: {currentCell}");
             return currentCell;
         }
 
-        // ¸¶¿ì½º°¡ Circle¿¡¸¸ ´ê¾Æ ÀÖ´Â °æ¿ì
+        // ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ Circleï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½
         if (hitCircle && lastMouseCell.HasValue)
         {
-            //Debug.Log($"¸¶¿ì½º°¡ Circle¿¡¸¸ ´êÀ½. ¸¶Áö¸· À¯È¿ ¼¿ ¹ÝÈ¯: {lastMouseCell}");
-            return lastMouseCell; // ¸¶Áö¸· À¯È¿ ¼¿ À¯Áö
+            //Debug.Log($"ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ Circleï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¿ ï¿½ï¿½ ï¿½ï¿½È¯: {lastMouseCell}");
+            return lastMouseCell; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¿ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
 
-        // ¸¶¿ì½º°¡ »ç°Å¸® ¹ÛÀ¸·Î ³ª°¬À» °æ¿ì
-        Debug.Log("¸¶¿ì½º°¡ À¯È¿ÇÑ Å¸ÀÏ ¹üÀ§¸¦ ¹þ¾î³².");
+        // ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+        Debug.Log("ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ ï¿½ï¿½È¿ï¿½ï¿½ Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½î³².");
         return null;
     }
+    public void ShowSkillAnimation(string skillName, Vector3 Start, Vector3 End)
+    {
+        GameObject skillPrefab = Resources.Load<GameObject>($"Prefab/SkillEffect/{skillName}");
+        if (skillPrefab != null)
+        {
+            GameObject skillAnimationInstance = Instantiate(skillPrefab, Start, Quaternion.identity);
+            Debug.Log($"{skillName} ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½");
 
-    public void SetTilemap(Tilemap currentTilemap)
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®: ï¿½Ú·ï¿½Æ¾ È£ï¿½ï¿½
+            StartCoroutine(MoveSkillAnimation(skillAnimationInstance, Start, End, 0.3f)); 
+        }
+        else
+        {
+            Debug.Log($"{skillName} ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
+        }
+    }
+
+    private IEnumerator MoveSkillAnimation(GameObject skillInstance, Vector3 start, Vector3 end, float duration)
+    {
+        float elapsedTime = 0f;
+
+        // ï¿½Ìµï¿½ Ã³ï¿½ï¿½
+        while (elapsedTime < duration)
+        {
+            if (skillInstance == null) yield break; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾ ï¿½ï¿½ï¿½ï¿½
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / duration); // 0ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            skillInstance.transform.position = Vector3.Lerp(start, end, t); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            yield return null; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+        }
+
+        // ï¿½Ìµï¿½ ï¿½Ï·ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+        if (skillInstance != null)
+            Destroy(skillInstance);
+    }    public void SetTilemap(Tilemap currentTilemap)
     {
         tilemap = currentTilemap;
     }
