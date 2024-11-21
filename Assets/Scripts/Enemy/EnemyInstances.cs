@@ -25,6 +25,12 @@ public class EnemyInstances : MonoBehaviour
                 case "GiantRat":
                     enemyDict[data.Name] = new GiantRat(data);
                     break;
+                case "WeedSpirit":
+                    enemyDict[data.Name] = new WeedSpirit(data);
+                    break;
+                case "Goblin":
+                    enemyDict[data.Name] = new Goblin(data);
+                    break;
                 default:
                     Debug.LogWarning($"없는게 들어옴 {data.Name}");
                     break;

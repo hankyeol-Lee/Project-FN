@@ -30,5 +30,27 @@ public class EnemyList
         }
     }
 
-   
+    public class WeedSpirit : Enemy
+    {
+        public WeedSpirit(EnemyData data) : base(data)
+        {
+
+        }
+        public override void Attack(GameObject attacker)
+        {
+            enemySkillList[0].CastSkill(enemySkillList[0], attacker);
+        }
+    }
+
+    public class Goblin : Enemy
+    {
+        public Goblin(EnemyData data) : base(data)
+        {
+
+        }
+        public override void Attack(GameObject attacker)
+        {
+            enemySkillList[0].CastSkill(enemySkillList[0], attacker);
+        }
+    }
 }

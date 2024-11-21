@@ -21,6 +21,8 @@ public class SpawnEnemy : MonoBehaviour
         //         GameManager.Instance.EnemySpawner.GetComponent<SpawnEnemy>().
         SpawnEnemyAtCell("Slime", new Vector3(3.72f, -1.1f, 0));
         SpawnEnemyAtCell("GiantRat",new Vector3(0f,0f,0f));
+        SpawnEnemyAtCell("WeedSpirit", new Vector3(0f, 1f, 0f));
+        SpawnEnemyAtCell("Goblin", new Vector3(1f, 1f, 0f));
     }
     public void SpawnEnemyAtCell(string enemyName, Vector3 spawnPos)
     {
