@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.VFX;
@@ -18,7 +19,7 @@ public abstract class ActiveSkill // 사용할 스킬을 지정한
     internal int playerCost;
     internal int distance; // 사거리. 스킬 키를 누르면 표시되는 스킬 원형 모양의 반지름.
     internal int skillcelldist; // 스킬 각각의 사거리. 예를 들어서, 사거리가 1이면 중앙 한 셀인거고 사거리가 2이면 중앙 셀을 기준으로 2칸까지의 셀 
-
+    internal Sprite skillIcon;
     internal bool isTargetCell; // 셀지정 O, X의 boolean
     internal skillType skilltype; // 스킬의 type을 지정하는거.
     internal static Tile newTile;
@@ -55,6 +56,7 @@ public abstract class ActiveSkill // 사용할 스킬을 지정한
             newTile = data.tile;
             skillRange = new List<Vector3Int>(); // 리스트 초기화
             skillcelldist = data.skillcelldist;
+            skillIcon = data.skillIcon;
     }
         catch (NullReferenceException)
         {
