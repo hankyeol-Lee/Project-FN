@@ -17,12 +17,13 @@ public class EnemyStateScript : MonoBehaviour
 
     public ActiveSkill thisSkill;
 
-    private void Start()
+    private void OnEnable()
     {
         enemyobject = transform.parent.gameObject;
         playertransform = GameManager.Instance.player.GetComponent<Transform>();
         tilemap = GameManager.Instance.tilemap;
-        if(EnemyInstances.enemyDict.TryGetValue(enemyobject.name,out Enemy enemy))
+        string cleanedName = enemyobject.name.Replace("(Clone)", "").Trim();
+        if (EnemyInstances.enemyDict.TryGetValue(cleanedName,out Enemy enemy))
         {
             this.enemy = enemy;
             thisSkill = enemy.enemySkillList[0];
