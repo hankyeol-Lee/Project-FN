@@ -66,20 +66,19 @@ public class SkillSystem : MonoBehaviour
                 {
                     // 대상 지정 스킬
                     thisSkill.ShowRange(checkMouseCell.Value);
-
                     if (Input.GetMouseButton(0))
                     {
                         Debug.Log($"대상 지정 스킬 사용: {thisSkill}");
-                        //Debug.Log(skillTargetObject.gameObject.name);
+                        Debug.Log(skillTargetObject.gameObject.name);
                         //Debug.Log(UI_EnergyBar.Instance.GetPlayerEnergy());
                         if (thisSkill.playerCost <= UI_EnergyBar.Instance.GetPlayerEnergy()) // 스킬코스트가 플레이어 현재의 에너지보다 크다면 
                         {
                             UI_EnergyBar.Instance.DecreaseHealth(thisSkill.playerCost);
-                            thisSkill.CastSkill(thisSkill, player, checkMouseCell.Value);
+                            thisSkill.CastSkill(thisSkill, player, skillTargetObject);
                             skillRange.SetActive(false);
                         }
                         //코스트 없을 경우 생각해야함
-                        skillRange.SetActive(false);
+                        //skillRange.SetActive(false);
                     }
                 }
             }

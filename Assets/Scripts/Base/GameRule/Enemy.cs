@@ -8,7 +8,7 @@ namespace Enemyspace // Enemyspace로 Enemy클래스에 접근 가능하도록 제어.
     {
         // Enemy Class 안에 필요한 속성, 메소드 추가
         //TODO : 
-        protected float HP;
+        public float HP;
         protected float AD;
         protected float AP;
         protected int AR; // 물리방어력. 
@@ -55,9 +55,10 @@ namespace Enemyspace // Enemyspace로 Enemy클래스에 접근 가능하도록 제어.
             }
             if (damage <= 0.0f) { damage = 0.0f; }
             HP -= damage;
+            Debug.Log(damage);
             FloatingTextManager floatingtextmanagerscript = GameManager.Instance.floatingtextmanager.GetComponent<FloatingTextManager>();
-            floatingtextmanagerscript.ShowFloatingText(position.transform.position, damage);
-                    
+            //floatingtextmanagerscript.ShowFloatingText(position.transform.position, damage);
+            EnemyHPBar.Instance.UpdateEnemyDamageBar();
             if (HP < 0)
             {
                 Die();

@@ -14,8 +14,9 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
             //해야할 것 : 스킬 타겟 오브젝트의 instance를 dictionary에서 찾아서 
             //initdamage를 계산 후 
             //그 오브젝트(에너미)의 GetDamage함수를 사용.
-
+            Debug.Log("이거아냐?");
             EnemyInstances.enemyDict.TryGetValue(skillTarget.name, out Enemy enemy);
+            Debug.Log(skillTarget.name);
             float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, GameManager.Instance.player.GetComponent<PlayerStatus>().returnADAP(useSkill.skilltype));
             enemy.TakeDamage(skillTarget.transform,initdamage,useSkill.skilltype);
         }
