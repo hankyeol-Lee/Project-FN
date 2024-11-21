@@ -13,14 +13,20 @@ public class SkillSystem : MonoBehaviour
 
     private Vector3Int? lastMouseCell = null; // 마지막으로 머물렀던 셀 좌표 저장
 
+    public static SkillSystem Instance;
 
-    private void Start()
+    private void Awake()
     {
+        if (Instance  == null)
+        {
+            Instance = this;
+        }
         playerskill = player.GetComponent<PlayerSkill>(); // playerskill.cs를 가져옴
         if (playerskill != null) //nullcheck
         {
             skills = playerskill.playerSkills; // 배열 자체를 직접 가져오기
         }
+        
     }
     private void Update()
     {
@@ -144,7 +150,10 @@ public class SkillSystem : MonoBehaviour
         return null;
     }
 
-
+    public void SetTilemap(Tilemap currentTilemap)
+    {
+        tilemap = currentTilemap;
+    }
 
 }
 

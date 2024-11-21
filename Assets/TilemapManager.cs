@@ -40,5 +40,6 @@ public class TilemapManager : MonoBehaviour
         currentTilemap.transform.position = new Vector3(0,0,0);
         GameManager.Instance.SetTilemap(map.GetComponent<Tilemap>());
         GameManager_Move.Instance.SetTilemap(map.GetComponent<Tilemap>()); 
+        SkillSystem.Instance.SetTilemap(map.GetComponent<Tilemap>());
     }
 }
