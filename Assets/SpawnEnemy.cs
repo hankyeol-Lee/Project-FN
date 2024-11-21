@@ -12,16 +12,15 @@ public class SpawnEnemy : MonoBehaviour
     //Enemy GameObject의 이름은 EnemyInstances 딕셔너리의 key와 완벽하게 동일해야 함.
     //각 에너미 GameObject 아래에는 prefab EnemyState가 지정되어있음.
 
-    //자 그러면 Assets/Resources/Prefab/Enemy 폴더 안에 있는 프리팹 Slime 을 동적으로 생성하는 함수를 만들어줘 다른 이름의 프리팹을 생성할 때도 사용 가능성 있는 함수를 
     
     // 현재 어떤 에너미가 생성되어있는지를 체크하는 딕셔너리
     public Dictionary<string, GameObject> enemyInstances = new Dictionary<string, GameObject>();
-    public GameObject enemyStatePrefab; // EnemyState 프리팹을 Inspector에 설정
 
     public void Start()
     {
         //         GameManager.Instance.EnemySpawner.GetComponent<SpawnEnemy>().
         SpawnEnemyAtCell("Slime", new Vector3(3.72f, -1.1f, 0));
+        SpawnEnemyAtCell("GiantRat",new Vector3(0f,0f,0f));
     }
     public void SpawnEnemyAtCell(string enemyName, Vector3 spawnPos)
     {
@@ -39,9 +38,7 @@ public class SpawnEnemy : MonoBehaviour
 
         if (enemyPrefab != null )
         {
-            Debug.Log(enemyPrefab.name);
             GameObject enemyInstance = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
-            Debug.Log(enemyInstance.name);
             if (!enemyInstances.ContainsKey(enemyName))
             {
                 enemyInstances.Add(enemyName, enemyInstance); // 딕셔너리에 추가
@@ -52,11 +49,11 @@ public class SpawnEnemy : MonoBehaviour
                 Debug.LogWarning("이미 스폰됨");
             }
             //자식객체로 EnemyStateInstance 생성
-            if (enemyStatePrefab != null)
-            {
-                GameObject enemyStateInstance = Instantiate(enemyStatePrefab, enemyInstance.transform);
-                enemyStateInstance.transform.localPosition = Vector3.zero; // 부모의 중앙에 위치
-            }
+            GameObject enemyStatePrefab = Resources.Load<GameObject>($"Prefab/EnemyState");
+            GameObject enemyStateInstance = Instantiate(enemyStatePrefab, enemyInstance.transform);
+            enemyStateInstance.transform.localPosition = Vector3.zero; // 부모의 중앙에 위치
+
+
 
 
         }
