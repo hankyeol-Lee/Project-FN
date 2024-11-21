@@ -266,10 +266,15 @@ MonoBehaviour:
   tilemapParent: {fileID: 1512204299}
   tilemapPrefabs:
   - {fileID: 5096287231784983871, guid: 37f0bda78f1fa4345ae2941c2018523f, type: 3}
-  - {fileID: 1977018137549753031, guid: 3d775dbd5cd684e4bb623ea478e33187, type: 3}
+  - {fileID: 2445023480303241116, guid: 3d775dbd5cd684e4bb623ea478e33187, type: 3}
   - {fileID: 1996028477430820712, guid: b40c3d27e6d3441388c012f99c40e626, type: 3}
   - {fileID: 7046725641736057105, guid: 818aca0c1a5b74df7aea4ee62ef23b50, type: 3}
   - {fileID: 2871987215557163019, guid: b8bd19f73b01b41b7be8a4dd3605aa24, type: 3}
+  - {fileID: 3854761060722170080, guid: 39682862ee5024191a887cb74a9acf2e, type: 3}
+  - {fileID: 3217529861759089320, guid: 9f4a130c8c5074ff6ac249da260d6c0c, type: 3}
+  - {fileID: 4735394931642687006, guid: 5791b65dd830a4ea2ac6498587c86018, type: 3}
+  - {fileID: 588279125589952571, guid: 5bc6c96921401418b83540220844b687, type: 3}
+  - {fileID: 3565106168855836174, guid: 7f109a9a3ff374e53be5bf177c78ead3, type: 3}
 --- !u!1 &458961136 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6553217508181066872, guid: f7e2e8b4c06760d43b2e9db186b6a86b, type: 3}
@@ -1176,7 +1181,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1512204297}
   m_Enabled: 1
-  m_CellSize: {x: 0.8788888, y: 1, z: 1}
+  m_CellSize: {x: 0.8659766, y: 1, z: 1}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 1
   m_CellSwizzle: 2
@@ -1381,11 +1386,11 @@ PrefabInstance:
       objectReference: {fileID: 1788039896667572697, guid: da662a2f9d586044890162846a35c26b, type: 3}
     - target: {fileID: 8619383122048026374, guid: f7e2e8b4c06760d43b2e9db186b6a86b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.67
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8619383122048026374, guid: f7e2e8b4c06760d43b2e9db186b6a86b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.43
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8619383122048026374, guid: f7e2e8b4c06760d43b2e9db186b6a86b, type: 3}
       propertyPath: m_LocalPosition.z
