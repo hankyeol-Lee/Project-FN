@@ -18,7 +18,7 @@ MonoBehaviour:
   enemyCastTime: 0
   playerCastTime: 1
   coolDown: 0
-  playerCost: 1
+  playerCost: 3
   distance: 3
   isTargetCell: 0
   skilltype: 1
