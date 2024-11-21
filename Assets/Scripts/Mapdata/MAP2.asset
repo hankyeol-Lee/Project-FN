@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6389a2dfb662c405a94e96534131155d, type: 3}
   m_Name: MAP2
   m_EditorClassIdentifier: 
-  mapName: 
-  tilemapPrefab: {fileID: 0}
+  mapName: MAP2
+  tilemapPrefab: {fileID: 5093558104135167226, guid: b70c3a0fbd39b481fbfca62c2efe3ca3, type: 3}
