@@ -5,30 +5,32 @@ using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour 
 {
-    public static GameManager Instance { get; private set; } //½Ì±ÛÅæ ÆÐÅÏ »ç¿ë, Àü¿ªÀ¸·Î Á¢±ÙÇÒ ¿ÀºêÁ§Æ®µé Ãß°¡
-    public GameManager_Move gameManagerMove; // GameManager_Move ÂüÁ¶
+    public static GameManager Instance { get; private set; } //ï¿½Ì±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ß°ï¿½
+    public GameManager_Move gameManagerMove; // GameManager_Move ï¿½ï¿½ï¿½ï¿½
 
-    public GameObject player; // ÇÃ·¹ÀÌ¾î °´Ã¼
-    public GameObject floatingtextmanager; // µ¥¹ÌÁö ÅØ½ºÆ® ¶ç¿ì´Â °´Ã¼µµ ½Ì±ÛÅæÀ¸·Î ÇØ¾ß ÇÔ.
+    public GameObject player; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ã¼
+    public GameObject floatingtextmanager; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Ì±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø¾ï¿½ ï¿½ï¿½.
     public GameObject EnemySpawner;
 
     public Tilemap tilemap; // 
-
+    public Grid mygrid;
     public skillHexRadius skillHexRadius;
 
+    void Start()
+    {      
+    }
     void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // ¾ÀÀÌ º¯°æµÇ¾îµµ ÆÄ±«µÇÁö ¾Êµµ·Ï ¼³Á¤
+            DontDestroyOnLoad(gameObject); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾îµµ ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
         else
         {
-            Destroy(gameObject); // Áßº¹µÈ ÀÎ½ºÅÏ½º°¡ ÀÖ´Ù¸é ÆÄ±«
+            Destroy(gameObject); // ï¿½ßºï¿½ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½Ä±ï¿½
         }
-
-
+        
         SceneManager.LoadScene("BattleUIScene",LoadSceneMode.Additive);
        
     }
@@ -50,6 +52,10 @@ public class GameManager : MonoBehaviour
     public float DamageSystem(float skillcoef,ActiveSkill.skillType skilltype,float AttackPoint)
     {
         return skillcoef * AttackPoint;
+    }
+    public void SetTilemap(Tilemap currentTilemap)
+    {
+        tilemap = currentTilemap;
     }
     
 }

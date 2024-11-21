@@ -11,23 +11,36 @@ using System.Linq;
 
 public class GameManager_Move : MonoBehaviour
 {
+    public static GameManager_Move Instance;
     public string cellTag = "Cell";
     public Tilemap tilemap;
     //public TileBase tile;
     public GameObject player;
 
     private Vector3Int targetCell;
-    private Vector3Int currentTargetCell; // ÇöÀç ÇÃ·¹ÀÌ¾î ÀÌµ¿ÀÇ ¸ñÀû Å¸ÀÏ
-    private bool is_P_Moving; // ÇÃ·¹ÀÌ¾î°¡ Å¸ÀÏ ÀÌµ¿ ÁßÀÎÁö ÆÇº°
-    public TileBase highlightTile; // °­Á¶ÇÒ Å¸ÀÏ
+    private Vector3Int currentTargetCell; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
+    private bool is_P_Moving; // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ Å¸ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Çºï¿½
+    public TileBase highlightTile; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
     public Vector3Int playerCellPos;
-
+    public Grid mygrid;
     Animator playeranimator;
 
+    private void Awake(){
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾îµµ ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        }
+        else
+        {
+            Destroy(gameObject); // ï¿½ßºï¿½ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½Ä±ï¿½
+        }
+    }
     private void Start()
     {
         is_P_Moving = false;
         playeranimator = player.GetComponent<Animator>();
+
     }
     private void Update()
     {
@@ -49,11 +62,11 @@ public class GameManager_Move : MonoBehaviour
         foreach (Hex neighbor in neighbors)
         {
             Vector3Int neighborPos = new Vector3Int(neighbor.q, neighbor.r, 0);
-            tilemap.SetTile(neighborPos, highlightTile); // ÀÌ¿ô ¼¿¿¡ °­Á¶ Å¸ÀÏ ¼³Á¤
+            tilemap.SetTile(neighborPos, highlightTile); // ï¿½Ì¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
     }
 
-    private void GetRayCell() // ¿ìÅ¬¸¯À» ÇÏ¸é, ¸¶¿ì½º À§Ä¡¿¡ ÀÖ´Â Å¸ÀÏÀ» °¡Á®¿À´Â ÇÔ¼ö
+    private void GetRayCell() // ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¸ï¿½, ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ö´ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     {
         if (Input.GetMouseButtonDown(1))
         {
@@ -72,13 +85,13 @@ public class GameManager_Move : MonoBehaviour
                 //List<Vector3Int> playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell, obstacles);
                 if (! is_P_Moving)
                 {
-                    playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell, obstacles); // ÀÌµ¿ Áß ¾Æ´Ï¶ó¸é ÇöÀç Å¸ÀÏºÎÅÍ playerPath ½ÃÀÛ
+                    playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell, obstacles); // ï¿½Ìµï¿½ ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½Ïºï¿½ï¿½ï¿½ playerPath ï¿½ï¿½ï¿½ï¿½
                     currentTargetCell = targetCell;
                     is_P_Moving = true;
                 }
                 else
                 {
-                    playerPath = HexClass.HexPathfinding.FindPath(currentTargetCell, targetCell, obstacles); // ÀÌµ¿ Áß ÀÌ¶ó¸é ÇöÀç ÇâÇÏ´Â ¸ñÀû Å¸ÀÏºÎÅÍ playerPath ½ÃÀÛ
+                    playerPath = HexClass.HexPathfinding.FindPath(currentTargetCell, targetCell, obstacles); // ï¿½Ìµï¿½ ï¿½ï¿½ ï¿½Ì¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½Ïºï¿½ï¿½ï¿½ playerPath ï¿½ï¿½ï¿½ï¿½
           
                 }
                 
@@ -90,11 +103,11 @@ public class GameManager_Move : MonoBehaviour
     }
 
 
-    Vector3Int? CheckCell(RaycastHit2D[] hit) // ray hit¿¡¼­ cell¸¸ °É·¯³»´Â ÇÔ¼ö. cellÀº ´Ü ÇÏ³ª¿©¾ß ÇÔ.
+    Vector3Int? CheckCell(RaycastHit2D[] hit) // ray hitï¿½ï¿½ï¿½ï¿½ cellï¿½ï¿½ ï¿½É·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½. cellï¿½ï¿½ ï¿½ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½.
     {
         foreach (var cell in hit)
         {
-            if (cell.collider.CompareTag(cellTag)) // cellTag¿Í ÀÏÄ¡ÇÏ¸é
+            if (cell.collider.CompareTag(cellTag)) // cellTagï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ï¸ï¿½
             {
                 Vector3 worldPosition = cell.point;
                 Vector3Int cellPosition = tilemap.WorldToCell(worldPosition);
@@ -116,8 +129,8 @@ public class GameManager_Move : MonoBehaviour
         foreach (var cell in path)
         {
             playerCellPos = GetPlayerPos();
-            Vector3 startWorldPos = tilemap.CellToWorld(playerCellPos); // ÇÃ·¹ÀÌ¾î°¡ ÀÖ´Â ¼¿ÀÇ Á¤Áß¾Ó ÁÂÇ¥¸¦ °¡Á®¿È. 
-            Vector3 endWorldPos = tilemap.CellToWorld(cell); // cell. Áï ´ÙÀ½ ¼¿ÀÇ Áß¾ÓÁÂÇ¥¸¦ °¡Á®¿È.
+            Vector3 startWorldPos = tilemap.CellToWorld(playerCellPos); // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß¾ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. 
+            Vector3 endWorldPos = tilemap.CellToWorld(cell); // cell. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß¾ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
             //Debug.DrawLine(startWorldPos, endWorldPos);
             yield return MoveCell(player,startWorldPos, endWorldPos);
         }
@@ -126,7 +139,7 @@ public class GameManager_Move : MonoBehaviour
     }
 
 
-    public IEnumerator MoveCell(GameObject mover, Vector3 startWorldPos, Vector3 endWorldPos) // MoveCell À» ¼öÁ¤ÇØ¼­, ÇÃ·¹ÀÌ¾î ¸»°í ´Ù¸¥ °´Ã¼µµ ¿òÁ÷ÀÏ ¼ö ÀÖµµ·Ï.
+    public IEnumerator MoveCell(GameObject mover, Vector3 startWorldPos, Vector3 endWorldPos) // MoveCell ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½, ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½.
     {
         float elapsedTime = 0f;
         float duration = 0.5f;
@@ -139,7 +152,11 @@ public class GameManager_Move : MonoBehaviour
             yield return null; 
         }
 
-        // Á¤È®È÷ ¸ñÇ¥ À§Ä¡·Î ¼³Á¤
+        // ï¿½ï¿½È®ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         mover.transform.position = endWorldPos;
+    }
+    public void SetTilemap(Tilemap currentTilemap)
+    {
+        tilemap = currentTilemap;
     }
 }
