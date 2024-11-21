@@ -734,7 +734,6 @@ GameObject:
   - component: {fileID: 1112719826}
   - component: {fileID: 1112719829}
   - component: {fileID: 1112719828}
-  - component: {fileID: 1112719827}
   m_Layer: 5
   m_Name: PlayerHPBar
   m_TagString: Untagged
@@ -761,18 +760,6 @@ RectTransform:
   m_AnchoredPosition: {x: -365.1, y: 458.27997}
   m_SizeDelta: {x: 800, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1112719827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1112719825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbca0069321be4685b804f1ea00228fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1112719828
 MonoBehaviour:
   m_ObjectHideFlags: 0
