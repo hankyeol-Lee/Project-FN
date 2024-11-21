@@ -24,6 +24,7 @@ public class PlayerSkill : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             AddSkill("MagicBullet",0);
+
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -45,6 +46,7 @@ public class PlayerSkill : MonoBehaviour
             {
                 // 빈 슬롯이면 스킬을 할당
                 playerSkills[slotnum] = skillToAdd;
+                SkillUIBase.Instance.setSkilIcon(slotnum,skillToAdd);
                 Debug.Log($"{skillToAdd.skillName} 스킬이 {slotnum + 1}번 슬롯에 할당되었습니다.");
             }
         }
