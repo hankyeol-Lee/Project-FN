@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -57,6 +59,7 @@ public class SkillSystem : MonoBehaviour
                         if (thisSkill.playerCost <= UI_EnergyBar.Instance.GetPlayerEnergy()) // 스킬코스트가 플레이어 현재의 에너지보다 크다면 
                         {
                             UI_EnergyBar.Instance.DecreaseHealth(thisSkill.playerCost);
+                            ShowSkillAnimation(thisSkill.skillName, player.transform.position, checkMouseCell.Value);
                             thisSkill.CastSkill(thisSkill, player, checkMouseCell.Value);
                             skillRange.SetActive(false);
                         }
@@ -74,6 +77,7 @@ public class SkillSystem : MonoBehaviour
                         if (thisSkill.playerCost <= UI_EnergyBar.Instance.GetPlayerEnergy()) // 스킬코스트가 플레이어 현재의 에너지보다 크다면 
                         {
                             UI_EnergyBar.Instance.DecreaseHealth(thisSkill.playerCost);
+                            ShowSkillAnimation(thisSkill.skillName, player.transform.position, skillTargetObject.gameObject.transform.position);
                             thisSkill.CastSkill(thisSkill, player, skillTargetObject);
                             skillRange.SetActive(false);
                         }
@@ -143,8 +147,41 @@ public class SkillSystem : MonoBehaviour
         Debug.Log("마우스가 유효한 타일 범위를 벗어남.");
         return null;
     }
+    public void ShowSkillAnimation(string skillName, Vector3 Start, Vector3 End)
+    {
+        GameObject skillPrefab = Resources.Load<GameObject>($"Prefab/SkillEffect/{skillName}");
+        if (skillPrefab != null)
+        {
+            GameObject skillAnimationInstance = Instantiate(skillPrefab, Start, Quaternion.identity);
+            Debug.Log($"{skillName} 스킬 프리팹 생성 완료");
 
+            // 선형 보간 파트: 코루틴 호출
+            StartCoroutine(MoveSkillAnimation(skillAnimationInstance, Start, End, 0.3f)); 
+        }
+        else
+        {
+            Debug.Log($"{skillName} 스킬 프리팹이 없습니다");
+        }
+    }
 
+    private IEnumerator MoveSkillAnimation(GameObject skillInstance, Vector3 start, Vector3 end, float duration)
+    {
+        float elapsedTime = 0f;
+
+        // 이동 처리
+        while (elapsedTime < duration)
+        {
+            if (skillInstance == null) yield break; // 오브젝트가 삭제된 경우 코루틴 종료
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / duration); // 0에서 1까지의 값을 유지
+            skillInstance.transform.position = Vector3.Lerp(start, end, t); // 선형 보간
+            yield return null; // 다음 프레임까지 대기
+        }
+
+        // 이동 완료 후 오브젝트 삭제
+        if (skillInstance != null)
+            Destroy(skillInstance);
+    }
 
 }
 
