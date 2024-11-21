@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class TilemapManager : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class TilemapManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LoadTilemap(0);
+        LoadTilemap(1);
     }
 
     // Update is called once per frame
@@ -34,6 +35,10 @@ public class TilemapManager : MonoBehaviour
         }
 
         // 새로운 타일맵 로드
-        currentTilemap = Instantiate(tilemapPrefabs[mapIndex], tilemapParent);
+        GameObject map = Instantiate(tilemapPrefabs[mapIndex], tilemapParent);
+        currentTilemap = map;
+        currentTilemap.transform.position = new Vector3(0,0,0);
+        GameManager.Instance.SetTilemap(map.GetComponent<Tilemap>());
+        GameManager_Move.Instance.SetTilemap(map.GetComponent<Tilemap>()); 
     }
 }
