@@ -27,7 +27,6 @@ public class EnemyStateScript : MonoBehaviour
         if (EnemyInstances.enemyDict.TryGetValue(cleanedName,out Enemy enemy))
         {
             this.enemy = enemy;
-            Debug.Log(this.enemy);
             thisSkill = enemy.enemySkillList[0];
         }
         else
@@ -73,8 +72,7 @@ public class EnemyStateScript : MonoBehaviour
 
                 case EnemyState.Attack:
                     yield return new WaitForSeconds(1f);
-                    Debug.Log("공격함");
-                    Debug.Log(enemyobject);
+
                     enemy.Attack(enemyobject);
                     enemyState = EnemyState.Wait;
                     // Attack 상태에서의 로직 (추가적인 조건에 따라 구현)

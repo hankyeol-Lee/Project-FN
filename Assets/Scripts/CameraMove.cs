@@ -18,7 +18,7 @@ public class CameraMove : MonoBehaviour
     {
         if (isAnchored) 
         { 
-            transform.position = new Vector3(player.transform.position.x , player.transform.position.y + (float)dy,transform.position.z); 
+            transform.position = new Vector3(player.transform.position.x , player.transform.position.y,transform.position.z); 
         }
 
         /*
@@ -36,7 +36,7 @@ public class CameraMove : MonoBehaviour
         if(miniMap_UI_Touch.is_MiniMap_Touch) // 미니맵 상호작용
         {
             isAnchored = false; // 미니맵 카메라UI 위치로 수정해야 할 듯 // 높이 변화에 따른 delta값이 이게 아님 수정해야함
-            transform.position = new Vector3(player.transform.position.x + miniMap_UI_Touch.delta_MiniMap_POS.x / 60, player.transform.position.y + miniMap_UI_Touch.delta_MiniMap_POS.y / 60 + (float)dy, transform.position.z);
+            transform.position = new Vector3(player.transform.position.x + miniMap_UI_Touch.delta_MiniMap_POS.x / 60, player.transform.position.y + miniMap_UI_Touch.delta_MiniMap_POS.y / 60 , transform.position.z);
         }else
         {
             isAnchored = true;

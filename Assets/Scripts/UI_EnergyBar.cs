@@ -64,7 +64,7 @@ public class UI_EnergyBar : MonoBehaviour
             currentHealth -= cost;
             UpdateHealthBar();
             UpdateHealthText();
-            Debug.Log("Q 키가 눌려서 체력이 한 칸 줄었습니다. 현재 체력: " + currentHealth);
+            //Debug.Log("Q 키가 눌려서 체력이 한 칸 줄었습니다. 현재 체력: " + currentHealth);
 
             // 체력 감소 후 일정 시간 동안 Q 입력을 비활성화
             canDecreaseHealth = false;

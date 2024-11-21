@@ -52,7 +52,7 @@ public class SkillSystem : MonoBehaviour
                     if (Input.GetMouseButton(0))
                     {
                         //Debug.Log($"스킬 사용 위치: {checkMouseCell.Value}");
-                        Debug.Log(UI_EnergyBar.Instance.GetPlayerEnergy());
+                        //Debug.Log(UI_EnergyBar.Instance.GetPlayerEnergy());
 
                         if (thisSkill.playerCost <= UI_EnergyBar.Instance.GetPlayerEnergy()) // 스킬코스트가 플레이어 현재의 에너지보다 크다면 
                         {
@@ -71,20 +71,17 @@ public class SkillSystem : MonoBehaviour
                     {
                         Debug.Log($"대상 지정 스킬 사용: {thisSkill}");
                         //Debug.Log(skillTargetObject.gameObject.name);
-                        Debug.Log(UI_EnergyBar.Instance.GetPlayerEnergy());
+                        //Debug.Log(UI_EnergyBar.Instance.GetPlayerEnergy());
                         if (thisSkill.playerCost <= UI_EnergyBar.Instance.GetPlayerEnergy()) // 스킬코스트가 플레이어 현재의 에너지보다 크다면 
                         {
                             UI_EnergyBar.Instance.DecreaseHealth(thisSkill.playerCost);
                             thisSkill.CastSkill(thisSkill, player, checkMouseCell.Value);
                             skillRange.SetActive(false);
                         }
+                        //코스트 없을 경우 생각해야함
                         skillRange.SetActive(false);
                     }
                 }
-            }
-            else
-            {
-                Debug.Log("스킬 사용 가능한 타일이 없음.");
             }
         }
     }
