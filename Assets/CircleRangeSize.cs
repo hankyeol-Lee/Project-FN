@@ -21,6 +21,4 @@ public class CircleRangeSize : MonoBehaviour
         float diameter = range*hexsize;
         this.transform.localScale = new Vector3(diameter*currentScale.x, diameter*currentScale.y, diameter*currentScale.z); 
     }
-    
-    
 }

@@ -1380,6 +1380,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6798127971703129131, guid: f7e2e8b4c06760d43b2e9db186b6a86b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6861880495430644485, guid: f7e2e8b4c06760d43b2e9db186b6a86b, type: 3}
       propertyPath: floatingtextmanager
       value: 
