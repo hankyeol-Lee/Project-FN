@@ -27,7 +27,7 @@ public class PlayerSkill : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-
+            AddSkill("Flame", 1);
         }
     }
 

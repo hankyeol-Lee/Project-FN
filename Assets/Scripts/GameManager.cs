@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject player; // 플레이어 객체
     public GameObject floatingtextmanager; // 데미지 텍스트 띄우는 객체도 싱글톤으로 해야 함.
+    public GameObject EnemySpawner;
 
     public Tilemap tilemap; // 
 

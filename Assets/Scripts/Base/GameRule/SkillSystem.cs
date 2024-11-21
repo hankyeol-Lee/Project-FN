@@ -29,6 +29,11 @@ public class SkillSystem : MonoBehaviour
             ShowSkillRange(skills[0]);
             thisSkill = skills[0];
         }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            ShowSkillRange(skills[1]);
+            thisSkill = skills[1];
+        }
 
         if (skillRange.activeSelf == true)
         {
@@ -41,14 +46,20 @@ public class SkillSystem : MonoBehaviour
                 if (thisSkill.isTargetCell)
                 {
                     thisSkill.ShowRange(checkMouseCell.Value);
-                    Debug.Log($"스킬을 사용할 위치: {checkMouseCell.Value}");
+                    //Debug.Log($"스킬을 사용할 위치: {checkMouseCell.Value}");
 
                     // 좌클릭 감지
                     if (Input.GetMouseButton(0))
                     {
-                        Debug.Log($"스킬 사용 위치: {checkMouseCell.Value}");
-                        thisSkill.CastSkill(thisSkill, player, checkMouseCell.Value);
-                        skillRange.SetActive(false);
+                        //Debug.Log($"스킬 사용 위치: {checkMouseCell.Value}");
+                        Debug.Log(UI_EnergyBar.Instance.GetPlayerEnergy());
+
+                        if (thisSkill.playerCost <= UI_EnergyBar.Instance.GetPlayerEnergy()) // 스킬코스트가 플레이어 현재의 에너지보다 크다면 
+                        {
+                            UI_EnergyBar.Instance.DecreaseHealth(thisSkill.playerCost);
+                            thisSkill.CastSkill(thisSkill, player, checkMouseCell.Value);
+                            skillRange.SetActive(false);
+                        }
                     }
                 }
                 else
@@ -59,8 +70,14 @@ public class SkillSystem : MonoBehaviour
                     if (Input.GetMouseButton(0))
                     {
                         Debug.Log($"대상 지정 스킬 사용: {thisSkill}");
-                        Debug.Log(skillTargetObject.gameObject.name);
-                        thisSkill.CastSkill(thisSkill, player, skillTargetObject);
+                        //Debug.Log(skillTargetObject.gameObject.name);
+                        Debug.Log(UI_EnergyBar.Instance.GetPlayerEnergy());
+                        if (thisSkill.playerCost <= UI_EnergyBar.Instance.GetPlayerEnergy()) // 스킬코스트가 플레이어 현재의 에너지보다 크다면 
+                        {
+                            UI_EnergyBar.Instance.DecreaseHealth(thisSkill.playerCost);
+                            thisSkill.CastSkill(thisSkill, player, checkMouseCell.Value);
+                            skillRange.SetActive(false);
+                        }
                         skillRange.SetActive(false);
                     }
                 }
