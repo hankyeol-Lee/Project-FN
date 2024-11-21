@@ -18,7 +18,7 @@ public class CameraMove : MonoBehaviour
     {
         if (isAnchored) 
         { 
-            transform.position = new Vector3(player.transform.position.x , player.transform.position.y + (float)dy,transform.position.z); 
+            transform.position = new Vector3(player.transform.position.x , player.transform.position.y,transform.position.z); 
         }
 
         /*
