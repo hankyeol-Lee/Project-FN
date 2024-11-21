@@ -5,8 +5,9 @@ public class RelicManager : MonoBehaviour
 {
     public static RelicManager Instance;
 
-    private List<Relic> activeRelics = new List<Relic>();
+    public List<Relic> activeRelics = new List<Relic>();
     private Dictionary<string, Relic> allRelics = new Dictionary<string, Relic>();
+    public Dictionary<string, int> activeRelicsDIct = new Dictionary<string, int>();
 
     private void Awake()
     {
@@ -48,30 +49,40 @@ public class RelicManager : MonoBehaviour
     private void RegisterRelics()
     {
         /*
-        // À¯¹° µî·Ï ¿¹Á¦
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         allRelics.Add("Cost Relic", new Relic(
             "Cost Relic",
             "Increases cost regeneration speed when cost is 3 or higher.",
-            condition => condition.CurrentCost >= 3, // Á¶°Ç
+            condition => condition.CurrentCost >= 3, // ï¿½ï¿½ï¿½ï¿½
             condition =>
             {
                 Debug.Log("Cost Relic Effect Activated: Cost regeneration speed increased!");
-                // ½ÇÁ¦ È¿°ú ·ÎÁ÷
+                // ï¿½ï¿½ï¿½ï¿½ È¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             }
         ));
+
 
         allRelics.Add("Health Relic", new Relic(
-            "Health Relic",                                                 //ÀÌ¸§
-            "Heals the player if health drops below 50.",                   / ¼³¸í
-            condition => condition.PlayerHealth < 50,                       // Á¶°Ç
-            condition =>                                                    // È¿°ú
+            "Health Relic",                                                 //ï¿½Ì¸ï¿½
+            "Heals the player if health drops below 50.",                   / ï¿½ï¿½ï¿½ï¿½
+            condition => condition.PlayerHealth < 50,                       // ï¿½ï¿½ï¿½ï¿½
+            condition =>                                                    // È¿ï¿½ï¿½
             {
                 Debug.Log("Health Relic Effect Activated: Player healed!");
-                condition.PlayerHealth += 10; // È¿°ú ¿¹Á¦
+                condition.PlayerHealth += 10; // È¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             }
         ));
 
-        // Ãß°¡ À¯¹° µî·Ï °¡´É
+        // ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         */
+        allRelics.Add("Old Helmet", new Relic(
+            "Old Helmet",
+            "Ã¼ï¿½ï¿½ +10",
+            condition => true, // ï¿½ï¿½ï¿½ï¿½
+            condition =>
+            {
+                condition.P_Health += 10;  //È¿ï¿½ï¿½
+            }
+        ));
     }
 }

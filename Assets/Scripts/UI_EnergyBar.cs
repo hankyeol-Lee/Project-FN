@@ -11,7 +11,7 @@ public class UI_EnergyBar : MonoBehaviour
     public Text healthText;           // 체력을 표시할 Text 컴포넌트
     public float fillSpeed = 1f;      // 1초에 한 칸씩 차오르는 속도
     private int maxHealth = 10;       // 최대 체력 칸 수
-    private int currentHealth;        // 현재 체력 칸 수
+    public int currentHealth;        // 현재 체력 칸 수
     private bool canDecreaseHealth = true; // 체력 감소 가능 여부
     public static UI_EnergyBar Instance { get; private set; }
     private void Awake()

@@ -6,19 +6,51 @@ public class GameCondition : MonoBehaviour
     public int CurrentCost { get; set; }
     public int PlayerHealth { get; set; }
     */
+    public GameObject Player;
+    public float P_Health;
+    public float P_AD;
+    public float P_AP;
+    public float P_AR;
+    public float P_MR;
+    public int Cur_Cost;
+    public float Cost_Fill;
+
+
+
+    private void Start()
+    {
+        P_Health = Player.GetComponent<PlayerStatus>().playerHP;
+        P_AD = Player.GetComponent<PlayerStatus>().playerAD;
+        P_AP = Player.GetComponent<PlayerStatus>().playerAP;
+        P_AR = Player.GetComponent<PlayerStatus>().playerAR;
+        P_MR = Player.GetComponent<PlayerStatus>().playerMR;
+        Cur_Cost = UI_EnergyBar.Instance.currentHealth;
+        Cost_Fill = UI_EnergyBar.Instance.fillSpeed;
+        //RelicManagerï¿½ï¿½ï¿½ï¿½ activeRelicsDictï¿½ï¿½ï¿½ï¿½ intï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
+        foreach(var relic in RelicManager.Instance.activeRelicsDIct)
+        {
+            if(relic.Value == 1) // Relic value : 0 : ï¿½ï¿½ï¿½ï¿½ È¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, 1 : È¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+            {
+                RelicManager.Instance.activeRelicsDIct[relic.Key] = 0;
+            }
+        }
+        //RelicManager.Instance.CheckRelics(this);
+        
+
+    }
 
     private void Update()
     {
         /*
-        // Space Å°·Î ÄÚ½ºÆ® Áõ°¡ Å×½ºÆ®
+        // Space Å°ï¿½ï¿½ ï¿½Ú½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ®
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            CurrentCost += 1;
-            Debug.Log($"Current Cost: {CurrentCost}");
+            //Cur_Cost += 1;
+            //Debug.Log($"Current Cost: {CurrentCost}");
             RelicManager.Instance.CheckRelics(this);
         }
 
-        // H Å°·Î Ã¼·Â °¨¼Ò Å×½ºÆ®
+        // H Å°ï¿½ï¿½ Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ®
         if (Input.GetKeyDown(KeyCode.H))
         {
             PlayerHealth -= 10;
@@ -26,5 +58,15 @@ public class GameCondition : MonoBehaviour
             RelicManager.Instance.CheckRelics(this);
         }
         */
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            
+            RelicManager.Instance.AddRelic("Old Helmet");
+            P_Health = Player.GetComponent<PlayerStatus>().playerHP;
+            Debug.Log($"P_HP: {P_Health}");
+            RelicManager.Instance.CheckRelics(this);
+            Debug.Log($"P_HP!!!: {P_Health}");
+
+        }
     }
 }
