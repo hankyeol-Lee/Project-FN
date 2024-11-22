@@ -72,7 +72,8 @@ public class SkillSystem : MonoBehaviour
                         }
                     }
                 }
-                else
+                else 
+                {
                     // ï¿½ï¿½ï¿?ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³
                     thisSkill.ShowRange(checkMouseCell.Value);
                     if (Input.GetMouseButton(0))
