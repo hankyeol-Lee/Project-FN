@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Enemyspace;
+using HexClass;
 using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -74,54 +75,62 @@ public abstract class ActiveSkill // 사용할 스킬을 지정한
     }
 
 
-    public void SetSkillRangeCell ()
-    {
 
-    }
 
     //showdistance : 스킬 범위를 보여주는 메소드. 이걸 어떤 식으로 스킬 칸을 관리할 지 모르곘음.
     public void ShowRange(Vector3Int mouseCellPos)
     {
         Tilemap tilemap = GameManager.Instance.tilemap;
-        //GameManager.Instance.skillHexRadius.ScaleHex(mouseCellPos,this.skillcelldist);
 
-        int distance = skillcelldist;
-
-        // 이전 스킬 범위 타일을 원래 상태로 복원
+        // 이전 타일 복원
         foreach (var cell in previousSkillTiles.Keys)
         {
             tilemap.SetTile(cell, previousSkillTiles[cell]);
         }
-        previousSkillTiles.Clear(); // 초기화 후 딕셔너리 비우기
-        skillRange.Clear(); // 새로운 스킬 범위 계산 전 초기화
+        previousSkillTiles.Clear();
+        skillRange.Clear();
 
-        // 범위 내 셀 계산
-        Vector3Int centerCell = mouseCellPos;
-        for (int x = -distance; x <= distance; x++)
+        // 중심 셀
+        Hex centerHex = new Hex(mouseCellPos.x, mouseCellPos.y);
+
+        // 스킬 범위를 저장할 HashSet
+        HashSet<Hex> rangeSet = new HashSet<Hex>();
+        rangeSet.Add(centerHex);
+
+        // 스킬 범위를 단계별로 확장
+        for (int i = 0; i < skillcelldist-1; i++)
         {
-            for (int y = -distance; y <= distance; y++)
+            // 현재 셀들의 이웃을 모두 추가
+            HashSet<Hex> neighbors = new HashSet<Hex>();
+            foreach (Hex hex in rangeSet)
             {
-                if (Mathf.Abs(x + y) <= distance)
-                {
-                    Vector3Int offset = new Vector3Int(x,y, 0);
-                    Vector3Int cell = centerCell + offset;
-                    skillRange.Add(cell);
+                neighbors.UnionWith(hex.GetNeighbors()); // 이웃을 모두 추가
+            }
+            rangeSet.UnionWith(neighbors); // 기존 집합에 추가
+        }
 
-                    // 기존 타일을 저장하여 나중에 복원 가능하게 함
-                    if (!previousSkillTiles.ContainsKey(cell))
-                    {
-                        previousSkillTiles[cell] = tilemap.GetTile(cell);
-                    }
-                }
+        // 최종 범위를 Vector3Int로 변환
+        foreach (Hex hex in rangeSet)
+        {
+            Vector3Int cellPos = hex.ToVector3Int();
+            skillRange.Add(cellPos);
+
+            // 기존 타일 저장
+            if (!previousSkillTiles.ContainsKey(cellPos))
+            {
+                previousSkillTiles[cellPos] = tilemap.GetTile(cellPos);
             }
         }
-        // 새로운 범위 타일 설정
+
+        // 타일맵에 범위 설정
         foreach (var cell in skillRange)
         {
             tilemap.SetTile(cell, newTile);
-            //Debug.Log($"스킬범위 {cell} 에 지정됨");
         }
     }
+
+
+
 
     public List<GameObject> CheckRangeEnemy(Vector3Int mouseCellPos)
     {
