@@ -50,6 +50,7 @@ public class SkillSystem : MonoBehaviour
 
             if (checkMouseCell.HasValue)
             {
+                //Debug.Log($"{ checkMouseCell.Value} ½ºÅ³ »ç¿ë!!");
                 // ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½
                 if (thisSkill.isTargetCell)
                 {
@@ -72,7 +73,6 @@ public class SkillSystem : MonoBehaviour
                     }
                 }
                 else
-                {
                     // ï¿½ï¿½ï¿?ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³
                     thisSkill.ShowRange(checkMouseCell.Value);
                     if (Input.GetMouseButton(0))
@@ -105,6 +105,7 @@ public class SkillSystem : MonoBehaviour
     private Vector3Int? CheckMouseInCircle()
     {
         // ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ray ï¿½ï¿½ï¿½ï¿½
+        skillTargetObject = null;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray);
 
@@ -139,12 +140,14 @@ public class SkillSystem : MonoBehaviour
             lastMouseCell = currentCell; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¿ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
             //Debug.Log($"ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ Circleï¿½ï¿½ Cellï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½: {currentCell}");
             return currentCell;
+            
         }
 
         // ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ Circleï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿?ï¿½Ö´ï¿½ ï¿½ï¿½ï¿?
         if (hitCircle && lastMouseCell.HasValue)
         {
             //Debug.Log($"ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ Circleï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¿ ï¿½ï¿½ ï¿½ï¿½È¯: {lastMouseCell}");
+            //Debug.Log($"{lastMouseCell} ¿´´ø°Í¤·¤·");
             return lastMouseCell; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¿ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
 
