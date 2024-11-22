@@ -48,6 +48,12 @@ public class UI_EnergyBar : MonoBehaviour
                 UpdateHealthText();
             }
         }
+        else //최대치 이상인 경우
+        {
+            currentHealth = maxHealth;
+            UpdateHealthBar();
+            UpdateHealthText();
+        }
 
         // Q 키를 눌렀고 체력 감소가 가능한 경우 한 칸 감소
         if (Input.GetKeyDown(KeyCode.E) && canDecreaseHealth)
@@ -76,7 +82,7 @@ public class UI_EnergyBar : MonoBehaviour
         return currentHealth;
     }
     // 체력바 업데이트
-    void UpdateHealthBar()
+   public void UpdateHealthBar()
     {
         healthBar.fillAmount = (float)currentHealth / maxHealth;
     }
@@ -84,7 +90,7 @@ public class UI_EnergyBar : MonoBehaviour
     {
         canDecreaseHealth = true;
     }
-    void UpdateHealthText()
+   public void UpdateHealthText()
     {
         if (healthText != null)
         {
