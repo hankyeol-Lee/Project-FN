@@ -17,6 +17,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
             //Debug.Log("이거아냐?");
             EnemyInstances.enemyDict.TryGetValue(skillTarget.name, out Enemy enemy);
             //Debug.Log(skillTarget.name);
+            Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
             float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, GameManager.Instance.player.GetComponent<PlayerStatus>().returnADAP(useSkill.skilltype));
             enemy.TakeDamage(skillTarget.transform,initdamage,useSkill.skilltype);
         }
@@ -25,6 +26,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
             EnemyInstances.enemyDict.TryGetValue(skillCaster.name, out Enemy enemy); // 1. enemy 객체에 스킬 시전자의 정보를 enemyDict에서 받아옴.(복붙)
             //Debug.Log($"useskill : {useSkill}, enemy : {enemy}, enemy returnadap : {enemy.returnADAP(useSkill.skilltype)}");
             float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, enemy.returnADAP(useSkill.skilltype)); // 스킬계수 * 공격력(혹은 AP)
+            Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
             GameManager.Instance.player.GetComponent<PlayerStatus>().PlayerGetDamage(initdamage, skilltype); // 플레이어에게 직접 데미지를 주는 코드
             //Debug.Log($"{skillCaster.name}에게공격당햇다는거임 {useSkill.skillName} {skillCaster.transform.position}, {GameManager.Instance.player.transform.position}");
             SkillSystem.Instance.ShowSkillAnimation(useSkill.skillName, skillCaster.transform.position, GameManager.Instance.player.transform.position);
@@ -38,6 +40,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) 
         {
             EnemyInstances.enemyDict.TryGetValue(skillTarget.name, out Enemy enemy);
+            Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
             float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, GameManager.Instance.player.GetComponent<PlayerStatus>().returnADAP(useSkill.skilltype));
             enemy.TakeDamage(skillTarget.transform, initdamage, useSkill.skilltype);
         }
@@ -47,6 +50,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
             EnemyInstances.enemyDict.TryGetValue(skillCaster.name, out Enemy enemy); // 1. enemy 객체에 스킬 시전자의 정보를 enemyDict에서 받아옴.(복붙)
             //Debug.Log($"useskill : {useSkill}, enemy : {enemy}, enemy returnadap : {enemy.returnADAP(useSkill.skilltype)}");
             float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, enemy.returnADAP(useSkill.skilltype)); // 스킬계수 * 공격력(혹은 AP)
+            Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
             GameManager.Instance.player.GetComponent<PlayerStatus>().PlayerGetDamage(initdamage, skilltype); // 플레이어에게 직접 데미지를 주는 코드
             //Debug.Log($"{skillCaster.name}에게공격당햇다는거임 {useSkill.skillName} {skillCaster.transform.position}, {GameManager.Instance.player.transform.position}");
             SkillSystem.Instance.ShowSkillAnimation(useSkill.skillName, skillCaster.transform.position, GameManager.Instance.player.transform.position);
@@ -58,6 +62,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Decay(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) 
         {
+            Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
             foreach (var inenemy in CheckRangeEnemy(targetCell))
             {
                 EnemyInstances.enemyDict.TryGetValue(inenemy.name, out Enemy enemy);
@@ -78,6 +83,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
             if (isfuck.HasValue) // 만약에 스킬 범위 안에 있다면.
             {
                 float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient,useSkill.skilltype,enemy.returnADAP(useSkill.skilltype));
+                Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
                 // 플레이어에게 데미지 주는 함수.
                 GameManager.Instance.player.GetComponent<PlayerStatus>().PlayerGetDamage(initdamage,skilltype);
                 //Debug.Log($"{skillCaster.name}에게공격당햇다는거임 {useSkill.skillName} {skillCaster.transform.position}, {GameManager.Instance.player.GetComponent<Transform>().position}");
@@ -95,6 +101,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
             {
                 EnemyInstances.enemyDict.TryGetValue(inenemy.name, out Enemy enemy);
                 //Debug.Log($"{inenemy.name}이 범위에 들어옴");
+                Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
                 float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, GameManager.Instance.player.GetComponent<PlayerStatus>().returnADAP(useSkill.skilltype));
                 enemy.TakeDamage(inenemy.transform, initdamage, useSkill.skilltype);
                 //Debug.Log($"{inenemy.name}의 HP : {enemy.HP}, 받은 피해 : {initdamage}");
@@ -110,6 +117,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
             if (isfuck.HasValue) // 만약에 스킬 범위 안에 있다면.
             {
                 float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, enemy.returnADAP(useSkill.skilltype));
+                Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
                 // 플레이어에게 데미지 주는 함수.
                 GameManager.Instance.player.GetComponent<PlayerStatus>().PlayerGetDamage(initdamage, skilltype);
                 //Debug.Log($"{skillCaster.name}에게공격당햇다는거임 {useSkill.skillName} {skillCaster.transform.position}, {GameManager.Instance.player.GetComponent<Transform>().position}");
@@ -126,6 +134,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         {
             EnemyInstances.enemyDict.TryGetValue(skillTarget.name, out Enemy enemy);
             float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, GameManager.Instance.player.GetComponent<PlayerStatus>().returnADAP(useSkill.skilltype));
+            Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
             enemy.TakeDamage(skillTarget.transform, initdamage, useSkill.skilltype);
         }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) 
@@ -134,6 +143,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
             EnemyInstances.enemyDict.TryGetValue(skillCaster.name, out Enemy enemy); // 1. enemy 객체에 스킬 시전자의 정보를 enemyDict에서 받아옴.(복붙)
             //Debug.Log($"useskill : {useSkill}, enemy : {enemy}, enemy returnadap : {enemy.returnADAP(useSkill.skilltype)}");
             float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, enemy.returnADAP(useSkill.skilltype)); // 스킬계수 * 공격력(혹은 AP)
+            Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
             GameManager.Instance.player.GetComponent<PlayerStatus>().PlayerGetDamage(initdamage, skilltype); // 플레이어에게 직접 데미지를 주는 코드
             //Debug.Log($"{skillCaster.name}에게공격당햇다는거임 {useSkill.skillName} {skillCaster.transform.position}, {GameManager.Instance.player.transform.position}");
             SkillSystem.Instance.ShowSkillAnimation(useSkill.skillName, skillCaster.transform.position, GameManager.Instance.player.transform.position);
@@ -200,11 +210,12 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
     {
         public Flame(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) 
-        { 
+        {
             //1, 스킬 쓰는 셀 위에 enemy가 있는지 없는지 check해야함.
             //2. 그 enemy 정보를 받아와야함.
             //3. 만약 있다면 -> 데미지계산, 등등...
-            foreach(var inenemy in CheckRangeEnemy(targetCell))
+            Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
+            foreach (var inenemy in CheckRangeEnemy(targetCell))
             {
                 EnemyInstances.enemyDict.TryGetValue(inenemy.name, out Enemy enemy);
                 //Debug.Log($"{inenemy.name}이 범위에 들어옴");
@@ -224,6 +235,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
             {
                 float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, enemy.returnADAP(useSkill.skilltype));
                 // 플레이어에게 데미지 주는 함수.
+                Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
                 GameManager.Instance.player.GetComponent<PlayerStatus>().PlayerGetDamage(initdamage, skilltype);
                 //Debug.Log($"{skillCaster.name}에게공격당햇다는거임 {useSkill.skillName} {skillCaster.transform.position}, {GameManager.Instance.player.GetComponent<Transform>().position}");
                 SkillSystem.Instance.ShowSkillAnimation(useSkill.skillName, skillCaster.transform.position, GameManager.Instance.player.transform.position);

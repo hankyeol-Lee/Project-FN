@@ -7,10 +7,15 @@ public class Skill_AudioManage : MonoBehaviour
 {
     //public AudioClip[] Skill_sounds;
     public AudioSource SkillAudioSource;
+    public static Skill_AudioManage Instance;
 
     void Awake()
     {
-            SkillAudioSource = GetComponent<AudioSource>();
+        SkillAudioSource = GetComponent<AudioSource>();
+        if (Instance == null)
+        {
+            Instance = this;
+        }
     }
 
  
