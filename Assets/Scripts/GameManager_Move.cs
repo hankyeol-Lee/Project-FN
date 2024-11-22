@@ -114,6 +114,12 @@ public class GameManager_Move : MonoBehaviour
             {
                 Vector3 worldPosition = cell.point;
                 Vector3Int cellPosition = tilemap.WorldToCell(worldPosition);
+
+                if (tilemap.HasTile(cellPosition))
+                {
+                    return cellPosition; // 유효한 타일일 경우 반환
+                }
+
                 return cellPosition;
             }
         }

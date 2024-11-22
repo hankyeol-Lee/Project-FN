@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace HexClass // pathfinding 메소드는 다른 객체에서도 사용 가능하도록, namespace로 저장.
 {
@@ -80,6 +81,40 @@ namespace HexClass // pathfinding 메소드는 다른 객체에서도 사용 가능하도록, name
 
                 //Debug.Log($"Neighbors for Even Row: ({q + 1}, {r}), ({q - 1}, {r}), ({q}, {r + 1}), ({q}, {r - 1}), ({q - 1}, {r - 1}), ({q - 1}, {r + 1})");
             }
+            neighbors = neighbors.FindAll(neighbor => GameManager.Instance.tilemap.HasTile(neighbor.ToVector3Int()));
+
+            return neighbors;
+        }
+        //new overload for GetNeighbors
+        public List<Hex> GetNeighbors(Tilemap tilemap = null)
+        {
+            List<Hex> neighbors = new List<Hex>();
+            bool oddRow = Mathf.Abs(r % 2) == 1;
+
+            if (oddRow)
+            {
+                neighbors.Add(new Hex(q + 1, r));
+                neighbors.Add(new Hex(q - 1, r));
+                neighbors.Add(new Hex(q, r + 1));
+                neighbors.Add(new Hex(q, r - 1));
+                neighbors.Add(new Hex(q + 1, r - 1));
+                neighbors.Add(new Hex(q + 1, r + 1));
+            }
+            else
+            {
+                neighbors.Add(new Hex(q + 1, r));
+                neighbors.Add(new Hex(q - 1, r));
+                neighbors.Add(new Hex(q, r + 1));
+                neighbors.Add(new Hex(q, r - 1));
+                neighbors.Add(new Hex(q - 1, r - 1));
+                neighbors.Add(new Hex(q - 1, r + 1));
+            }
+
+            // Tilemap이 제공되면 유효한 셀만 필터링
+            if (tilemap != null)
+            {
+                neighbors = neighbors.FindAll(neighbor => tilemap.HasTile(neighbor.ToVector3Int()));
+            }
 
             return neighbors;
         }
@@ -128,7 +163,9 @@ namespace HexClass // pathfinding 메소드는 다른 객체에서도 사용 가능하도록, name
                 foreach (Hex next in neighbors) // 이웃한 노드를 조사.
                 {
                     // 장애물 검사
-                    if (obstacles.Contains(next)) // 장애물이면 무시
+                    Vector3Int nextCell = next.ToVector3Int();
+
+                    if (!GameManager.Instance.tilemap.HasTile(nextCell) || obstacles.Contains(next)) // 장애물이면 무시
                         continue;
 
                     int newCost = costSoFar[current] + 1;

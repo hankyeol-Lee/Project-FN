@@ -73,6 +73,8 @@ public class SkillSystem : MonoBehaviour
                             thisSkill.CastSkill(thisSkill, player, checkMouseCell.Value);
                             skillRange.SetActive(false);
                         }
+                        thisSkill.RecoverCell(tilemap);
+                        skillRange.SetActive(false);
                     }
                 }
                 else 
@@ -81,7 +83,6 @@ public class SkillSystem : MonoBehaviour
                     thisSkill.ShowRange(checkMouseCell.Value);
                     if (Input.GetMouseButton(0))
                     {
-                        Debug.Log(skillTargetObject.gameObject.name);
                         //Debug.Log(UI_EnergyBar.Instance.GetPlayerEnergy());
                         if (thisSkill.playerCost <= UI_EnergyBar.Instance.GetPlayerEnergy()) // ��ų�ڽ�Ʈ�� �÷��̾� ������ ���������� ũ�ٸ� 
                         {
@@ -91,7 +92,8 @@ public class SkillSystem : MonoBehaviour
                             skillRange.SetActive(false);
                         }
                         //�ڽ�Ʈ ���� ���?�����ؾ���
-                        //skillRange.SetActive(false);
+                        thisSkill.RecoverCell(tilemap);
+                        skillRange.SetActive(false);
                     }
                 }
             }

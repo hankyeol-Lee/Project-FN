@@ -74,7 +74,21 @@ public abstract class ActiveSkill // 사용할 스킬을 지정한
         return 0.0f;
     }
 
+    public void RecoverCell(Tilemap tilemap)
+    {
+        // 이전 타일 복원
 
+        if (previousSkillTiles != null)
+        {
+            foreach (var cell in previousSkillTiles.Keys)
+            {
+                tilemap.SetTile(cell, previousSkillTiles[cell]);
+            }
+            previousSkillTiles.Clear();
+            skillRange.Clear();
+        }
+        
+    }
 
 
     //showdistance : 스킬 범위를 보여주는 메소드. 이걸 어떤 식으로 스킬 칸을 관리할 지 모르곘음.
@@ -82,13 +96,7 @@ public abstract class ActiveSkill // 사용할 스킬을 지정한
     {
         Tilemap tilemap = GameManager.Instance.tilemap;
 
-        // 이전 타일 복원
-        foreach (var cell in previousSkillTiles.Keys)
-        {
-            tilemap.SetTile(cell, previousSkillTiles[cell]);
-        }
-        previousSkillTiles.Clear();
-        skillRange.Clear();
+        RecoverCell(tilemap);
 
         // 중심 셀
         Hex centerHex = new Hex(mouseCellPos.x, mouseCellPos.y);
@@ -104,7 +112,7 @@ public abstract class ActiveSkill // 사용할 스킬을 지정한
             HashSet<Hex> neighbors = new HashSet<Hex>();
             foreach (Hex hex in rangeSet)
             {
-                neighbors.UnionWith(hex.GetNeighbors()); // 이웃을 모두 추가
+                neighbors.UnionWith(hex.GetNeighbors(tilemap));
             }
             rangeSet.UnionWith(neighbors); // 기존 집합에 추가
         }
