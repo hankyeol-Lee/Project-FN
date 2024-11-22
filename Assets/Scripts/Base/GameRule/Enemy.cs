@@ -42,7 +42,7 @@ namespace Enemyspace // Enemyspace로 Enemy클래스에 접근 가능하도록 제어.
         public abstract void Attack(GameObject attacker);
         
 
-        public virtual void TakeDamage(Transform position,float damage,ActiveSkill.skillType skilltype)
+        public virtual void TakeDamage(Transform position, float damage, ActiveSkill.skillType skilltype)
         {
             // 에너미의 마방 혹은 물리방어력으로 데미지 계산하고 HP 계산
             if (skilltype == ActiveSkill.skillType.Physics && damage > 0.0f)
@@ -53,25 +53,59 @@ namespace Enemyspace // Enemyspace로 Enemy클래스에 접근 가능하도록 제어.
             {
                 damage -= MR;
             }
+
+            // 데미지가 0 이하가 되지 않도록 제한
             if (damage <= 0.0f) { damage = 0.0f; }
+
+            // 체력 감소
             HP -= damage;
-            Debug.Log(damage);
+
+            // 체력이 0 이하로 내려가지 않도록 제한
+            if (HP < 0.0f)
+            {
+                HP = 0.0f;
+            }
+
+            Debug.Log($"Damage: {damage}, Remaining HP: {HP}");
+
+            // 플로팅 텍스트 표시
             FloatingTextManager floatingtextmanagerscript = GameManager.Instance.floatingtextmanager.GetComponent<FloatingTextManager>();
             //floatingtextmanagerscript.ShowFloatingText(position.transform.position, damage);
+
+            // 체력바 업데이트
             if (EnemyHPBar.enemyHPBars.TryGetValue(position.name, out EnemyHPBar hpBar))
             {
                 hpBar.UpdateEnemyDamageBar();
             }
-            if (HP < 0)
+
+            // 체력이 0일 경우 사망 처리
+            if (HP <= 0)
             {
                 Die();
             }
         }
+
         protected virtual void Die()
         {
-            // Enemy가 죽으면 공통적으로 하는 것들을 적으면 됨.
+            // 적 이름 가져오기
+            string enemyName = this.GetType().Name; // 또는 적의 고유 이름을 적절히 가져오는 로직
 
+            // 1. 적의 HP Bar 제거
+            if (EnemyHPBar.enemyHPBars.TryGetValue(enemyName, out EnemyHPBar hpBar))
+            {
+                hpBar.RemoveHPBar(); // EnemyHPBar 클래스에 체력바 제거 메서드 호출
+            }
+
+            // 2. 적 인스턴스를 게임에서 제거
+            if (SpawnEnemy.instance.enemyInstances.ContainsKey(enemyName))
+            {
+                SpawnEnemy.instance.EnemyEliminate(enemyName);
+            }
+ 
+            Debug.Log($"{enemyName} has been defeated and removed.");
         }
+
+
         public void AddSkill(string SkillName)
         {
             if (!SkillInstance.skillInstances.ContainsKey(SkillName))

@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class SpawnEnemy : MonoBehaviour
 {
+    public static SpawnEnemy instance;
     //에너미 스폰 매니지먼트
 
     //위치와 에너미 GO, 그 하위에 들어갈 prefab같은애들을 연결해줘야 함.
@@ -16,6 +17,13 @@ public class SpawnEnemy : MonoBehaviour
     // 현재 어떤 에너미가 생성되어있는지를 체크하는 딕셔너리
     public Dictionary<string, GameObject> enemyInstances = new Dictionary<string, GameObject>();
 
+    public void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+    }
     public void Start()
     {
         //         GameManager.Instance.EnemySpawner.GetComponent<SpawnEnemy>().
@@ -58,6 +66,22 @@ public class SpawnEnemy : MonoBehaviour
 
 
 
+        }
+    }
+    public void EnemyEliminate(string enemyName)
+    {
+        if (enemyInstances.ContainsKey(enemyName))
+        {
+            // 딕셔너리에서 적 GameObject를 가져옴
+            GameObject enemyInstance = enemyInstances[enemyName];
+
+            // 적의 게임 오브젝트 삭제
+            Destroy(enemyInstance);
+
+            // 딕셔너리에서 해당 적 제거
+            enemyInstances.Remove(enemyName);
+
+            Debug.Log($"{enemyName} has been eliminated.");
         }
     }
 

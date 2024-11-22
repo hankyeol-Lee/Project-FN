@@ -67,13 +67,20 @@ public class EnemyHPBar : MonoBehaviour
         return null;
     }
 
-    private void OnDestroy()
+    public void RemoveHPBar()
+{
+    string parentEnemyName = transform.parent.name;
+
+    // 체력바가 딕셔너리에 있는지 확인
+    if (enemyHPBars.ContainsKey(parentEnemyName))
     {
-        // 체력바가 삭제되면 딕셔너리에서 제거
-        string parentEnemyName = transform.parent.name;
-        if (enemyHPBars.ContainsKey(parentEnemyName))
-        {
-            enemyHPBars.Remove(parentEnemyName);
-        }
+        // 딕셔너리에서 제거
+        enemyHPBars.Remove(parentEnemyName);
+        Debug.Log($"HP Bar for {parentEnemyName} has been removed.");
     }
+
+    // 체력바 오브젝트 삭제
+    Destroy(gameObject);
+}
+
 }
