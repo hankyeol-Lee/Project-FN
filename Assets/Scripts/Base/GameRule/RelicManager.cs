@@ -7,7 +7,7 @@ public class RelicManager : MonoBehaviour
     public static RelicManager Instance;
 
     public List<Relic> activeRelics = new List<Relic>();
-    private Dictionary<string, Relic> allRelics = new Dictionary<string, Relic>();
+    public Dictionary<string, Relic> allRelics = new Dictionary<string, Relic>();
     public Dictionary<string, int> activeRelicsDict = new Dictionary<string, int>();
 
     private void Awake()
@@ -59,7 +59,8 @@ public class RelicManager : MonoBehaviour
                 condition.P_Health += 10;
                 activeRelicsDict["Old Helmet"] = 0; // 효과 적용 후 비활성화
                 Debug.Log("적용됏슴!!");
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Old Sword
@@ -71,7 +72,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_AD += 1;
                 activeRelicsDict["Old Sword"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Old Orb
@@ -83,7 +85,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_AP += 1;
                 activeRelicsDict["Old Orb"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Old Armor
@@ -95,7 +98,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_AR += 1;
                 activeRelicsDict["Old Armor"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Old Bead
@@ -107,7 +111,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_MR += 1;
                 activeRelicsDict["Old Bead"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Ordinary Helmet
@@ -119,7 +124,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_Health += 20;
                 activeRelicsDict["Ordinary Helmet"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Ordinary Sword
@@ -131,7 +137,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_AD += 2;
                 activeRelicsDict["Ordinary Sword"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Ordinary Orb
@@ -143,7 +150,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_AP += 2;
                 activeRelicsDict["Ordinary Orb"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Ordinary Armor
@@ -155,7 +163,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_AR += 2;
                 activeRelicsDict["Ordinary Armor"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Ordinary Amulet
@@ -167,7 +176,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_MR += 2;
                 activeRelicsDict["Ordinary Amulet"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Ordinary Boots
@@ -180,7 +190,8 @@ public class RelicManager : MonoBehaviour
                 condition.P_AR += 1;
                 condition.P_MR += 1;
                 activeRelicsDict["Ordinary Boots"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Unusual Helmet
@@ -192,7 +203,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_Health += 30;
                 activeRelicsDict["Unusual Helmet"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Unusual Sword
@@ -204,7 +216,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_AD += 3;
                 activeRelicsDict["Unusual Sword"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Unusual Orb
@@ -216,7 +229,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_AP += 3;
                 activeRelicsDict["Unusual Orb"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Unusual Armor
@@ -228,7 +242,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_AR += 3;
                 activeRelicsDict["Unusual Armor"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Unusual Amulet
@@ -240,7 +255,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_MR += 3;
                 activeRelicsDict["Unusual Amulet"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Unusual Boots
@@ -253,7 +269,8 @@ public class RelicManager : MonoBehaviour
                 condition.P_MR += 2;
                 condition.P_AR += 2;
                 activeRelicsDict["Unusual Boots"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Unusual Device
@@ -265,7 +282,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.Cost_Fill += condition.Cost_Fill * 0.1f;
                 activeRelicsDict["Unusual Device"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Hero's Helmet
@@ -277,7 +295,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_Health += 50;
                 activeRelicsDict["Hero's Helmet"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Hero's Sword
@@ -289,7 +308,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_AD += 5;
                 activeRelicsDict["Hero's Sword"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Hero's Orb
@@ -301,7 +321,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_AP += 5;
                 activeRelicsDict["Hero's Orb"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Hero's Armor
@@ -313,7 +334,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_AR += 5;
                 activeRelicsDict["Hero's Armor"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Hero's Amulet
@@ -325,7 +347,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_MR += 5;
                 activeRelicsDict["Hero's Amulet"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Hero's Boots
@@ -338,7 +361,8 @@ public class RelicManager : MonoBehaviour
                 condition.P_AR += 3;
                 condition.P_MR += 3;
                 activeRelicsDict["Hero's Boots"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Hero's Device
@@ -350,7 +374,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.Cost_Fill += condition.Cost_Fill * 0.2f;
                 activeRelicsDict["Hero's Device"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
 
@@ -363,7 +388,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.Cost_Fill += condition.Cost_Fill * 0.3f;
                 activeRelicsDict["Calm Mind"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Cursed Helmet
@@ -376,7 +402,8 @@ public class RelicManager : MonoBehaviour
                 condition.P_Health += 50;
                 condition.P_AR -= 2;
                 activeRelicsDict["Cursed Helmet"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Cursed Sword
@@ -389,7 +416,8 @@ public class RelicManager : MonoBehaviour
                 condition.P_AD += 5;
                 condition.P_AP -= 2;
                 activeRelicsDict["Cursed Sword"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Cursed Orb
@@ -402,7 +430,8 @@ public class RelicManager : MonoBehaviour
                 condition.P_AP += 5;
                 condition.P_AD -= 2;
                 activeRelicsDict["Cursed Orb"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Cursed Armor
@@ -415,7 +444,8 @@ public class RelicManager : MonoBehaviour
                 condition.P_AR += 5;
                 condition.P_MR -= 2;
                 activeRelicsDict["Cursed Armor"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Cursed Amulet
@@ -428,7 +458,8 @@ public class RelicManager : MonoBehaviour
                 condition.P_MR += 5;
                 condition.P_AR -= 2;
                 activeRelicsDict["Cursed Amulet"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Cursed Boots
@@ -441,7 +472,8 @@ public class RelicManager : MonoBehaviour
                 condition.P_AR += 2;
                 condition.P_Health -= 20;
                 activeRelicsDict["Cursed Boots"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Cursed Device
@@ -454,7 +486,8 @@ public class RelicManager : MonoBehaviour
                 condition.Cost_Fill += condition.Cost_Fill * 0.2f;
                 condition.P_Health -= 20;
                 activeRelicsDict["Cursed Device"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Rash Mind
@@ -467,7 +500,8 @@ public class RelicManager : MonoBehaviour
                 condition.Cost_Fill -= condition.Cost_Fill * 0.1f;
                 condition.P_Health += 20;
                 activeRelicsDict["Rash Mind"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Fully Charged Battery
@@ -483,7 +517,8 @@ public class RelicManager : MonoBehaviour
                 condition.P_AR += 2;
                 condition.P_MR += 2;
                 activeRelicsDict["Fully Charged Battery"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Emergency Charge
@@ -499,7 +534,8 @@ public class RelicManager : MonoBehaviour
                 UI_EnergyBar.Instance.UpdateHealthBar();
                 UI_EnergyBar.Instance.UpdateHealthText();
                 
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Gold Medal
@@ -515,7 +551,8 @@ public class RelicManager : MonoBehaviour
                 condition.P_AR += 5;
                 condition.P_MR += 5;
                 activeRelicsDict["Gold Medal"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Silver Medal
@@ -531,7 +568,8 @@ public class RelicManager : MonoBehaviour
                 condition.P_AR += 3;
                 condition.P_MR += 3;
                 activeRelicsDict["Silver Medal"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Bronze Medal
@@ -547,7 +585,8 @@ public class RelicManager : MonoBehaviour
                 condition.P_AR += 2;
                 condition.P_MR += 2;
                 activeRelicsDict["Bronze Medal"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Heavy Helmet
@@ -559,7 +598,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_Health += 30;
                 activeRelicsDict["Heavy Helmet"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Heavy Sword
@@ -571,7 +611,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_AD += 3;
                 activeRelicsDict["Heavy Sword"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Heavy Orb
@@ -583,7 +624,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_AP += 3;
                 activeRelicsDict["Heavy Orb"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Heavy Armor
@@ -595,7 +637,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_AR += 3;
                 activeRelicsDict["Heavy Armor"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Heavy Amulet
@@ -607,7 +650,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_MR += 3;
                 activeRelicsDict["Heavy Amulet"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Heavy Boots
@@ -620,7 +664,8 @@ public class RelicManager : MonoBehaviour
                 condition.P_AR += 2;
                 condition.P_MR += 2;
                 activeRelicsDict["Heavy Boots"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Solid and Heavy
@@ -640,7 +685,8 @@ public class RelicManager : MonoBehaviour
                     case 3: condition.P_MR += 1; break;
                 }
                 activeRelicsDict["Solid and Heavy"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Suspicious Cube
@@ -664,7 +710,8 @@ public class RelicManager : MonoBehaviour
                 condition.GetType().GetField(stats[1].Item1).SetValue(condition, (float)stats[1].Item2 + 1);
                 condition.GetType().GetField(stats.Last().Item1).SetValue(condition, (float)stats.Last().Item2 - 1);
                 activeRelicsDict["Suspicious Cube"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Red Cube
@@ -688,7 +735,8 @@ public class RelicManager : MonoBehaviour
                 condition.GetType().GetField(stats[1].Item1).SetValue(condition, (float)stats[1].Item2 + 2);
                 condition.GetType().GetField(stats.Last().Item1).SetValue(condition, (float)stats.Last().Item2 - 2);
                 activeRelicsDict["Red Cube"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Black Cube
@@ -712,7 +760,8 @@ public class RelicManager : MonoBehaviour
                 condition.GetType().GetField(stats[1].Item1).SetValue(condition, (float)stats[1].Item2 + 3);
                 condition.GetType().GetField(stats.Last().Item1).SetValue(condition, (float)stats.Last().Item2 - 3);
                 activeRelicsDict["Black Cube"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Amazing Cube
@@ -736,7 +785,8 @@ public class RelicManager : MonoBehaviour
                     condition.GetType().GetField(stats[i].Item1).SetValue(condition, (float)stats[i].Item2 + 5);
                 condition.GetType().GetField(stats.Last().Item1).SetValue(condition, (float)stats.Last().Item2 - 5);
                 activeRelicsDict["Amazing Cube"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Diamond
@@ -748,7 +798,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_Health = 150;
                 activeRelicsDict["Diamond"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Ruby
@@ -760,7 +811,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_AD = 15;
                 activeRelicsDict["Ruby"] = 0;
-            }
+            },
+            "Ruby" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Emerald
@@ -772,7 +824,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_AP = 15;
                 activeRelicsDict["Emerald"] = 0;
-            }
+            },
+            "Emerald" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Sapphire
@@ -784,7 +837,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_AR = 15;
                 activeRelicsDict["Sapphire"] = 0;
-            }
+            },
+            "Sapphire" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Garnet
@@ -796,7 +850,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_MR = 15;
                 activeRelicsDict["Garnet"] = 0;
-            }
+            },
+            "Garnet" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Amber
@@ -812,7 +867,8 @@ public class RelicManager : MonoBehaviour
                 condition.P_AR += 5;
                 condition.P_MR += 5;
                 activeRelicsDict["Amber"] = 0;
-            }
+            },
+            "Amber" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Ultra Recovery
@@ -824,7 +880,8 @@ public class RelicManager : MonoBehaviour
             {
                 condition.P_Health += 50;
                 activeRelicsDict["Ultra Recovery"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
 
         // Strange Gem
@@ -840,8 +897,8 @@ public class RelicManager : MonoBehaviour
                 condition.P_AR = 15;
                 condition.P_MR = 15;
                 activeRelicsDict["Strange Gem"] = 0;
-            }
+            },
+            "Diamond" // RelicImages 폴더에서 이미지 로드
         ));
-
     }
 }

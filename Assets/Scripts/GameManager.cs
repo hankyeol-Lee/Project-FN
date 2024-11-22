@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour 
 {
-    public static GameManager Instance { get; private set; } //�̱��� ���� ���, �������� ������ ������Ʈ�� �߰�
+    public static GameManager Instance { get; private set; } //�̱��� ���� ���?, �������� ������ ������Ʈ�� �߰�
     public GameManager_Move gameManagerMove; // GameManager_Move ����
 
     public GameObject player; // �÷��̾� ��ü
@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // ���� ����Ǿ �ı����� �ʵ��� ����
+            DontDestroyOnLoad(gameObject); // ���� ����Ǿ�? �ı����� �ʵ��� ����
         }
         else
         {

@@ -1228,7 +1228,6 @@ GameObject:
   m_Component:
   - component: {fileID: 440261697}
   - component: {fileID: 440261696}
-  - component: {fileID: 440261698}
   m_Layer: 0
   m_Name: InventoryManager
   m_TagString: Untagged
@@ -1248,7 +1247,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbaf607047d8b4bc4bb04bd79ac80648, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items: []
   baseSlotParent: {fileID: 344133496}
   baseSlots:
   - {fileID: 167758361}
@@ -1296,19 +1294,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &440261698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 440261694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e5e56edf63014098b96c0869646f20f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemDatabase: {fileID: 11400000, guid: 6d7e73e39ff8e4ab28587d8c64d15fbf, type: 2}
 --- !u!1 &463947973 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4043999412949481124, guid: 8488309e3a7de4ac19be347035efc4b6, type: 3}
@@ -2314,6 +2299,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cc72a663470e4f8296f2a833adccfa1, type: 3}
+--- !u!114 &1035958222 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3447191885088113874, guid: a6f0f2094c7c54b678aa9568d56358a3, type: 3}
+  m_PrefabInstance: {fileID: 8854573714532530949}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1082498252
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5523,6 +5519,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8248702085636355348, guid: a6f0f2094c7c54b678aa9568d56358a3, type: 3}
+      propertyPath: relicImage
+      value: 
+      objectReference: {fileID: 1035958222}
     - target: {fileID: 8353910658241104281, guid: a6f0f2094c7c54b678aa9568d56358a3, type: 3}
       propertyPath: m_Name
       value: Itemslots

@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    public static InventoryManager Instance; // 싱글톤 패턴으로 관리
-    public List<Item> items = new List<Item>(); // 공통 아이템 리스트
+    public static InventoryManager Instance; // 싱글톤 패턴
+
+    public List<Relic> relics = new List<Relic>(); // 유물 리스트
 
     // InvBase 관련 슬롯
     [Header("Base Inventory Settings")]
@@ -23,7 +25,7 @@ public class InventoryManager : MonoBehaviour
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        // 에디터에서 자동으로 슬롯 배열을 갱신
+        // 에디터에서 자동으로 슬롯 배열 갱신
         if (baseSlotParent != null)
             baseSlots = baseSlotParent.GetComponentsInChildren<ItemSlot>();
 
@@ -44,53 +46,60 @@ public class InventoryManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        FreshSlot(); // 슬롯 초기화
+        FreshSlot(); // 초기 슬롯 갱신
     }
 
     public void FreshSlot()
     {
         // Base Inventory 갱신
         int i = 0;
-        for (; i < items.Count && i < baseSlots.Length; i++)
+        for (; i < relics.Count && i < baseSlots.Length; i++)
         {
-            baseSlots[i].item = items[i]; // 아이템 할당
+            baseSlots[i].SetRelic(relics[i]); // 슬롯에 유물 데이터 설정
         }
-        for (; i < baseSlots.Length; i++)
-        {
-            baseSlots[i].item = null; // 나머지 슬롯 비우기
-        }
+
 
         // Expanded Inventory 갱신
         for (int j = 0; j < expandedSlots.Length; j++)
         {
-            if (i < items.Count)
+            if (i < relics.Count)
             {
-                expandedSlots[j].item = items[i]; // 남은 아이템 확장 슬롯에 할당
+                expandedSlots[j].SetRelic(relics[i]); // 확장 슬롯에 유물 데이터 설정
                 i++;
             }
-            else
-            {
-                expandedSlots[j].item = null; // 슬롯 비우기
-            }
+
         }
     }
 
-    public void AddItem(Item _item)
+public void AddRelicToInventory(string relicName)
+{
+    // RelicManager에서 유물 데이터 검색
+    RelicManager.Instance.AddRelic(relicName);
+    Relic relic = RelicManager.Instance.activeRelics.Find(r => r.Name == relicName);
+
+    if (relic != null && !relics.Contains(relic)) // 중복 방지
     {
-        if (items.Count < baseSlots.Length + expandedSlots.Length) // 전체 슬롯 체크
-        {
-            items.Add(_item);
-            FreshSlot();
-        }
-        else
-        {
-            print("슬롯이 가득 찼습니다.");
-        }
-    }
-    void Start(){
-        AddItem(ItemDatabaseSingleton.Instance.GetItemByName("Amber"));
-        AddItem(ItemDatabaseSingleton.Instance.GetItemByName("Diamond"));
-        AddItem(ItemDatabaseSingleton.Instance.GetItemByName("Sapphire"));
 
+        relics.Add(relic);
+        Debug.Log($"[AddRelicToInventory] Relic added: {relic.Name}");
+        Debug.Log($"Description: {relic.Description}");
+        Debug.Log($"Sprite: {(relic.Image != null ? relic.Image.name : "No Image Found")}");
+
+        FreshSlot(); // UI 갱신
+    }
+    else
+    {
+        Debug.LogWarning($"[AddRelicToInventory] Failed to add relic: {relicName}");
+        Debug.Log($"Reason: {(relic == null ? "Relic not found in RelicManager" : "Relic already in inventory")}");
+    }
+}
+
+
+    private void Start()
+    {
+        // 예제: 인벤토리에 유물 추가
+        AddRelicToInventory("Amber");
+        AddRelicToInventory("Diamond");
+        AddRelicToInventory("Sapphire");
     }
 }
