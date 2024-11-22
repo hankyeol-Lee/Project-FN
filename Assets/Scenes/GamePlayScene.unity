@@ -353,7 +353,6 @@ MonoBehaviour:
   playerAR: 0
   playerMR: 0
   costResilience: 0
-  floatingtextmanager: {fileID: 0}
 --- !u!1 &212323811
 GameObject:
   m_ObjectHideFlags: 0
@@ -1412,7 +1411,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2325093612422308851, guid: c1c530e50531d4f77ba8c3419e2fc359, type: 3}
       propertyPath: m_SortingOrder
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2576115441024298029, guid: c1c530e50531d4f77ba8c3419e2fc359, type: 3}
       propertyPath: m_LocalPosition.x

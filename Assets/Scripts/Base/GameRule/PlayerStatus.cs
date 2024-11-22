@@ -13,7 +13,6 @@ public class PlayerStatus : MonoBehaviour
 
     public float costResilience; 
     
-    public GameObject floatingtextmanager;
 
     private void Start()
     {
@@ -37,9 +36,8 @@ public class PlayerStatus : MonoBehaviour
         }
         if (damage <= 0.0f) { damage = 0.0f; }
         playerHP -= damage;
-        FloatingTextManager floatingtextmanagerscript = floatingtextmanager.GetComponent<FloatingTextManager>();
         //floatingtextmanagerscript.ShowFloatingText(GameManager.Instance.player.transform.position, damage);
-        //여기에 체력바에 접근해서 체력바 깎는거
+        //?��기에 체력바에 ?��근해?�� 체력�? 깎는�?
         PlayerHPBar.Instance.UpdatePlayerDamageBar(damage);
 
     }

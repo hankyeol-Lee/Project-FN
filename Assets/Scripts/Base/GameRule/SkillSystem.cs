@@ -38,11 +38,13 @@ public class SkillSystem : MonoBehaviour
         {
             ShowSkillRange(skills[0]);
             thisSkill = skills[0];
+            AttackAnimation();
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
             ShowSkillRange(skills[1]);
             thisSkill = skills[1];
+            AttackAnimation();
         }
 
         if (skillRange.activeSelf == true)
@@ -162,7 +164,7 @@ public class SkillSystem : MonoBehaviour
         if (skillPrefab != null)
         {
             GameObject skillAnimationInstance = Instantiate(skillPrefab, Start, Quaternion.identity);
-            AttackAnimation();
+
             // ���� ���� ��Ʈ: �ڷ�ƾ ȣ��
             StartCoroutine(MoveSkillAnimation(skillAnimationInstance, Start, End, 0.3f)); 
         }

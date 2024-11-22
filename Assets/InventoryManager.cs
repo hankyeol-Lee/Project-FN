@@ -98,8 +98,5 @@ public void AddRelicToInventory(string relicName)
     private void Start()
     {
         // 예제: 인벤토리에 유물 추가
-        AddRelicToInventory("Amber");
-        AddRelicToInventory("Diamond");
-        AddRelicToInventory("Sapphire");
     }
 }
