@@ -11,7 +11,7 @@ public static class ItemDatabaseAutoRegister
         string databasePath = "Assets/ItemDatabase.asset";
 
         // ItemDatabase 에셋 로드
-        ItemDatabase itemDatabase = AssetDatabase.LoadAssetAtPath<ItemDatabase>(databasePath);
+        ITEMDB itemDatabase = AssetDatabase.LoadAssetAtPath<ITEMDB>(databasePath);
 
         if (itemDatabase != null)
         {

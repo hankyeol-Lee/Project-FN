@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ItemDatabase")]
-public class ItemDatabase : ScriptableObject
+public class ITEMDB : ScriptableObject
 {
     // Start is called before the first frame update
     public List<Item> items; // 모든 아이템을 저장하는 리스트

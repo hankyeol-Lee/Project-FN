@@ -88,6 +88,9 @@ public class InventoryManager : MonoBehaviour
         }
     }
     void Start(){
-  
+        AddItem(ItemDatabaseSingleton.Instance.GetItemByName("Amber"));
+        AddItem(ItemDatabaseSingleton.Instance.GetItemByName("Diamond"));
+        AddItem(ItemDatabaseSingleton.Instance.GetItemByName("Sapphire"));
+
     }
 }
