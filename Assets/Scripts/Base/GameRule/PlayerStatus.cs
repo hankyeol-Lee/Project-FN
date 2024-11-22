@@ -17,8 +17,8 @@ public class PlayerStatus : MonoBehaviour
     private void Start()
     {
         playerHP = 100;
-        playerAD = 5;
-        playerAP = 5;
+        playerAD = 15;
+        playerAP = 15;
         playerMR = 5;
         playerAR = 5;
 
