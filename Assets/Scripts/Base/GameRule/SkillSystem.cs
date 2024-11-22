@@ -66,7 +66,6 @@ public class SkillSystem : MonoBehaviour
                         if (thisSkill.playerCost <= UI_EnergyBar.Instance.GetPlayerEnergy()) // ��ų�ڽ�Ʈ�� �÷��̾� ������ ���������� ũ�ٸ� 
                         {
                             UI_EnergyBar.Instance.DecreaseHealth(thisSkill.playerCost);
-                            ShowSkillAnimation(thisSkill.skillName, player.transform.position, checkMouseCell.Value);
                             thisSkill.CastSkill(thisSkill, player, checkMouseCell.Value);
                             skillRange.SetActive(false);
                         }
