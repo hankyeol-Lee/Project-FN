@@ -24,11 +24,9 @@ public abstract class ActiveSkill // 사용할 스킬을 지정한
     internal Sprite skillIcon;
     internal bool isTargetCell; // 셀지정 O, X의 boolean
     internal skillType skilltype; // 스킬의 type을 지정하는거.
-<<<<<<< Updated upstream
+
     private Tile newTile;
-=======
-    private  Tile newTile;
->>>>>>> Stashed changes
+
 
     private Dictionary<Vector3Int, TileBase> previousSkillTiles = new Dictionary<Vector3Int, TileBase>();
 
