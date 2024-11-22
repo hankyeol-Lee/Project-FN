@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using Enemyspace;
 using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -118,5 +120,46 @@ public abstract class ActiveSkill // 사용할 스킬을 지정한
             tilemap.SetTile(cell, newTile);
             //Debug.Log($"스킬범위 {cell} 에 지정됨");
         }
+    }
+
+    public List<GameObject> CheckRangeEnemy(Vector3Int mouseCellPos)
+    {
+        Tilemap tilemap = GameManager.Instance.tilemap;
+        List<GameObject> enemyList = new List<GameObject>();
+
+        int distance = skillcelldist;
+        skillRange.Clear(); // 계산 전 초기화
+
+        // 범위 내 셀 계산
+        Vector3Int centerCell = mouseCellPos;
+        for (int x = -distance; x <= distance; x++)
+        {
+            for (int y = -distance; y <= distance; y++)
+            {
+                if (Mathf.Abs(x + y) <= distance)
+                {
+                    Vector3Int offset = new Vector3Int(y, x, 0);
+                    Vector3Int cell = centerCell + offset;
+                    skillRange.Add(cell);
+
+                }
+            }
+        }
+
+        foreach(var cell in skillRange)
+        {
+            Vector3 worldPosition = tilemap.CellToWorld(cell); 
+            Collider2D[] hits = Physics2D.OverlapPointAll(worldPosition);
+
+            foreach (var hit in hits)
+            {
+                if (hit.CompareTag("Enemy"))
+                {
+                    enemyList.Add(hit.gameObject);
+                }
+            }
+        }
+        return enemyList;
+
     }
 }
