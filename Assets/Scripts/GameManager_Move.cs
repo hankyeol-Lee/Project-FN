@@ -8,6 +8,8 @@ using HexClass;
 using TMPro;
 using System.IO;
 using System.Linq;
+using Spine.Unity;
+using Spine;
 
 public class GameManager_Move : MonoBehaviour
 {
@@ -23,13 +25,14 @@ public class GameManager_Move : MonoBehaviour
     public TileBase highlightTile; // ������ Ÿ��
     public Vector3Int playerCellPos;
     public Grid mygrid;
+    public SkeletonAnimation p_animation;
     Animator playeranimator;
 
     private void Awake(){
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // ���� ����Ǿ �ı����� �ʵ��� ����
+            DontDestroyOnLoad(gameObject); // ���� ����Ǿ�? �ı����� �ʵ��� ����
         }
         else
         {
@@ -85,13 +88,13 @@ public class GameManager_Move : MonoBehaviour
                 //List<Vector3Int> playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell, obstacles);
                 if (! is_P_Moving)
                 {
-                    playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell, obstacles); // �̵� �� �ƴ϶�� ���� Ÿ�Ϻ��� playerPath ����
+                    playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell, obstacles); // �̵� �� �ƴ϶��? ���� Ÿ�Ϻ��� playerPath ����
                     currentTargetCell = targetCell;
                     is_P_Moving = true;
                 }
                 else
                 {
-                    playerPath = HexClass.HexPathfinding.FindPath(currentTargetCell, targetCell, obstacles); // �̵� �� �̶�� ���� ���ϴ� ���� Ÿ�Ϻ��� playerPath ����
+                    playerPath = HexClass.HexPathfinding.FindPath(currentTargetCell, targetCell, obstacles); // �̵� �� �̶��? ���� ���ϴ� ���� Ÿ�Ϻ��� playerPath ����
           
                 }
                 
@@ -125,7 +128,10 @@ public class GameManager_Move : MonoBehaviour
 
     public IEnumerator MovePath(List<Vector3Int> path)
     {
-        playeranimator.Play("PLAYER_MOVE_ANIM");
+        p_animation = player.GetComponent<SkeletonAnimation>();
+        SkeletonDataAsset skeletonDataAsset = Resources.Load<SkeletonDataAsset>("PlayerAnimation/Move");
+        p_animation.skeletonDataAsset = skeletonDataAsset;
+        p_animation.Initialize(true);
         foreach (var cell in path)
         {
             playerCellPos = GetPlayerPos();
@@ -135,7 +141,9 @@ public class GameManager_Move : MonoBehaviour
             yield return MoveCell(player,startWorldPos, endWorldPos);
         }
         is_P_Moving = false;
-        playeranimator.Play("PLAYER_IDLE_ANIM");
+        skeletonDataAsset = Resources.Load<SkeletonDataAsset>("PlayerAnimation/Idle");
+        p_animation.skeletonDataAsset = skeletonDataAsset;
+        p_animation.Initialize(true);
     }
 
 
