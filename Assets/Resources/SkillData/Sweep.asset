@@ -24,6 +24,7 @@ MonoBehaviour:
   isTargetCell: 1
   skilltype: 0
   skillcelldist: 1
-  tile: {fileID: 0}
+  tile: {fileID: 11400000, guid: eb5a40703ede4bf40b2151cd81fb3670, type: 2}
   SkillRangeList: []
   offset: {x: 0, y: 0, z: 0}
+  skillIcon: {fileID: 0}
