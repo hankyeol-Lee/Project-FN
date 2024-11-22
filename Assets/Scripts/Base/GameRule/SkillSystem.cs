@@ -1,5 +1,4 @@
 using System.Collections;
-using Spine.Unity;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -15,7 +14,7 @@ public class SkillSystem : MonoBehaviour
     public ActiveSkill thisSkill; // Ű�� ������ ��, � ��ų�� ������ check�ϴ� ��ų�� ����Ű�� ����.
 
     private Vector3Int? lastMouseCell = null; // ���������� �ӹ����� �� ��ǥ ����
-    public SkeletonAnimation p_animation;
+
     public static SkillSystem Instance;
 
     private void Awake()
@@ -29,7 +28,6 @@ public class SkillSystem : MonoBehaviour
         {
             skills = playerskill.playerSkills; // �迭 ��ü�� ���� ��������
         }
-        p_animation = player.GetComponent<SkeletonAnimation>();
         
     }
     private void Update()
@@ -181,7 +179,6 @@ public class SkillSystem : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float t = Mathf.Clamp01(elapsedTime / duration); // 0���� 1������ ���� ����
             skillInstance.transform.position = Vector3.Lerp(start, end, t); // ���� ����
-
             yield return null; // ���� �����ӱ��� ���?
         }
 
@@ -193,19 +190,6 @@ public class SkillSystem : MonoBehaviour
     {
         tilemap = currentTilemap;
     }
-    public void AttackAnimation()
-    {
-        SkeletonDataAsset skeletonDataAsset = Resources.Load<SkeletonDataAsset>("PlayerAnimation/Attack");
-        p_animation.skeletonDataAsset = skeletonDataAsset;
-        p_animation.Initialize(true);
-    }
-    public void IdleAnimation()
-    {
-        SkeletonDataAsset skeletonDataAsset = Resources.Load<SkeletonDataAsset>("PlayerAnimation/Idle");
-        p_animation.skeletonDataAsset = skeletonDataAsset;
-        p_animation.Initialize(true);
-    }
-
 
 }
 
