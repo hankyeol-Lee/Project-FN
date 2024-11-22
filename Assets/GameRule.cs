@@ -1,32 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameRule : MonoBehaviour
 {
     public GameObject Player;
+    private bool isGameOver = false; // 씬 전환 여부 플래그
+
     void Update()
     {
-        if (Player.GetComponent<PlayerStatus>().playerHP <= 0)
+        if (!isGameOver && Player.GetComponent<PlayerStatus>().playerHP <= 0)
         {
+            isGameOver = true;
             Destroy(Player);
-
+            StartCoroutine(DelayedAction2());
         }
-        if (SpawnEnemy.instance.enemyInstances.Count == 0)
+
+        if (!isGameOver && SpawnEnemy.instance.enemyInstances.Count == 0)
         {
             Debug.Log("Win");
+            isGameOver = true; // 플래그 설정
             StartCoroutine(DelayedAction());
- 
         }
     }
+
     IEnumerator DelayedAction()
     {
-
         yield return new WaitForSeconds(3f);
         SceneManager.LoadScene("VictoryScene");
-
+    }
+    IEnumerator DelayedAction2()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene("DefeatScene");
     }
 }
-
