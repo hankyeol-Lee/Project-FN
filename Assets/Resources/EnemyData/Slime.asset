@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Slime
   HP: 50
-  AD: 2
-  AP: 2
+  AD: 5
+  AP: 5
   AR: 8
   MR: 8
   Speed: 0.4
