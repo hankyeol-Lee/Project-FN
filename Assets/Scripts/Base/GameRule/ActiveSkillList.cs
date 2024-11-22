@@ -30,13 +30,13 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) // enemy만 사용하는 skill 오버로딩.
         {
-            //
-            //여기에 스킬 이펙트 입력 ( 전역 싱글톤 정의된 함수를 사용해야함)
-            //대상지정 스킬의 경우)
+            //대상지정 스킬의 경우
             EnemyInstances.enemyDict.TryGetValue(skillCaster.name, out Enemy enemy); // 1. enemy 객체에 스킬 시전자의 정보를 enemyDict에서 받아옴.(복붙)
-            Debug.Log($"useskill : {useSkill}, enemy : {enemy}, enemy returnadap : {enemy.returnADAP(useSkill.skilltype)}");
+            //Debug.Log($"useskill : {useSkill}, enemy : {enemy}, enemy returnadap : {enemy.returnADAP(useSkill.skilltype)}");
             float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, enemy.returnADAP(useSkill.skilltype)); // 스킬계수 * 공격력(혹은 AP)
             GameManager.Instance.player.GetComponent<PlayerStatus>().PlayerGetDamage(initdamage, skilltype); // 플레이어에게 직접 데미지를 주는 코드
+            Debug.Log($"{skillCaster.name}에게공격당햇다는거임 {useSkill.skillName} {skillCaster.transform.position}, {GameManager.Instance.player.transform.position}");
+            SkillSystem.Instance.ShowSkillAnimation(useSkill.skillName, skillCaster.transform.position, GameManager.Instance.player.transform.position);
         }
     }
 
@@ -47,10 +47,8 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) 
         {
-
             // 셀 타겟팅
             EnemyInstances.enemyDict.TryGetValue(skillCaster.name, out Enemy enemy);
-                //TODO : 플레이어 위치 찾고, 플레이어의 셀에 공격하거나 ㅇㅇ 
             Vector3Int playerCellPos = GameManager.Instance.PlayerWorldToCell(GameManager.Instance.player.transform.position);
             bool? isfuck = GameManager.Instance.IsTargetOnCell(playerCellPos); // 그 셀 위에 플레이어가 있다면(플레이어가 있는 셀 위치 == IstargetOnCell())
             if (isfuck.HasValue) // 만약에 스킬 범위 안에 있다면.
@@ -58,6 +56,8 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
                 float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient,useSkill.skilltype,enemy.returnADAP(useSkill.skilltype));
                 // 플레이어에게 데미지 주는 함수.
                 GameManager.Instance.player.GetComponent<PlayerStatus>().PlayerGetDamage(initdamage,skilltype);
+                Debug.Log($"{skillCaster.name}에게공격당햇다는거임 {useSkill.skillName} {skillCaster.transform.position}, {GameManager.Instance.player.GetComponent<Transform>().position}");
+                SkillSystem.Instance.ShowSkillAnimation(useSkill.skillName, skillCaster.transform.position, GameManager.Instance.player.transform.position);
             }
         }   
     }
@@ -67,7 +67,20 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public ManaDrain(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) 
+        {
+            EnemyInstances.enemyDict.TryGetValue(skillCaster.name, out Enemy enemy);
+            Vector3Int playerCellPos = GameManager.Instance.PlayerWorldToCell(GameManager.Instance.player.transform.position);
+            bool? isfuck = GameManager.Instance.IsTargetOnCell(playerCellPos); // 그 셀 위에 플레이어가 있다면(플레이어가 있는 셀 위치 == IstargetOnCell())
+            if (isfuck.HasValue) // 만약에 스킬 범위 안에 있다면.
+            {
+                float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, enemy.returnADAP(useSkill.skilltype));
+                // 플레이어에게 데미지 주는 함수.
+                GameManager.Instance.player.GetComponent<PlayerStatus>().PlayerGetDamage(initdamage, skilltype);
+                Debug.Log($"{skillCaster.name}에게공격당햇다는거임 {useSkill.skillName} {skillCaster.transform.position}, {GameManager.Instance.player.GetComponent<Transform>().position}");
+                SkillSystem.Instance.ShowSkillAnimation(useSkill.skillName, skillCaster.transform.position, GameManager.Instance.player.transform.position);
+            }
+        }
     }
 
     public class Smash : ActiveSkill
@@ -75,7 +88,16 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         public Smash(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) 
+        {
+            //대상지정 스킬의 경우
+            EnemyInstances.enemyDict.TryGetValue(skillCaster.name, out Enemy enemy); // 1. enemy 객체에 스킬 시전자의 정보를 enemyDict에서 받아옴.(복붙)
+            //Debug.Log($"useskill : {useSkill}, enemy : {enemy}, enemy returnadap : {enemy.returnADAP(useSkill.skilltype)}");
+            float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, enemy.returnADAP(useSkill.skilltype)); // 스킬계수 * 공격력(혹은 AP)
+            GameManager.Instance.player.GetComponent<PlayerStatus>().PlayerGetDamage(initdamage, skilltype); // 플레이어에게 직접 데미지를 주는 코드
+            Debug.Log($"{skillCaster.name}에게공격당햇다는거임 {useSkill.skillName} {skillCaster.transform.position}, {GameManager.Instance.player.transform.position}");
+            SkillSystem.Instance.ShowSkillAnimation(useSkill.skillName, skillCaster.transform.position, GameManager.Instance.player.transform.position);
+        }
     }
 
     public class Harden : ActiveSkill
