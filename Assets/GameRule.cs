@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameRule : MonoBehaviour
 {
@@ -10,12 +11,22 @@ public class GameRule : MonoBehaviour
     {
         if (Player.GetComponent<PlayerStatus>().playerHP <= 0)
         {
-            //ÆÐ¹è
+            Destroy(Player);
+
         }
-        if (EnemyInstances.enemyDict.Count == 0)
+        if (SpawnEnemy.instance.enemyInstances.Count == 0)
         {
-            //½Â¸®
+            Debug.Log("Win");
+            StartCoroutine(DelayedAction());
+ 
         }
+    }
+    IEnumerator DelayedAction()
+    {
+
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene("VictoryScene");
+
     }
 }
 

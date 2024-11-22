@@ -5,14 +5,14 @@ using UnityEngine.Tilemaps;
 
 public class TilemapManager : MonoBehaviour
 {
-    public Transform tilemapParent; // íƒ€ì¼ë§µì„ ë¡œë“œí•  ë¶€ëª¨ ê°ì²´
-    public GameObject[] tilemapPrefabs; // íƒ€ì¼ë§µ Prefab ë°°ì—´
+    public Transform tilemapParent; // ????¼ë§µì„ ë¡œë“œ?•  ë¶?ëª? ê°ì²´
+    public GameObject[] tilemapPrefabs; // ????¼ë§? Prefab ë°°ì—´
 
-    private GameObject currentTilemap; // í˜„ì¬ í™œì„±í™”ëœ íƒ€ì¼ë§µ
+    private GameObject currentTilemap; // ?˜„?¬ ?™œ?„±?™”?œ ????¼ë§?
     // Start is called before the first frame update
     void Start()
     {
-        LoadTilemap(7);
+        LoadTilemap(3);
     }
 
     // Update is called once per frame
@@ -28,13 +28,13 @@ public class TilemapManager : MonoBehaviour
             return;
         }
 
-        // ê¸°ì¡´ íƒ€ì¼ë§µ ì œê±°
+        // ê¸°ì¡´ ????¼ë§? ? œê±?
         if (currentTilemap != null)
         {
             Destroy(currentTilemap);
         }
 
-        // ìƒˆë¡œìš´ íƒ€ì¼ë§µ ë¡œë“œ
+        // ?ƒˆë¡œìš´ ????¼ë§? ë¡œë“œ
         GameObject map = Instantiate(tilemapPrefabs[mapIndex], tilemapParent);
         currentTilemap = map;
         currentTilemap.transform.position = new Vector3(0,0,0);
