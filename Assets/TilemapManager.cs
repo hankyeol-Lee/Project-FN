@@ -12,7 +12,7 @@ public class TilemapManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LoadTilemap(3);
+        LoadTilemap(10);
     }
 
     // Update is called once per frame

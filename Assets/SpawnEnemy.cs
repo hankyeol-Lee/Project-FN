@@ -26,11 +26,27 @@ public class SpawnEnemy : MonoBehaviour
     }
     public void Start()
     {
-        //         GameManager.Instance.EnemySpawner.GetComponent<SpawnEnemy>().
-        SpawnEnemyAtCell("Slime", new Vector3(3.72f, -1.1f, 0));
-        SpawnEnemyAtCell("GiantRat",new Vector3(9.112f, -0.102f,0f));
-        SpawnEnemyAtCell("WeedSpirit", new Vector3(7.58f, -3.55f, 0f));
-        SpawnEnemyAtCell("Goblin", new Vector3(9.14f, -3.58f, 0f));
+        void SpawnEnemies()
+        {
+            SpawnEnemyAtCell("Slime", GameManager.Instance.PlayerCellToWorld(new Vector3Int(3, 8, 0)));
+            SpawnEnemyAtCell("GiantRat", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-6, 14, 0)));
+            SpawnEnemyAtCell("WeedSpirit", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-4, 20, 0)));
+            SpawnEnemyAtCell("Goblin", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-11, 17, 0)));
+            SpawnEnemyAtCell("Slime", GameManager.Instance.PlayerCellToWorld(new Vector3Int(1, 25, 0)));
+            SpawnEnemyAtCell("GiantRat", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-3, 32, 0)));
+            SpawnEnemyAtCell("WeedSpirit", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-8, 45, 0)));
+            SpawnEnemyAtCell("Goblin", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-19, 32, 0)));
+            SpawnEnemyAtCell("Slime", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-22, 44, 0)));
+            SpawnEnemyAtCell("GiantRat", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-27, 47, 0)));
+            SpawnEnemyAtCell("WeedSpirit", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-25, 38, 0)));
+            SpawnEnemyAtCell("Goblin", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-12, 27, 0)));
+            SpawnEnemyAtCell("Slime", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-5, 8, 0)));
+            SpawnEnemyAtCell("GiantRat", GameManager.Instance.PlayerCellToWorld(new Vector3Int(0, 20, 0)));
+            SpawnEnemyAtCell("WeedSpirit", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-7, 53, 0)));
+            SpawnEnemyAtCell("Goblin", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-17, 43, 0)));
+            SpawnEnemyAtCell("Slime", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-24, 39, 0)));
+        }
+        SpawnEnemies();
     }
     public void SpawnEnemyAtCell(string enemyName, Vector3 spawnPos)
     {

@@ -5,34 +5,43 @@ using UnityEngine.SceneManagement;
 
 public class GameRule : MonoBehaviour
 {
+    public bool isWin = false;
     public GameObject Player;
     private bool isGameOver = false; // �� ��ȯ ���� �÷���
 
     void Update()
     {
-        if (!isGameOver && Player.GetComponent<PlayerStatus>().playerHP <= 0)
+        string thisscene = SceneManager.GetActiveScene().name;
+        if (!string.IsNullOrEmpty(thisscene))
         {
-            isGameOver = true;
-            Destroy(Player);
-            StartCoroutine(DelayedAction2());
-        }
+            if (!isGameOver && Player.GetComponent<PlayerStatus>().playerHP <= 0)
+            {
+                isGameOver = true;
+                Destroy(Player);
+                StartCoroutine(DelayedAction2());
+            }
 
-        if (!isGameOver && SpawnEnemy.instance.enemyInstances.Count == 0)
-        {
-            Debug.Log("Win");
-            isGameOver = true; // �÷��� ����
-            StartCoroutine(DelayedAction());
+            if (!isGameOver && SpawnEnemy.instance.enemyInstances.Count == 0)
+            {
+                Debug.Log("Win");
+                isGameOver = true; // �÷��� ����
+                StartCoroutine(DelayedAction());
+            }
         }
+        
     }
 
     IEnumerator DelayedAction()
     {
         yield return new WaitForSeconds(3f);
+        isWin = true;   
         SceneManager.LoadScene("VictoryScene");
+        SceneManager.LoadScene("SelectScene");
     }
     IEnumerator DelayedAction2()
     {
         yield return new WaitForSeconds(3f);
         SceneManager.LoadScene("DefeatScene");
+        SceneManager.LoadScene("SelectScene");
     }
 }
