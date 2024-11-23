@@ -9,18 +9,23 @@ public class GameRule : MonoBehaviour
     public GameObject Player;
     void Update()
     {
-        if (Player.GetComponent<PlayerStatus>().playerHP <= 0)
+        string scenename = SceneManager.GetActiveScene().name;
+        if (scenename == "GamePlayScene")
         {
-            Destroy(Player);
+            if (Player.GetComponent<PlayerStatus>().playerHP <= 0)
+            {
+                Destroy(Player);
 
-        }
-        if (SpawnEnemy.instance.enemyInstances.Count == 0)
-        {
-            Debug.Log("Win");
-            StartCoroutine(DelayedAction());
- 
+            }
+            if (SpawnEnemy.instance.enemyInstances.Count == 0)
+            {
+                Debug.Log("Win");
+                StartCoroutine(DelayedAction());
+
+            }
         }
     }
+        
     IEnumerator DelayedAction()
     {
 
