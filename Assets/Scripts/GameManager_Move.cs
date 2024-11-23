@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using Spine.Unity;
 using Spine;
+using UnityEditor;
 
 public class GameManager_Move : MonoBehaviour
 {
@@ -39,11 +40,13 @@ public class GameManager_Move : MonoBehaviour
             Destroy(gameObject); // �ߺ��� �ν��Ͻ��� �ִٸ� �ı�
         }
     }
+    
+
+
     private void Start()
     {
         is_P_Moving = false;
         playeranimator = player.GetComponent<Animator>();
-
     }
     private void Update()
     {
@@ -97,10 +100,18 @@ public class GameManager_Move : MonoBehaviour
                     playerPath = HexClass.HexPathfinding.FindPath(currentTargetCell, targetCell, obstacles); // �̵� �� �̶��? ���� ���ϴ� ���� Ÿ�Ϻ��� playerPath ����
           
                 }
-                
-                StartCoroutine(MovePath(playerPath));
-                
-                
+                //decreasecost
+                if(UI_EnergyBar.Instance.GetPlayerEnergy() < playerPath.Count)
+                {
+                    playerPath = null;
+                    StopAllCoroutines();
+                    return;
+                }
+                else
+                {
+                    UI_EnergyBar.Instance.DecreaseHealth(playerPath.Count);
+                    StartCoroutine(MovePath(playerPath));
+                }
             }
         }
     }
@@ -156,7 +167,7 @@ public class GameManager_Move : MonoBehaviour
     public IEnumerator MoveCell(GameObject mover, Vector3 startWorldPos, Vector3 endWorldPos) // MoveCell �� �����ؼ�, �÷��̾� ���� �ٸ� ��ü�� ������ �� �ֵ���.
     {
         float elapsedTime = 0f;
-        float duration = 0.5f;
+        float duration = 0.4444f;
 
         while (elapsedTime < duration)
         {

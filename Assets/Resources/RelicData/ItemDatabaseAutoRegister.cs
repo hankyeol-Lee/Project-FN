@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
-
+#if UNITY_EDITOR
 [InitializeOnLoad] // Unity 에디터가 로드될 때 자동 실행
+
 public static class ItemDatabaseAutoRegister
 {
     static ItemDatabaseAutoRegister()
@@ -32,3 +33,4 @@ public static class ItemDatabaseAutoRegister
         }
     }
 }
+#endif

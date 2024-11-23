@@ -19,18 +19,12 @@ public class PlayerSkill : MonoBehaviour
         allSkillLists = SkillInstance.skillInstances; // SkillInstanceÀÇ µñ¼Å³Ê¸®¸¦ °¡Á®¿È
     }
 
-    private void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            AddSkill("MagicBullet",0);
-
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            AddSkill("Flame", 1);
-        }
+        AddSkill("MagicBullet", 0);
+        AddSkill("Flame", 1);
     }
+    
 
     public void AddSkill(string skillName, int slotnum)
     {

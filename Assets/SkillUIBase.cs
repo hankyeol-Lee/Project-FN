@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using Microsoft.Unity.VisualStudio.Editor;
 using Unity.VisualScripting;
-using UnityEditor.ShortcutManagement;
 using UnityEngine;
 using UnityEngine.UI;
 

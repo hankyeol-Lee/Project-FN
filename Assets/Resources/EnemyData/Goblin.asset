@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Goblin
   HP: 50
-  AD: 15
+  AD: 30
   AP: 0
   AR: 5
   MR: 5

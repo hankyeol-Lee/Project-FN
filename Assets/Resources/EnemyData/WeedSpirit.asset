@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: WeedSpirit
   HP: 50
-  AD: 20
+  AD: 100
   AP: 0
   AR: 2
   MR: 8

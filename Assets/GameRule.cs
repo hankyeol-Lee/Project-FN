@@ -36,12 +36,15 @@ public class GameRule : MonoBehaviour
         yield return new WaitForSeconds(3f);
         isWin = true;   
         SceneManager.LoadScene("VictoryScene");
-        SceneManager.LoadScene("SelectScene");
+        yield return new WaitForSeconds(10f);
+        SceneManager.LoadScene("MainScene");
     }
     IEnumerator DelayedAction2()
     {
         yield return new WaitForSeconds(3f);
         SceneManager.LoadScene("DefeatScene");
-        SceneManager.LoadScene("SelectScene");
+
+        yield return new WaitForSeconds(10f);
+        SceneManager.LoadScene("MainScene");
     }
 }

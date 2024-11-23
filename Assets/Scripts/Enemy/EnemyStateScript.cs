@@ -47,7 +47,7 @@ public class EnemyStateScript : MonoBehaviour
             {
                 case EnemyState.Wait:
                     // Wait 상태에서는 2초를 대기
-                    yield return new WaitForSeconds(2f);
+                    yield return new WaitForSeconds(1f);
                     // 만약 플레이어와의 셀 거리가 thisskill.skillcelldist 이하라면 if (thisSkill.skillcelldist)
                     if (checkDistancetoPlayer())
                     {
@@ -71,7 +71,7 @@ public class EnemyStateScript : MonoBehaviour
                     break;
 
                 case EnemyState.Attack:
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(0.5f);
 
                     enemy.Attack(enemyobject);
                     enemyState = EnemyState.Wait;

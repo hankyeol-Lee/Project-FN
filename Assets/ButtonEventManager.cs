@@ -7,7 +7,7 @@ public class ButtonEventManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public void OnstartbuttonClick(){
-        SceneManager.LoadScene("SelectScene");
+        SceneManager.LoadScene("GamePlayScene");
     }
 
     public void GameExit()

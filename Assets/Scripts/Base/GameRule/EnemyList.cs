@@ -4,6 +4,120 @@ using UnityEngine;
 using Enemyspace;
 public class EnemyList
 {
+    // Slime 클래스들
+    public class Slime1 : Enemy
+    {
+        public Slime1(EnemyData data) : base(data) { }
+
+        public override void Attack(GameObject attacker)
+        {
+            enemySkillList[0].CastSkill(enemySkillList[0], attacker);
+        }
+    }
+    public class Slime2 : Enemy
+    {
+        public Slime2(EnemyData data) : base(data) { }
+
+        public override void Attack(GameObject attacker)
+        {
+            enemySkillList[0].CastSkill(enemySkillList[0], attacker);
+        }
+    }
+    public class Slime3 : Enemy
+    {
+        public Slime3(EnemyData data) : base(data) { }
+
+        public override void Attack(GameObject attacker)
+        {
+            enemySkillList[0].CastSkill(enemySkillList[0], attacker);
+        }
+    }
+    // WeedSpirit 클래스들
+    public class WeedSpirit1 : Enemy
+    {
+        public WeedSpirit1(EnemyData data) : base(data) { }
+
+        public override void Attack(GameObject attacker)
+        {
+            enemySkillList[0].CastSkill(enemySkillList[0], attacker);
+        }
+    }
+    public class WeedSpirit2 : Enemy
+    {
+        public WeedSpirit2(EnemyData data) : base(data) { }
+
+        public override void Attack(GameObject attacker)
+        {
+            enemySkillList[0].CastSkill(enemySkillList[0], attacker);
+        }
+    }
+    public class WeedSpirit3 : Enemy
+    {
+        public WeedSpirit3(EnemyData data) : base(data) { }
+
+        public override void Attack(GameObject attacker)
+        {
+            enemySkillList[0].CastSkill(enemySkillList[0], attacker);
+        }
+    }
+    public class GiantRat1 : Enemy
+    {
+        public GiantRat1(EnemyData data) : base(data) { }
+
+        public override void Attack(GameObject attacker)
+        {
+            enemySkillList[0].CastSkill(enemySkillList[0], attacker);
+        }
+    }
+    public class GiantRat2 : Enemy
+    {
+        public GiantRat2(EnemyData data) : base(data) { }
+
+        public override void Attack(GameObject attacker)
+        {
+            enemySkillList[0].CastSkill(enemySkillList[0], attacker);
+        }
+    }
+    public class GiantRat3 : Enemy
+    {
+        public GiantRat3(EnemyData data) : base(data) { }
+
+        public override void Attack(GameObject attacker)
+        {
+            enemySkillList[0].CastSkill(enemySkillList[0], attacker);
+        }
+    }
+
+    public class Goblin1 : Enemy
+    {
+        public Goblin1(EnemyData data) : base(data) { }
+        public override void Attack(GameObject attacker)
+        {
+            enemySkillList[0].CastSkill(enemySkillList[0], attacker);
+        }
+    }
+    public class Goblin2 : Enemy
+    {
+        public Goblin2(EnemyData data) : base(data) { }
+        public override void Attack(GameObject attacker)
+        {
+            enemySkillList[0].CastSkill(enemySkillList[0], attacker);
+        }
+    }
+    public class Goblin3 : Enemy
+    {
+        public Goblin3(EnemyData data) : base(data) { }
+        public override void Attack(GameObject attacker)
+        {
+            enemySkillList[0].CastSkill(enemySkillList[0], attacker);
+        }
+    }
+    /// <summary>
+    /// <summary>
+    /// 
+    /// <summary>
+    /// //////
+    /// </summary>
     // 여기에 Enemy의 하위 class를 사용하면 됨. Enemy를 적어 놓을 듯.
     public class Slime : Enemy
     {

@@ -54,12 +54,13 @@ public class UI_EnergyBar : MonoBehaviour
             UpdateHealthBar();
             UpdateHealthText();
         }
-
+/*
         // Q 키를 눌렀고 체력 감소가 가능한 경우 한 칸 감소
         if (Input.GetKeyDown(KeyCode.E) && canDecreaseHealth)
         {
             DecreaseHealth(2);
         }
+*/
     }
 
     // 체력 한 칸 줄이는 메서드

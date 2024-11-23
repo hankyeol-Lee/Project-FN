@@ -32,19 +32,21 @@ public class SpawnEnemy : MonoBehaviour
             SpawnEnemyAtCell("GiantRat", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-6, 14, 0)));
             SpawnEnemyAtCell("WeedSpirit", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-4, 20, 0)));
             SpawnEnemyAtCell("Goblin", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-11, 17, 0)));
-            SpawnEnemyAtCell("Slime", GameManager.Instance.PlayerCellToWorld(new Vector3Int(1, 25, 0)));
-            SpawnEnemyAtCell("GiantRat", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-3, 32, 0)));
-            SpawnEnemyAtCell("WeedSpirit", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-8, 45, 0)));
-            SpawnEnemyAtCell("Goblin", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-19, 32, 0)));
-            SpawnEnemyAtCell("Slime", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-22, 44, 0)));
-            SpawnEnemyAtCell("GiantRat", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-27, 47, 0)));
-            SpawnEnemyAtCell("WeedSpirit", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-25, 38, 0)));
-            SpawnEnemyAtCell("Goblin", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-12, 27, 0)));
-            SpawnEnemyAtCell("Slime", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-5, 8, 0)));
-            SpawnEnemyAtCell("GiantRat", GameManager.Instance.PlayerCellToWorld(new Vector3Int(0, 20, 0)));
-            SpawnEnemyAtCell("WeedSpirit", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-7, 53, 0)));
-            SpawnEnemyAtCell("Goblin", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-17, 43, 0)));
-            SpawnEnemyAtCell("Slime", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-24, 39, 0)));
+            // Slime
+            SpawnEnemyAtCell("Slime1", GameManager.Instance.PlayerCellToWorld(new Vector3Int(1, 25, 0)));
+            SpawnEnemyAtCell("Slime2", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-3, 32, 0)));
+            SpawnEnemyAtCell("Slime3", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-8, 45, 0)));
+
+            // WeedSpirit
+            SpawnEnemyAtCell("WeedSpirit1", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-19, 32, 0)));
+            SpawnEnemyAtCell("WeedSpirit2", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-22, 44, 0)));
+            SpawnEnemyAtCell("WeedSpirit3", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-27, 47, 0)));
+
+            // GiantRat
+            SpawnEnemyAtCell("GiantRat1", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-25, 38, 0)));
+            SpawnEnemyAtCell("GiantRat2", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-12, 27, 0)));
+            SpawnEnemyAtCell("GiantRat3", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-5, 8, 0)));
+
         }
         SpawnEnemies();
     }
