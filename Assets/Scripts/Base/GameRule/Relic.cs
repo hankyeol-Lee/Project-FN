@@ -23,7 +23,7 @@ public class Relic
             }
         else
             {
-                Debug.Log($"[Relic] Image loaded successfully: {imageName}");
+                //Debug.Log($"[Relic] Image loaded successfully: {imageName}");
             }
     }
 

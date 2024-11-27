@@ -86,22 +86,25 @@ public class GameManager_Move : MonoBehaviour
             {
                 HashSet<Hex> obstacles = new HashSet<Hex>();
                 targetCell = returnCell.Value;
-                List<Vector3Int> playerPath = new List<Vector3Int>(); 
+                List<Vector3Int> playerPath = new List<Vector3Int>();
                 //tilemap.SetTile(targetCell, tile);
                 //List<Vector3Int> playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell, obstacles);
-                if (! is_P_Moving)
+                if (is_P_Moving)
+                {
+                    StopAllCoroutines(); // 기존 코루틴 중단
+                    is_P_Moving = false; // 이동 상태 초기화
+                    return;
+                }
+                if (!is_P_Moving)
                 {
                     playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell, obstacles);
                     currentTargetCell = targetCell;
                     is_P_Moving = true;
                 }
-                else
-                {
-                    playerPath = HexClass.HexPathfinding.FindPath(currentTargetCell, targetCell, obstacles);
-          
-                }
+                //playerPath = HexClass.HexPathfinding.FindPath(currentTargetCell, targetCell, obstacles);
+
                 //decreasecost
-                if(UI_EnergyBar.Instance.GetPlayerEnergy() < playerPath.Count)
+                if (UI_EnergyBar.Instance.GetPlayerEnergy() < playerPath.Count)
                 {
                     playerPath = null;
                     StopAllCoroutines();

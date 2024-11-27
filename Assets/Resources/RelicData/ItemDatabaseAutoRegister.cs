@@ -25,7 +25,7 @@ public static class ItemDatabaseAutoRegister
             // 변경 사항 저장
             EditorUtility.SetDirty(itemDatabase);
 
-            Debug.Log($"Registered {allItems.Length} items to ItemDatabase");
+            //Debug.Log($"Registered {allItems.Length} items to ItemDatabase");
         }
         else
         {
