@@ -20,7 +20,7 @@ public class GameCondition : MonoBehaviour
         P_AP = Player.GetComponent<PlayerStatus>().playerAP;
         P_AR = Player.GetComponent<PlayerStatus>().playerAR;
         P_MR = Player.GetComponent<PlayerStatus>().playerMR;
-        Cur_Cost = UI_EnergyBar.Instance.currentHealth;
+        Cur_Cost = (int)UI_EnergyBar.Instance.currentHealth;
         Cost_Fill = UI_EnergyBar.Instance.fillSpeed;
         
         foreach(var relic in RelicManager.Instance.activeRelicsDict)
@@ -42,7 +42,7 @@ public class GameCondition : MonoBehaviour
         P_AP = Player.GetComponent<PlayerStatus>().playerAP;
         P_AR = Player.GetComponent<PlayerStatus>().playerAR;
         P_MR = Player.GetComponent<PlayerStatus>().playerMR;
-        Cur_Cost = UI_EnergyBar.Instance.currentHealth;
+        Cur_Cost = (int)UI_EnergyBar.Instance.currentHealth;
         Cost_Fill = UI_EnergyBar.Instance.fillSpeed;
 
         RelicManager.Instance.CheckRelics(this);

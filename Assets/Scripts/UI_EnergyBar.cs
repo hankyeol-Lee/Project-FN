@@ -9,9 +9,9 @@ public class UI_EnergyBar : MonoBehaviour
 {
     public Image healthBar;           // 체력바 Image 컴포넌트
     public Text healthText;           // 체력을 표시할 Text 컴포넌트
-    public float fillSpeed = 1f;      // 1초에 한 칸씩 차오르는 속도
-    private int maxHealth = 10;       // 최대 체력 칸 수
-    public int currentHealth;        // 현재 체력 칸 수
+    public float fillSpeed = 1.0f;      // 1초에 한 칸씩 차오르는 속도
+    private float maxHealth = 10.0f;       // 최대 체력 칸 수
+    public float currentHealth;        // 현재 체력 칸 수
     private bool canDecreaseHealth = true; // 체력 감소 가능 여부
     public static UI_EnergyBar Instance { get; private set; }
     private void Awake()
@@ -41,7 +41,7 @@ public class UI_EnergyBar : MonoBehaviour
             healthBar.fillAmount += (1f / maxHealth) * (fillSpeed * Time.deltaTime);
 
             // 다음 칸으로 채워졌는지 확인
-            if (healthBar.fillAmount >= (float)(currentHealth + 1) / maxHealth)
+            if (healthBar.fillAmount >= (currentHealth + 1.0f) / maxHealth)
             {
                 currentHealth += 1;
                 UpdateHealthBar();
@@ -80,12 +80,12 @@ public class UI_EnergyBar : MonoBehaviour
     }
     public int GetPlayerEnergy()
     {
-        return currentHealth;
+        return Mathf.FloorToInt(currentHealth); // 소숫점 이하를 버리고 정수 반환
     }
     // 체력바 업데이트
-   public void UpdateHealthBar()
+    public void UpdateHealthBar()
     {
-        healthBar.fillAmount = (float)currentHealth / maxHealth;
+        healthBar.fillAmount = currentHealth / maxHealth;
     }
     void EnableDecreaseHealth()
     {
@@ -95,7 +95,7 @@ public class UI_EnergyBar : MonoBehaviour
     {
         if (healthText != null)
         {
-            healthText.text = currentHealth.ToString(); // 텍스트에 현재 체력 표시
+            healthText.text = ((int)currentHealth).ToString(); // 텍스트에 현재 체력 표시
         }
     }
 }

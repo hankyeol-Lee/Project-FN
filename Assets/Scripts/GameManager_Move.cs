@@ -112,7 +112,8 @@ public class GameManager_Move : MonoBehaviour
                 }
                 else
                 {
-                    UI_EnergyBar.Instance.DecreaseHealth(playerPath.Count);
+                    Debug.Log(playerPath);
+                    UI_EnergyBar.Instance.DecreaseHealth(playerPath.Count - 1);
                     StartCoroutine(MovePath(playerPath));
                 }
             }
