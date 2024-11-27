@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,12 +13,12 @@ public class UI_EnergyBar : MonoBehaviour
     public float currentHealth;        // 현재 체력 칸 수
     private bool canDecreaseHealth = true; // 체력 감소 가능 여부
     public static UI_EnergyBar Instance { get; private set; }
+    
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            //DontDestroyOnLoad(gameObject); // 씬 전환 시에도 유지
         }
         else
         {
@@ -35,67 +34,74 @@ public class UI_EnergyBar : MonoBehaviour
 
     void Update()
     {
-        // 체력이 최대치 이하일 때 1초마다 체력을 한 칸씩 증가
+        // 체력이 최대치 이하일 때 체력 증가
         if (currentHealth < maxHealth)
         {
-            healthBar.fillAmount += (1f / maxHealth) * (fillSpeed * Time.deltaTime);
+            // fillAmount를 증가시킴
+            healthBar.fillAmount += (fillSpeed / maxHealth) * Time.deltaTime;
 
-            // 다음 칸으로 채워졌는지 확인
-            if (healthBar.fillAmount >= (currentHealth + 1.0f) / maxHealth)
-            {
-                currentHealth += 1;
-                UpdateHealthBar();
-                UpdateHealthText();
-            }
+            // fillAmount를 currentHealth로 변환
+            currentHealth = healthBar.fillAmount * maxHealth;
+
+            UpdateHealthBar();
+            UpdateHealthText();
         }
-        else //최대치 이상인 경우
+        else
         {
+            // 체력이 최대치 이상일 경우 동기화
             currentHealth = maxHealth;
+            healthBar.fillAmount = 1.0f; // 최대치로 설정
             UpdateHealthBar();
             UpdateHealthText();
         }
-/*
-        // Q 키를 눌렀고 체력 감소가 가능한 경우 한 칸 감소
-        if (Input.GetKeyDown(KeyCode.E) && canDecreaseHealth)
-        {
-            DecreaseHealth(2);
-        }
-*/
     }
 
-    // 체력 한 칸 줄이는 메서드
-    public void DecreaseHealth(int cost)
+    // 체력 감소 메서드
+    public void DecreaseHealth(float cost)
     {
-        if (currentHealth > 0)
+        if (currentHealth > 0 && canDecreaseHealth)
         {
-            currentHealth -= cost;
+            // fillAmount를 감소시키고 currentHealth 동기화
+            healthBar.fillAmount -= cost / maxHealth;
+            currentHealth = healthBar.fillAmount * maxHealth;
+
+            // 체력 값이 0 이하로 내려가지 않도록 제한
+            if (currentHealth < 0)
+            {
+                currentHealth = 0;
+                healthBar.fillAmount = 0;
+            }
+
             UpdateHealthBar();
             UpdateHealthText();
-            //Debug.Log("Q 키가 눌려서 체력이 한 칸 줄었습니다. 현재 체력: " + currentHealth);
 
-            // 체력 감소 후 일정 시간 동안 Q 입력을 비활성화
+            // 체력 감소 후 일정 시간 동안 Q 입력 비활성화
             canDecreaseHealth = false;
-            Invoke(nameof(EnableDecreaseHealth), 0.1f); // 0.1초 후 입력 재활성화
+            Invoke(nameof(EnableDecreaseHealth), 0.1f);
         }
     }
+
     public int GetPlayerEnergy()
     {
-        return Mathf.FloorToInt(currentHealth); // 소숫점 이하를 버리고 정수 반환
+        return Mathf.FloorToInt(currentHealth); // 정수로 반환
     }
+
     // 체력바 업데이트
     public void UpdateHealthBar()
     {
-        healthBar.fillAmount = currentHealth / maxHealth;
+        healthBar.fillAmount = currentHealth / maxHealth; // fillAmount 동기화
     }
+
     void EnableDecreaseHealth()
     {
         canDecreaseHealth = true;
     }
-   public void UpdateHealthText()
+
+    public void UpdateHealthText()
     {
         if (healthText != null)
         {
-            healthText.text = ((int)currentHealth).ToString(); // 텍스트에 현재 체력 표시
+            healthText.text = Mathf.FloorToInt(currentHealth).ToString(); // 텍스트 업데이트
         }
     }
 }
