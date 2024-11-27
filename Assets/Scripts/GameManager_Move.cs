@@ -72,7 +72,7 @@ public class GameManager_Move : MonoBehaviour
         }
     }
 
-    private void GetRayCell() // ��Ŭ���� �ϸ�, ���콺 ��ġ�� �ִ� Ÿ���� �������� �Լ�
+    private void GetRayCell() 
     {
         if (Input.GetMouseButtonDown(1))
         {
@@ -91,13 +91,13 @@ public class GameManager_Move : MonoBehaviour
                 //List<Vector3Int> playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell, obstacles);
                 if (! is_P_Moving)
                 {
-                    playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell, obstacles); // �̵� �� �ƴ϶��? ���� Ÿ�Ϻ��� playerPath ����
+                    playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell, obstacles);
                     currentTargetCell = targetCell;
                     is_P_Moving = true;
                 }
                 else
                 {
-                    playerPath = HexClass.HexPathfinding.FindPath(currentTargetCell, targetCell, obstacles); // �̵� �� �̶��? ���� ���ϴ� ���� Ÿ�Ϻ��� playerPath ����
+                    playerPath = HexClass.HexPathfinding.FindPath(currentTargetCell, targetCell, obstacles);
           
                 }
                 //decreasecost
