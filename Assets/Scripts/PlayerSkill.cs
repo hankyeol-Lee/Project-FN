@@ -23,8 +23,6 @@ public class PlayerSkill : MonoBehaviour
     {
         AddSkill("MagicBullet", 0);
         AddSkill("Flame", 1);
-        //AddSkill("VenomousFang", 2);
-        AddSkill("GhostlyGrasp", 3);
     }
     
 
