@@ -12,7 +12,8 @@ public class TilemapManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LoadTilemap(10);
+        int randomnum = Random.RandomRange(0, 10);
+        LoadTilemap(randomnum);
     }
 
     // Update is called once per frame

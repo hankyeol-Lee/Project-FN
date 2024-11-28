@@ -12,7 +12,7 @@ public class SpawnEnemy : MonoBehaviour
     //enemy는 Enemy 태그가 붙어있어야 하며, 또 polygon collider 2d가 붙어있어야 함.
     //Enemy GameObject의 이름은 EnemyInstances 딕셔너리의 key와 완벽하게 동일해야 함.
     //각 에너미 GameObject 아래에는 prefab EnemyState가 지정되어있음.
-
+    public Tilemap tilemap;
     
     // 현재 어떤 에너미가 생성되어있는지를 체크하는 딕셔너리
     public Dictionary<string, GameObject> enemyInstances = new Dictionary<string, GameObject>();
@@ -26,30 +26,53 @@ public class SpawnEnemy : MonoBehaviour
     }
     public void Start()
     {
+        tilemap = GameManager.Instance.tilemap;
         void SpawnEnemies()
         {
-            SpawnEnemyAtCell("Slime", GameManager.Instance.PlayerCellToWorld(new Vector3Int(3, 8, 0)));
-            SpawnEnemyAtCell("GiantRat", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-6, 14, 0)));
-            SpawnEnemyAtCell("WeedSpirit", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-4, 20, 0)));
-            SpawnEnemyAtCell("Goblin", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-11, 17, 0)));
-            // Slime
-            SpawnEnemyAtCell("Slime1", GameManager.Instance.PlayerCellToWorld(new Vector3Int(1, 25, 0)));
-            SpawnEnemyAtCell("Slime2", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-3, 32, 0)));
-            SpawnEnemyAtCell("Slime3", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-8, 45, 0)));
+            // 사용할 에너미 이름 리스트
+            List<string> enemyNames = new List<string>
+        {
+            "GiantRat", 
+            "WeedSpirit", 
+            "Slime", 
+            "Goblin", 
+        };
 
-            // WeedSpirit
-            SpawnEnemyAtCell("WeedSpirit1", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-19, 32, 0)));
-            SpawnEnemyAtCell("WeedSpirit2", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-22, 44, 0)));
-            SpawnEnemyAtCell("WeedSpirit3", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-27, 47, 0)));
+            int numberOfEnemies = 4; // 생성할 에너미 수
+            for (int i = 0; i < numberOfEnemies; i++)
+            {
+                // 에너미 이름 랜덤 선택
+                string enemyName = enemyNames[Random.Range(0, enemyNames.Count)];
 
-            // GiantRat
-            SpawnEnemyAtCell("GiantRat1", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-25, 38, 0)));
-            SpawnEnemyAtCell("GiantRat2", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-12, 27, 0)));
-            SpawnEnemyAtCell("GiantRat3", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-5, 8, 0)));
+                // 타일맵에서 랜덤 셀 위치 선택
+                Vector3Int randomCell = GetRandomTilePosition();
+                Vector3 spawnPos = tilemap.GetCellCenterWorld(randomCell);
 
+                // 에너미 스폰
+                SpawnEnemyAtCell(enemyName, spawnPos);
+            }
         }
+
         SpawnEnemies();
     }
+    private Vector3Int GetRandomTilePosition()
+    {
+        // 타일맵의 경계 (BoundsInt) 가져오기
+        BoundsInt bounds = tilemap.cellBounds;
+        Vector3Int randomCell;
+
+        do
+        {
+            // 범위 내 랜덤 좌표 생성
+            int randomX = Random.Range(bounds.xMin, bounds.xMax);
+            int randomY = Random.Range(bounds.yMin, bounds.yMax);
+            randomCell = new Vector3Int(randomX, randomY, 0);
+        }
+        while (!tilemap.HasTile(randomCell)); // 타일이 없는 셀은 제외
+        Debug.Log(randomCell);
+        return randomCell;
+    }
+
     public void SpawnEnemyAtCell(string enemyName, Vector3 spawnPos)
     {
         GameObject enemyPrefab = Resources.Load<GameObject>($"Prefab/Enemy/{enemyName}");
