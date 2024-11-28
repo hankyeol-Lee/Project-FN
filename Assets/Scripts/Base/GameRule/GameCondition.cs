@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GameCondition : MonoBehaviour
 {
-    public GameObject Player;
+    public static GameCondition Instance;
     public float P_Health; // 플레이어의 체력
     public float P_AD; // 플레이어의 물리공격력
     public float P_AP; // 플레이어의 마법공격력, 마력
@@ -12,14 +12,26 @@ public class GameCondition : MonoBehaviour
     public float Cost_Fill; // 코스트 회복력
 
 
-
+    private void Awake()
+    {
+                if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Scene 전환 시 유지
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     private void Start()
     {
-        P_Health = Player.GetComponent<PlayerStatus>().playerHP;
-        P_AD = Player.GetComponent<PlayerStatus>().playerAD;
-        P_AP = Player.GetComponent<PlayerStatus>().playerAP;
-        P_AR = Player.GetComponent<PlayerStatus>().playerAR;
-        P_MR = Player.GetComponent<PlayerStatus>().playerMR;
+        
+        P_Health = PlayerStatus.Instance.playerHP;
+        P_AD = PlayerStatus.Instance.playerAD;
+        P_AP = PlayerStatus.Instance.playerAP;
+        P_AR = PlayerStatus.Instance.playerAR;
+        P_MR = PlayerStatus.Instance.playerMR;
         Cur_Cost = (int)UI_EnergyBar.Instance.currentHealth;
         Cost_Fill = UI_EnergyBar.Instance.fillSpeed;
         
@@ -37,11 +49,11 @@ public class GameCondition : MonoBehaviour
 
     private void Update()
     {
-        P_Health = Player.GetComponent<PlayerStatus>().playerHP;
-        P_AD = Player.GetComponent<PlayerStatus>().playerAD;
-        P_AP = Player.GetComponent<PlayerStatus>().playerAP;
-        P_AR = Player.GetComponent<PlayerStatus>().playerAR;
-        P_MR = Player.GetComponent<PlayerStatus>().playerMR;
+        P_Health = PlayerStatus.Instance.playerHP;
+        P_AD = PlayerStatus.Instance.playerAD;
+        P_AP = PlayerStatus.Instance.playerAP;
+        P_AR = PlayerStatus.Instance.playerAR;
+        P_MR = PlayerStatus.Instance.playerMR;
         Cur_Cost = (int)UI_EnergyBar.Instance.currentHealth;
         Cost_Fill = UI_EnergyBar.Instance.fillSpeed;
 
@@ -57,11 +69,11 @@ public class GameCondition : MonoBehaviour
         */
         
 
-        Player.GetComponent<PlayerStatus>().playerHP = P_Health;
-        Player.GetComponent<PlayerStatus>().playerAD = P_AD;
-        Player.GetComponent<PlayerStatus>().playerAP = P_AP;
-        Player.GetComponent<PlayerStatus>().playerAR = P_AR;
-        Player.GetComponent<PlayerStatus>().playerMR = P_MR;
+        PlayerStatus.Instance.playerHP = P_Health;
+        PlayerStatus.Instance.playerAD = P_AD;
+        PlayerStatus.Instance.playerAP = P_AP;
+        PlayerStatus.Instance.playerAR = P_AR;
+        PlayerStatus.Instance.playerMR = P_MR;
         UI_EnergyBar.Instance.currentHealth = Cur_Cost;
         UI_EnergyBar.Instance.fillSpeed = Cost_Fill;
 

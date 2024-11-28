@@ -2,32 +2,56 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+
 public class RelicManager : MonoBehaviour
 {
     public static RelicManager Instance;
 
     public List<Relic> activeRelics = new List<Relic>();
-    public Dictionary<string, Relic> allRelics = new Dictionary<string, Relic>();
-    public Dictionary<string, int> activeRelicsDict = new Dictionary<string, int>();
 
+    public Dictionary<string, Relic> allRelics = new Dictionary<string, Relic>();
+
+    public Dictionary<string, int> activeRelicsDict = new Dictionary<string, int>();
+    public delegate void RelicChangedHandler();
+    public event RelicChangedHandler OnRelicChanged;
     private void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
+            RegisterRelics();
+        }
+
         else
             Destroy(gameObject);
 
-        RegisterRelics();
+        
     }
 
-    public void AddRelic(string relicName) // 유물 추가해주는 메소드~ 영어로된 이름을 적어주세요~
+    public bool AddRelic(string relicName)
     {
-        if (allRelics.TryGetValue(relicName, out var relic) && !activeRelics.Contains(relic))
+        // Relic 데이터가 존재하는지 확인
+        if (!allRelics.TryGetValue(relicName, out Relic relic))
         {
-            activeRelics.Add(relic);
-            activeRelicsDict.Add(relicName, 1);
-            // UI에 유물 추가시키는 코드 자리
+            Debug.LogWarning($"[RelicManager] Relic not found: {relicName}");
+            return false;
         }
+
+        // 이미 활성화된 유물인지 확인
+        if (activeRelics.Contains(relic))
+        {
+            Debug.LogWarning($"[RelicManager] Relic already active: {relicName}");
+            return false;
+        }
+
+        // 유물 활성화
+        activeRelics.Add(relic);
+        activeRelicsDict[relicName] = 1; // 활성화 상태 설정
+        Debug.Log($"[RelicManager] Relic added: {relic.Name}");
+        Debug.Log($"Relic Name: {relic.Name}, Description: {relic.Description}");
+    
+        return true;
     }
 
     public void RemoveRelic(string relicName)
@@ -44,7 +68,9 @@ public class RelicManager : MonoBehaviour
         foreach (var relic in activeRelics)
         {
             relic.CheckAndApply(condition);
+            Debug.Log("Relic Apply");
         }
+        
     }
 
     private void RegisterRelics()

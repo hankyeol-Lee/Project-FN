@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerStatus : MonoBehaviour
 {
+    public static PlayerStatus Instance; // ΩÃ±€≈Ê ∆–≈œ
     public float playerHP;
     public float playerAD;
     public float playerAP;
@@ -13,12 +14,25 @@ public class PlayerStatus : MonoBehaviour
 
     public float costResilience; 
     
+    private void Awake()
+    {
+        // ΩÃ±€≈Ê º≥¡§
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
 
+    }
     private void Start()
     {
         playerHP = 100;
         playerAD = 30;
-        playerAP = 39;
+        playerAP = 30;
         playerMR = 5;
         playerAR = 5;
 

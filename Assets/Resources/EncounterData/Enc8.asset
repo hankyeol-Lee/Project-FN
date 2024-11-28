@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf957ff0ccda4e1e854d861f379cda8, type: 3}
+  m_Name: Enc8
+  m_EditorClassIdentifier: 
+  encounterName: "\uD568\uC815!"
+  encounterDescription: "\uB358\uC804\uC744 \uC218\uC0C9\uD558\uB358 \uB2F9\uC2E0\uC740
+    *\uCCA0\uCEE4\uB369!* \uC18C\uB9AC\uC640 \uD568\uAED8 \uB2F9\uC2E0\uC774 \uC1E0\uCC3D\uC0B4
+    \uC548\uC5D0 \uAC07\uD600\uC788\uB2E4\uB294 \uAC83\uC744 \uAE68\uB2EC\uC558\uC2B5\uB2C8\uB2E4.
+    \uB2E8\uC21C\uD788 \uD2C8\uC73C\uB85C \uBE60\uC838\uB098\uAC00\uAE30\uC5D4 \uC27D\uC9C0
+    \uC54A\uC544\uBCF4\uC785\uB2C8\uB2E4..."
+  choices:
+  - "\uD798\uC73C\uB85C \uC816\uD78C\uB2E4(\uBB3C\uB9AC\uACF5\uACA9\uB825 30 \uC774\uC0C1)"
+  - "\uB9C8\uB825\uC73C\uB85C \uC1E0\uCC3D\uC0B4\uC744 \uAD6C\uBD80\uB9B0\uB2E4(\uB9C8\uBC95\uACF5\uACA9\uB825
+    30 \uC774\uC0C1)"
+  - "\uBAB8\uC744 \uC5B5\uC9C0\uB85C \uBC00\uC5B4 \uB123\uB294\uB2E4.(\uCCB4\uB825
+    20 \uAC10\uC18C)"

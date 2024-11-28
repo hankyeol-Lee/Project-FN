@@ -124,7 +124,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6236547130882664952, guid: d322b033a83cec346bd584847b88401f, type: 3}
         m_TargetAssemblyTypeName: NodeManager, Assembly-CSharp
-        m_MethodName: OnNodeClick
+        m_MethodName: EncounterTrigger
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -8,6 +8,7 @@ public class NodeManager : MonoBehaviour
     public List<GameObject> Nodes = new List<GameObject>();
     public GameObject nodePointer;
     public static NodeManager instance;
+    public TriggerEvent triggerEvent; // TriggerEvent 스크립트 연결
 
     private void Awake()
     {
@@ -20,6 +21,7 @@ public class NodeManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
     }
 
     private void Start()
@@ -176,5 +178,15 @@ public class NodeManager : MonoBehaviour
                 HighlightNode(nodePointer, true);
             }
         }
+    }
+    public void EncounterTrigger()
+    {
+        if (triggerEvent == null)
+        {
+            Debug.LogError("TriggerEvent NOT CONNECTED");
+            return;
+        }
+        triggerEvent.OnEventTriggered();
+        Debug.Log("Encounter Active");
     }
 }
