@@ -68,7 +68,6 @@ public class RelicManager : MonoBehaviour
         foreach (var relic in activeRelics)
         {
             relic.CheckAndApply(condition);
-            Debug.Log("Relic Apply");
         }
         
     }
