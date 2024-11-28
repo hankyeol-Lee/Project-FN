@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,14 +9,20 @@ public class MapManager : MonoBehaviour
     public GameObject[] nodePrefab; // Node 프리팹
     public Transform mapParent; // Node를 배치할 부모 오브젝트
     public List<List<Node>> layers = new List<List<Node>>(); // Layer별 노드 리스트
-    public Node currentNode; // 현재 선택된 노드
+    public static Node currentNode; // 현재 선택된 노드
     public string mapSceneName = "MapScene"; // 맵 씬 이름
+    private bool isMapGenerated = false; // 맵 생성 여부 플래그
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject); // 씬 전환 시 MapManager 유지
+
+            GameObject nodeContainer = new GameObject("NodeContainer");
+            DontDestroyOnLoad(nodeContainer);
+            mapParent = nodeContainer.transform;
         }
         else
         {
@@ -25,7 +32,15 @@ public class MapManager : MonoBehaviour
 
     private void Start()
     {
-        GenerateMap();
+        if (!isMapGenerated)
+        {
+            GenerateMap(); // 맵이 한 번도 생성되지 않았으면 생성
+            isMapGenerated = true;
+        }
+        else
+        {
+            Debug.Log("맵이 이미 생성됨. 다시 생성하지 않음.");
+        }
     }
 
     public void GenerateMap()
@@ -76,6 +91,7 @@ public class MapManager : MonoBehaviour
                 if (depth == 0)
                 {
                     node.transform.position = startPosition;
+                    currentNode = node;
                 }
                 else
                 {
@@ -143,29 +159,42 @@ public class MapManager : MonoBehaviour
 
         LineRenderer lr = line.AddComponent<LineRenderer>();
 
-        // LineRenderer 설정
-        lr.startWidth = 0.1f;
-        lr.endWidth = 0.1f;
+        // LineRenderer 기본 설정
+        lr.startWidth = 0.05f;
+        lr.endWidth = 0.05f;
         lr.positionCount = 2;
-        lr.SetPosition(0, start);
-        lr.SetPosition(1, end);
-
-        // Material 설정
         lr.material = new Material(Shader.Find("Sprites/Default"));
-        lr.startColor = Color.white;
-        lr.endColor = Color.white;
+        lr.startColor = new Color(0.7019607843137254f, 0.5725490196078431f, 0.5137254901960784f, 1.0f);
+        lr.endColor = new Color(0.7019607843137254f, 0.5725490196078431f, 0.5137254901960784f, 1.0f);
+         
+        // 초기 시작점만 설정
+        lr.SetPosition(0, start);
+        lr.SetPosition(1, start); // 처음엔 시작점으로 끝점 지정
 
-        // 정렬 우선순위
-        lr.sortingOrder = 1;
-
-        // Debugging용 로그 출력
-        Debug.Log($"Line drawn from {start} to {end}");
+        // Dotween으로 끝점을 애니메이션
+        DOTween.To(
+            () => start,               // 시작점
+            value => lr.SetPosition(1, value), // 끝점 업데이트
+            end,                       // 목표 위치
+            1.0f                       // 애니메이션 지속 시간
+        ).SetEase(Ease.OutQuad); // Ease 설정 (부드러운 애니메이션)
     }
 
     public void LoadSceneForNode(Node node)
     {
         currentNode = node;
+        if (currentNode != null)
+        {
+            SpriteRenderer sr = currentNode.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                sr.color = Color.red; // currentNode를 빨간색으로
+            }
+        }
+
         Debug.Log("다음씬으로이동!");
+        HideNodeContainer();
+
         if (node.nodeType == NodeType.Normal)
         {
             SceneManager.LoadScene("GamePlayScene");
@@ -211,6 +240,67 @@ public class MapManager : MonoBehaviour
             }
         }
     }
+    //씬에서 관리하는거
+    public void HideNodeContainer()
+    {
+        if (mapParent != null)
+        {
+            mapParent.gameObject.SetActive(false);
+            Debug.Log("Node 컨테이너가 비활성화되었습니다.");
+        }
+    }
+
+    public void ShowNodeContainer()
+    {
+        if (mapParent != null)
+        {
+            mapParent.gameObject.SetActive(true);
+            Debug.Log("Node 컨테이너가 활성화되었습니다.");
+        }
+    }
+    public void UpdateNodeAccessibility()
+    {
+        if (currentNode == null)
+        {
+            Debug.LogWarning("currentNode가 설정되지 않았습니다. 초기 노드를 활성화합니다.");
+            if (layers.Count > 0 && layers[0].Count > 0)
+            {
+                layers[0][0].isAccessible = true; // 첫 노드 활성화
+            }
+            return;
+        }
+
+        // 1. 현재 노드 비활성화
+        currentNode.isAccessible = false;
+
+        // 2. 현재 노드의 부모 노드 확인
+        if (currentNode.parent != null)
+        {
+            var parentNode = currentNode.parent;
+
+            // 부모 노드의 모든 자식 노드를 비활성화
+            foreach (var sibling in parentNode.children)
+            {
+                sibling.isAccessible = false;
+                Debug.Log($"형제 노드 {sibling.id} 비활성화됨.");
+            }
+        }
+
+        // 3. 현재 노드의 자식 노드 활성화
+        if (currentNode.children != null && currentNode.children.Length > 0)
+        {
+            foreach (var child in currentNode.children)
+            {
+                child.isAccessible = true;
+                Debug.Log($"자식 노드 {child.id} 활성화됨.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"현재 노드 {currentNode.id}에 자식 노드가 없습니다.");
+        }
+    }
+
 
 
 }

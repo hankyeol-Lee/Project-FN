@@ -2,28 +2,24 @@ using UnityEngine;
 
 public class SceneLoader : MonoBehaviour
 {
+    public static bool isFirstLoad = true; //한번만체크..인데 이거 개어이없네
+
+
     private void Start()
     {
-        MapManager.Instance.ReturnToMap();
-    }
-
-    private void OnEnable()
-    {
-        UpdateNodeAccessibility();
-    }
-
-    private void UpdateNodeAccessibility()
-    {
-        Node currentNode = MapManager.Instance.currentNode;
-        if (currentNode == null) return;
-
-        // 현재 노드의 자식 노드 활성화
-        if (currentNode.children != null)
+        //UpdateNodeAccessibility();
+        
+        MapManager.Instance.ShowNodeContainer();
+        if (isFirstLoad )
         {
-            foreach (var child in currentNode.children)
-            {
-                child.isAccessible = true;
-            }
+            isFirstLoad = false;
         }
+        else
+        {
+            MapManager.Instance.UpdateNodeAccessibility(); // 노드 접근성 업데이트
+
+        }
+        Debug.Log("현재노드 : "+MapManager.currentNode);
+
     }
 }
