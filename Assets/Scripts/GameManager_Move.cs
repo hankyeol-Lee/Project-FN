@@ -33,7 +33,6 @@ public class GameManager_Move : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // ���� ����Ǿ�? �ı����� �ʵ��� ����
         }
         else
         {

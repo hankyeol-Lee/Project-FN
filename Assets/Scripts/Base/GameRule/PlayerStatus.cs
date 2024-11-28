@@ -24,6 +24,10 @@ public class PlayerStatus : MonoBehaviour
 
         costResilience = 140f;
     }
+    void OnSceneLoaded()
+    {
+        gameObject.SetActive(true);
+    }
     public void PlayerGetDamage(float damage,ActiveSkill.skillType skilltype) 
     {
         if (skilltype == ActiveSkill.skillType.Physics && damage > 0.0f)
