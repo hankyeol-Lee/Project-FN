@@ -32,7 +32,8 @@ public class MapManager : MonoBehaviour
     {
         layers.Clear(); // 기존 레이어 초기화
 
-        int totalDepth = 7; // 레이어 개수
+        int totalDepth = 6; // 레이어 개수
+        Vector3 startPosition = transform.position; // 첫 번째 노드의 위치를 NodeMapManager 위치로 설정
 
         for (int depth = 0; depth < totalDepth; depth++)
         {
@@ -70,7 +71,20 @@ public class MapManager : MonoBehaviour
 
                 Node node = Instantiate(prefab, mapParent).GetComponent<Node>();
                 node.id = depth * 10 + i; // 고유 ID 설정
-                node.transform.position = new Vector3(depth * 3.0f, -i * 2.5f, 0); // X축: 레이어, Y축: 노드 간 간격
+
+                // 첫 번째 노드는 NodeMapManager 위치에 배치
+                if (depth == 0)
+                {
+                    node.transform.position = startPosition;
+                }
+                else
+                {
+                    // 다음 레이어 노드 위치는 X축 기준으로 우측으로 이동, Y축은 간격 유지
+                    float xOffset = depth * 3.0f; // 레이어별 X축 이동 간격
+                    float yOffset = (i - (nodeCount - 1) / 2.0f) * -2.5f; // Y축 중앙 정렬
+                    node.transform.position = new Vector3(startPosition.x + xOffset, startPosition.y + yOffset, 0);
+                }
+
                 layer.Add(node);
             }
 
