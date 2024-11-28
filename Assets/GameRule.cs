@@ -14,7 +14,7 @@ public class GameRule : MonoBehaviour
         string thisscene = SceneManager.GetActiveScene().name;
         if (!string.IsNullOrEmpty(thisscene))
         {
-            if (!isGameOver && Player.GetComponent<PlayerStatus>().playerHP <= 0)
+            if (!isGameOver && PlayerStatus.Instance.playerHP <= 0)
             {
                 isGameOver = true;
                 Destroy(Player);
