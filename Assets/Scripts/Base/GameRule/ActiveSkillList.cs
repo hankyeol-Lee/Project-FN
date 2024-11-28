@@ -171,7 +171,19 @@ public class ActiveSkillList // ½ÇÁ¦·Î ¾µ ½ºÅ³µé ¸ñ·ÏÀ» Áý¾î³Ö´Â °÷.
         public VenomousFang(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) 
+        {
+            EnemyInstances.enemyDict.TryGetValue(skillTarget.name, out Enemy enemy);
+            Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
+            SkillSystem.Instance.ShowSkillAnimation(useSkill.skillName, skillCaster.transform.position, skillTarget.transform.position);
+            float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, GameManager.Instance.player.GetComponent<PlayerStatus>().returnADAP(useSkill.skilltype));
+        }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) 
+        {
+            EnemyInstances.enemyDict.TryGetValue(skillCaster.name, out Enemy enemy); 
+            float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, enemy.returnADAP(useSkill.skilltype)); 
+            Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
+            //ï¿½Ì±ï¿½ï¿½ï¿½ TakeDotDamage
     }
 
     public class Aftershock : ActiveSkill
@@ -187,7 +199,19 @@ public class ActiveSkillList // ½ÇÁ¦·Î ¾µ ½ºÅ³µé ¸ñ·ÏÀ» Áý¾î³Ö´Â °÷.
         public GhostlyGrasp(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
-        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) { }
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) 
+        {
+            EnemyInstances.enemyDict.TryGetValue(skillTarget.name, out Enemy enemy);
+            Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
+            float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, GameManager.Instance.player.GetComponent<PlayerStatus>().returnADAP(useSkill.skilltype));
+            enemy.TakeDamage(skillTarget.transform, initdamage, useSkill.skilltype);
+        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) 
+        {
+            EnemyInstances.enemyDict.TryGetValue(skillCaster.name, out Enemy enemy);
+            float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, enemy.returnADAP(useSkill.skilltype)); 
+            Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
+            GameManager.Instance.player.GetComponent<PlayerStatus>().PlayerGetDamage(initdamage, skilltype); 
+            SkillSystem.Instance.ShowSkillAnimation(useSkill.skillName, skillCaster.transform.position, GameManager.Instance.player.transform.position);
     }
 
     public class Fireball : ActiveSkill

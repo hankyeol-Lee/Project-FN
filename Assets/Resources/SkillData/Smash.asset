@@ -27,4 +27,4 @@ MonoBehaviour:
   tile: {fileID: 11400000, guid: eb5a40703ede4bf40b2151cd81fb3670, type: 2}
   SkillRangeList: []
   offset: {x: 0, y: 0, z: 0}
-  skillIcon: {fileID: 0}
+  skillIcon: {fileID: 21300000, guid: fc98dbecbc39142a084aac957c700000, type: 3}
