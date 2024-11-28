@@ -18,6 +18,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
             EnemyInstances.enemyDict.TryGetValue(skillTarget.name, out Enemy enemy);
             //Debug.Log(skillTarget.name);
             Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
+            SkillSystem.Instance.ShowSkillAnimation(useSkill.skillName, skillCaster.transform.position, skillTarget.transform.position);
             float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, GameManager.Instance.player.GetComponent<PlayerStatus>().returnADAP(useSkill.skilltype));
             enemy.TakeDamage(skillTarget.transform,initdamage,useSkill.skilltype);
         }
@@ -41,6 +42,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         {
             EnemyInstances.enemyDict.TryGetValue(skillTarget.name, out Enemy enemy);
             Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
+            SkillSystem.Instance.ShowSkillAnimation(useSkill.skillName, skillCaster.transform.position, skillTarget.transform.position);
             float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, GameManager.Instance.player.GetComponent<PlayerStatus>().returnADAP(useSkill.skilltype));
             enemy.TakeDamage(skillTarget.transform, initdamage, useSkill.skilltype);
         }
@@ -135,6 +137,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
             EnemyInstances.enemyDict.TryGetValue(skillTarget.name, out Enemy enemy);
             float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, GameManager.Instance.player.GetComponent<PlayerStatus>().returnADAP(useSkill.skilltype));
             Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
+            SkillSystem.Instance.ShowSkillAnimation(useSkill.skillName, skillCaster.transform.position, skillTarget.transform.position);
             enemy.TakeDamage(skillTarget.transform, initdamage, useSkill.skilltype);
         }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) 
@@ -170,13 +173,13 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
     {
         public VenomousFang(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
-        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) 
         {
             EnemyInstances.enemyDict.TryGetValue(skillTarget.name, out Enemy enemy);
             Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
             SkillSystem.Instance.ShowSkillAnimation(useSkill.skillName, skillCaster.transform.position, skillTarget.transform.position);
             float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, GameManager.Instance.player.GetComponent<PlayerStatus>().returnADAP(useSkill.skilltype));
+            //占싱깍옙占쏙옙 TakeDotDamage
         }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) 
         {
@@ -184,6 +187,8 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
             float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, enemy.returnADAP(useSkill.skilltype)); 
             Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
             //占싱깍옙占쏙옙 TakeDotDamage
+            //占싱깍옙占쏙옙 TakeDotDamage
+        }
     }
 
     public class Aftershock : ActiveSkill
@@ -198,13 +203,13 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
     {
         public GhostlyGrasp(SkillData data) : base(data) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, Vector3Int targetCell) { }
-        public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) { }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster, GameObject skillTarget) 
         {
             EnemyInstances.enemyDict.TryGetValue(skillTarget.name, out Enemy enemy);
             Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
             float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, GameManager.Instance.player.GetComponent<PlayerStatus>().returnADAP(useSkill.skilltype));
             enemy.TakeDamage(skillTarget.transform, initdamage, useSkill.skilltype);
+        }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) 
         {
             EnemyInstances.enemyDict.TryGetValue(skillCaster.name, out Enemy enemy);
@@ -212,6 +217,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
             Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
             GameManager.Instance.player.GetComponent<PlayerStatus>().PlayerGetDamage(initdamage, skilltype); 
             SkillSystem.Instance.ShowSkillAnimation(useSkill.skillName, skillCaster.transform.position, GameManager.Instance.player.transform.position);
+        }
     }
 
     public class Fireball : ActiveSkill
