@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3495859018436535820}
   - component: {fileID: 2262961087199175650}
   - component: {fileID: 5867878618905315748}
-  - component: {fileID: 1912647702545293491}
   m_Layer: 5
   m_Name: Elite1
   m_TagString: Untagged
@@ -122,9 +121,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6236547130882664952, guid: d322b033a83cec346bd584847b88401f, type: 3}
+      - m_Target: {fileID: 11500000, guid: 7b0742a5636d8400b926ebbb6b673f77, type: 3}
         m_TargetAssemblyTypeName: NodeManager, Assembly-CSharp
-        m_MethodName: EncounterTrigger
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -134,19 +133,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1912647702545293491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 517469389627033972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee791b56dca812b489fec31c3b2869f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: Elite
 --- !u!1 &883061326433407132
 GameObject:
   m_ObjectHideFlags: 0

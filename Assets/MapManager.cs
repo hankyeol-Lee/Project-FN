@@ -12,6 +12,7 @@ public class MapManager : MonoBehaviour
     public static Node currentNode; // 현재 선택된 노드
     public string mapSceneName = "MapScene"; // 맵 씬 이름
     private bool isMapGenerated = false; // 맵 생성 여부 플래그
+    public TriggerEvent triggerEvent; // TriggerEvent 스크립트 연결
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class MapManager : MonoBehaviour
             GameObject nodeContainer = new GameObject("NodeContainer");
             DontDestroyOnLoad(nodeContainer);
             mapParent = nodeContainer.transform;
+            currentNode = null;
         }
         else
         {
@@ -202,7 +204,7 @@ public class MapManager : MonoBehaviour
         }
         else if (node.nodeType == NodeType.Encounter)
         {
-            SceneManager.LoadScene("GamePlayScene");
+            EncounterTrigger();
         }
         //SceneManager.LoadScene(node.nodeType.ToString() + "Scene");
     }
@@ -299,6 +301,17 @@ public class MapManager : MonoBehaviour
         {
             Debug.LogWarning($"현재 노드 {currentNode.id}에 자식 노드가 없습니다.");
         }
+    }
+
+    public void EncounterTrigger()
+    {
+        if (triggerEvent == null)
+        {
+            Debug.LogError("TriggerEvent NOT CONNECTED");
+            return;
+        }
+        triggerEvent.OnEventTriggered();
+        Debug.Log("Encounter Active");
     }
 
 

@@ -47,10 +47,10 @@ public class NodeManager : MonoBehaviour
     {
         if (nodePointer != null)
         {
-            NodeType nodeType = nodePointer.GetComponent<NodeType>();
+            string nodeType = nodePointer.GetComponent<NodeType>().ToString();
             if (nodeType != null)
             {
-                LoadSceneByType(nodeType.type);
+                LoadSceneByType(nodeType);
             }
 
             // 현재 노드 강조 해제
@@ -189,4 +189,6 @@ public class NodeManager : MonoBehaviour
         triggerEvent.OnEventTriggered();
         Debug.Log("Encounter Active");
     }
+
+
 }

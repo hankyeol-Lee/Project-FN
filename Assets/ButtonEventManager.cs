@@ -7,15 +7,11 @@ public class ButtonEventManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public void OnstartbuttonClick(){
-        SceneManager.LoadScene("SelectScene");
+        SceneManager.LoadScene("MapScene");
     }
 
     public void GameExit()
 {
-    #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-    #else
         Application.Quit();
-    #endif
 }
 }
