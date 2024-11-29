@@ -46,6 +46,18 @@ public class SkillSystem : MonoBehaviour
             thisSkill = skills[1];
             AttackAnimation();
         }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            ShowSkillRange(skills[2]);
+            thisSkill = skills[2];
+            AttackAnimation();
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ShowSkillRange(skills[3]);
+            thisSkill = skills[3];
+            AttackAnimation();
+        }
 
         if (skillRange.activeSelf == true)
         {
@@ -67,7 +79,7 @@ public class SkillSystem : MonoBehaviour
                         //Debug.Log($"��ų ���?��ġ: {checkMouseCell.Value}");
                         //Debug.Log(UI_EnergyBar.Instance.GetPlayerEnergy());
 
-                        if (thisSkill.playerCost <= UI_EnergyBar.Instance.GetPlayerEnergy()) // ��ų�ڽ�Ʈ�� �÷��̾� ������ ���������� ũ�ٸ� 
+                        if (thisSkill.playerCost <= UI_EnergyBar.Instance.GetPlayerEnergy() && skillTargetObject != null) // ��ų�ڽ�Ʈ�� �÷��̾� ������ ���������� ũ�ٸ� 
                         {
                             UI_EnergyBar.Instance.DecreaseHealth(thisSkill.playerCost);
                             thisSkill.CastSkill(thisSkill, player, checkMouseCell.Value);
@@ -84,7 +96,7 @@ public class SkillSystem : MonoBehaviour
                     if (Input.GetMouseButton(0))
                     {
                         //Debug.Log(UI_EnergyBar.Instance.GetPlayerEnergy());
-                        if (thisSkill.playerCost <= UI_EnergyBar.Instance.GetPlayerEnergy()) // ��ų�ڽ�Ʈ�� �÷��̾� ������ ���������� ũ�ٸ� 
+                        if (thisSkill.playerCost <= UI_EnergyBar.Instance.GetPlayerEnergy() && skillTargetObject != null) // ��ų�ڽ�Ʈ�� �÷��̾� ������ ���������� ũ�ٸ� 
                         {
                             UI_EnergyBar.Instance.DecreaseHealth(thisSkill.playerCost);
                             ShowSkillAnimation(thisSkill.skillName, player.transform.position, skillTargetObject.gameObject.transform.position);
