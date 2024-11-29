@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -13,7 +14,7 @@ public class SpawnEnemy : MonoBehaviour
     //Enemy GameObject의 이름은 EnemyInstances 딕셔너리의 key와 완벽하게 동일해야 함.
     //각 에너미 GameObject 아래에는 prefab EnemyState가 지정되어있음.
 
-    
+    public Tilemap tilemap;
     // 현재 어떤 에너미가 생성되어있는지를 체크하는 딕셔너리
     public Dictionary<string, GameObject> enemyInstances = new Dictionary<string, GameObject>();
 
@@ -26,27 +27,45 @@ public class SpawnEnemy : MonoBehaviour
     }
     public void Start()
     {
+        tilemap = GameManager.Instance.tilemap;
         void SpawnEnemies()
         {
-            SpawnEnemyAtCell("Slime", GameManager.Instance.PlayerCellToWorld(new Vector3Int(3, 8, 0)));
-            SpawnEnemyAtCell("GiantRat", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-6, 14, 0)));
-            SpawnEnemyAtCell("WeedSpirit", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-4, 20, 0)));
-            SpawnEnemyAtCell("Goblin", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-11, 17, 0)));
-            // Slime
-            SpawnEnemyAtCell("Slime1", GameManager.Instance.PlayerCellToWorld(new Vector3Int(1, 25, 0)));
-            SpawnEnemyAtCell("Slime2", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-3, 32, 0)));
-            SpawnEnemyAtCell("Slime3", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-8, 45, 0)));
+            List<string> allEnemies = new List<string>()
+            {
+                "GiantRat", "GiantRat1", "GiantRat2", "GiantRat3",
+                "Slime", "Slime1", "Slime2", "Slime3",
+                "WeedSpirit", "WeedSpirit1", "WeedSpirit2", "WeedSpirit3",
+                "Goblin", "Goblin1", "Goblin2", "Goblin3"
+            };
+            List<string> selectedEnemies = allEnemies.OrderBy(x => UnityEngine.Random.value).Take(5).ToList();
 
-            // WeedSpirit
-            SpawnEnemyAtCell("WeedSpirit1", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-19, 32, 0)));
-            SpawnEnemyAtCell("WeedSpirit2", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-22, 44, 0)));
-            SpawnEnemyAtCell("WeedSpirit3", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-27, 47, 0)));
+            int spawnedCount = 0;
+            Vector3 center = Vector3.zero; // 중심점
+            float minDistance = 3.0f; // 중심에서 최소 거리
 
-            // GiantRat
-            SpawnEnemyAtCell("GiantRat1", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-25, 38, 0)));
-            SpawnEnemyAtCell("GiantRat2", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-12, 27, 0)));
-            SpawnEnemyAtCell("GiantRat3", GameManager.Instance.PlayerCellToWorld(new Vector3Int(-5, 8, 0)));
+            // 타일맵의 크기 가져오기
+            BoundsInt bounds = tilemap.cellBounds;
 
+            while (spawnedCount < selectedEnemies.Count)
+            {
+                // 랜덤 위치 생성
+                int randomX = UnityEngine.Random.Range(bounds.xMin, bounds.xMax);
+                int randomY = UnityEngine.Random.Range(bounds.yMin, bounds.yMax);
+                Vector3Int randomCell = new Vector3Int(randomX, randomY, 0);
+
+                // 위치 조건 확인
+                if (tilemap.HasTile(randomCell)) // 타일이 있는 위치인지 확인
+                {
+                    float distance = Vector3.Distance(center, randomCell);
+                    if (distance >= minDistance) // 중심에서 최소 거리 조건 확인
+                    {
+                        // 에너미 소환
+                        string enemyName = selectedEnemies[spawnedCount];
+                        SpawnEnemyAtCell(enemyName, GameManager.Instance.PlayerCellToWorld(randomCell));
+                        spawnedCount++;
+                    }
+                }
+            }
         }
         SpawnEnemies();
     }

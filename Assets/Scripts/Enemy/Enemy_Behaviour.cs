@@ -97,67 +97,50 @@ public class Enemy_Behaviour : MonoBehaviour
     // 플레이어 위치로 이동하는 코루틴
     public void MoveToPlayerCell()
     {
-        Vector3Int playerPos = tilemap.WorldToCell(playertransform.position);
-        Vector3Int thisObjPos = tilemap.WorldToCell(transform.position);
-        Vector3Int targetPos = thisObjPos; // 타겟 포지션 변수
+        Vector3Int playerPos = tilemap.WorldToCell(playertransform.position); // 플레이어의 타일맵 좌표
+        Vector3Int thisObjPos = tilemap.WorldToCell(transform.position); // 적의 현재 타일맵 좌표
+        Vector3Int targetPos = thisObjPos; // 이동 목표 타일맵 좌표 초기화
 
         Debug.Log($"6. 플레이어 위치: {playerPos}, 적의 현재 위치: {thisObjPos}");
 
-        // 이동할 타겟 포지션 설정
-        void SettargetPos(Vector3Int thisObjPos, Vector3Int playerPos, ref Vector3Int targetPos)
+        // 플레이어 방향으로 이동 좌표를 설정하고 타일 유효성을 보장
+        Vector3Int GetValidTargetPos(Vector3Int currentPos, Vector3Int targetPos)
         {
-            bool isOddRow = Mathf.Abs(thisObjPos.y % 2) == 1; // 홀수 행인지 확인
-            bool isPlayerOnRight = playerPos.y > thisObjPos.y; // 플레이어가 더 오른쪽에 있는지 판단
+            // 플레이어 방향으로 이동 후보 생성
+            List<Vector3Int> possibleMoves = new List<Vector3Int>
+        {
+            new Vector3Int(currentPos.x + 1, currentPos.y, 0),   // 오른쪽
+            new Vector3Int(currentPos.x - 1, currentPos.y, 0),   // 왼쪽
+            new Vector3Int(currentPos.x, currentPos.y + 1, 0),   // 위쪽
+            new Vector3Int(currentPos.x, currentPos.y - 1, 0),   // 아래쪽
+        };
 
-            if (playerPos.y == thisObjPos.y) // 같은 행에 있는 경우
+            // 후보 위치를 거리 기준으로 정렬
+            possibleMoves.Sort((a, b) =>
+                Vector3Int.Distance(a, targetPos).CompareTo(Vector3Int.Distance(b, targetPos)));
+
+            // 타일맵 상에서 유효한 위치 반환
+            foreach (var move in possibleMoves)
             {
-                targetPos.x += (playerPos.x > thisObjPos.x) ? 1 : -1; // 플레이어가 위쪽이면 +1, 아니면 -1
-            }
-            else if (isPlayerOnRight) // 플레이어가 오른쪽에 있는 경우
-            {
-                targetPos.y += 1;
-                if (isOddRow) 
+                if (tilemap.HasTile(move)) // 타일맵에 타일이 있는지 확인
                 {
-                    targetPos.x += UnityEngine.Random.Range(0, 2) == 0 ? 1 : 0; 
-                }
-                else
-                {
-                    targetPos.x -= UnityEngine.Random.Range(0, 2) == 0 ? 1 : 0;
+                    return move;
                 }
             }
-            else // 플레이어가 왼쪽에 있는 경우
-            {
-                targetPos.y -= 1;
 
-                if (isOddRow)
-                {
-                    targetPos.x += UnityEngine.Random.Range(0, 2) == 0 ? 1 : 0;
-
-                }
-                else
-                {
-                    targetPos.x -= UnityEngine.Random.Range(0, 2) == 0 ? 1 : 0;
-                }
-
-            }
+            // 유효한 위치가 없으면 현재 위치 반환
+            return currentPos;
         }
 
         // 목표 위치 계산
-        SettargetPos(thisObjPos, playerPos, ref targetPos);
+        targetPos = GetValidTargetPos(thisObjPos, playerPos);
         Debug.Log($"7. 이동할 위치: {targetPos}");
 
         // 타일맵 좌표를 월드 좌표로 변환
-        Vector3 thisObjworldPos = tilemap.CellToWorld(targetPos);
-        Vector3 targetworldPos = tilemap.CellToWorld(targetPos);
+        Vector3 targetWorldPos = tilemap.CellToWorld(targetPos);
 
-        thisObjPos = tilemap.WorldToCell(transform.position); // 현재 위치 갱신
-
-        Debug.Log($"8. 현재 위치: {thisObjPos}");
-
-        //new WaitForSecondsRealtime(1.0f);
-        StartCoroutine(gamemanager.GetComponent<GameManager_Move>().MoveCell(this.gameObject, thisObjworldPos, targetworldPos));
         // 이동 코루틴 호출
-        
-
+        StartCoroutine(gamemanager.GetComponent<GameManager_Move>().MoveCell(this.gameObject, transform.position, targetWorldPos));
     }
 }
+
