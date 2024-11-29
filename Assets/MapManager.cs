@@ -204,6 +204,7 @@ public class MapManager : MonoBehaviour
         }
         else if (node.nodeType == NodeType.Encounter)
         {
+            Debug.Log("Encounter Click");
             EncounterTrigger();
         }
         //SceneManager.LoadScene(node.nodeType.ToString() + "Scene");

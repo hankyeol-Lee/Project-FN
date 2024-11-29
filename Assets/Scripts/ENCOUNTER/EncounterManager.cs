@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EncounterManager : MonoBehaviour
@@ -8,8 +9,22 @@ public class EncounterManager : MonoBehaviour
     public GameObject encounterUIPrefab; // UI ÆË¾÷ ÇÁ¸®ÆÕ
     public Canvas canvas; // ÆË¾÷À» ¶ç¿ï Äµ¹ö½º
     private GameObject currentUI; // ÇöÀç È°¼ºÈ­µÈ UI
+    private static EncounterManager Instance;
 
 
+    private void Awake()
+    {
+        // ½Ì±ÛÅæ ¼³Á¤
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     public void TriggerEncounter(EncounterData encounter)
     {
         // ÆË¾÷ »ý¼º
@@ -211,6 +226,8 @@ public class EncounterManager : MonoBehaviour
         }
 
         CloseEncounter();
+        SceneManager.LoadScene("MapScene");
+
     }
 
     private void CloseEncounter()

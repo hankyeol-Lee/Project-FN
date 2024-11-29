@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 0}
-  nodeType: 3
+  nodeType: 4
   id: 0
   children: []
   parent: {fileID: 0}

@@ -18,7 +18,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
             EnemyInstances.enemyDict.TryGetValue(skillTarget.name, out Enemy enemy);
             //Debug.Log(skillTarget.name);
             Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
-            float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, GameManager.Instance.player.GetComponent<PlayerStatus>().returnADAP(useSkill.skilltype));
+            float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, PlayerStatus.Instance.returnADAP(useSkill.skilltype));
             enemy.TakeDamage(skillTarget.transform,initdamage,useSkill.skilltype);
         }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) 
@@ -41,7 +41,7 @@ public class ActiveSkillList // 실제로 쓸 스킬들 목록을 집어넣는 곳.
         {
             EnemyInstances.enemyDict.TryGetValue(skillTarget.name, out Enemy enemy);
             Skill_AudioManage.Instance.PlaySkillAudio(useSkill.skillName);
-            float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, GameManager.Instance.player.GetComponent<PlayerStatus>().returnADAP(useSkill.skilltype));
+            float initdamage = GameManager.Instance.DamageSystem(useSkill.coefficient, useSkill.skilltype, PlayerStatus.Instance.returnADAP(useSkill.skilltype));
             enemy.TakeDamage(skillTarget.transform, initdamage, useSkill.skilltype);
         }
         public override void CastSkill(ActiveSkill useSkill, GameObject skillCaster) // enemy만 사용하는 skill 오버로딩.
