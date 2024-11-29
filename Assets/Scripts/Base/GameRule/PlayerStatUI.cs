@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerStatUI : MonoBehaviour
 {
     // Start is called before the first frame update    public TextMeshProUGUI statsText; // UI TextMeshPro 컴포넌트
     // public Text statsText; // 기본 Text 컴포넌트를 사용하는 경우 이 줄을 활성화
-    public TextMeshProUGUI statsText; // UI TextMeshPro 컴포넌트
+    public Text statsText; // UI TextMeshPro 컴포넌트
     // public Text statsText; // 기본 Text 컴포넌트를 사용하는 경우 이 줄을 활성화
 
     private void Update()

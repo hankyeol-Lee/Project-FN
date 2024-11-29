@@ -8,12 +8,13 @@ public class InventoryManager : MonoBehaviour
 
     public List<Relic> relics = new List<Relic>(); // 유물 리스트
 
+/*
     [Header("Base Inventory Settings")]
     [SerializeField]
     private Transform baseSlotParent; // InvBase의 ItemSlots
     [SerializeField]
     private ItemSlot[] baseSlots; // InvBase 슬롯 배열
-
+*/
     private void Awake()
     {
         // 싱글톤 설정
@@ -29,7 +30,7 @@ public class InventoryManager : MonoBehaviour
 
     }
 
-    private void OnEnable()
+    /*private void OnEnable()
     {
         // Scene 전환 이벤트 등록
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -65,8 +66,8 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
-
-    public void FreshSlot()
+*/
+  /*  public void FreshSlot()
     {
         if (baseSlots == null || baseSlotParent == null)
         {
@@ -81,7 +82,7 @@ public class InventoryManager : MonoBehaviour
             baseSlots[i].SetRelic(relics[i]); // 슬롯에 유물 데이터 설정
         }
     }
-
+*/
     public void AddRelicToInventory(string relicName)
     {
         // RelicManager에서 유물 데이터 검색
@@ -97,7 +98,7 @@ public class InventoryManager : MonoBehaviour
             Debug.Log($"Description: {relic.Description}");
             Debug.Log($"Sprite: {(relic.Image != null ? relic.Image.name : "No Image Found")}");
 
-            FreshSlot(); // UI 갱신
+            //FreshSlot(); // UI 갱신
         }
 
         else
