@@ -15,8 +15,8 @@ EditorBuildSettings:
     path: Assets/Scenes/BattleUIScene.unity
     guid: 053e685587747d9418613298b84ff620
   - enabled: 1
-    path: Assets/Scenes/SelectScene.unity
-    guid: b14c8110a00358c4fa0834d5b8bfabcc
+    path: Assets/Scenes/MapScene.unity
+    guid: 21c90b08d980b844fb580682f434e44f
   - enabled: 1
     path: Assets/Scenes/VictoryScene.unity
     guid: 021d85fb2288e4449a62ba7edb84cbfd
@@ -24,6 +24,6 @@ EditorBuildSettings:
     path: Assets/Scenes/DefeatScene.unity
     guid: edb88eb942d38428ebdfab52d0288601
   - enabled: 1
-    path: Assets/Scenes/MapScene.unity
-    guid: 21c90b08d980b844fb580682f434e44f
+    path: Assets/Scenes/SelectScene.unity
+    guid: b14c8110a00358c4fa0834d5b8bfabcc
   m_configObjects: {}

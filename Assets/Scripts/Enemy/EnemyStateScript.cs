@@ -46,7 +46,7 @@ public class EnemyStateScript : MonoBehaviour
             switch (enemyState)
             {
                 case EnemyState.Wait:
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(0.7f);
 
                     if (checkDistancetoPlayer()) // 공격 거리 확인
                     {
@@ -67,7 +67,7 @@ public class EnemyStateScript : MonoBehaviour
 
                     // 이동 후 다시 Wait 상태로 전환
                     enemyState = EnemyState.Wait;
-                    yield return new WaitForSeconds(2f);
+                    yield return new WaitForSeconds(1f);
                     break;
 
                 case EnemyState.Attack:

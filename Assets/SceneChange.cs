@@ -18,8 +18,10 @@ public class SceneChange : MonoBehaviour
     }
 
     IEnumerator sceneChange(){
-
+        float playerHPS = PlayerStatus.Instance.playerHP;
+        PlayerStatus.Instance.playerHP += playerHPS * 0.15f;
+        //체력회복
         yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene("MapScene");
     }
 }

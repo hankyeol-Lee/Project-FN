@@ -207,6 +207,10 @@ public class MapManager : MonoBehaviour
             Debug.Log("Encounter Click");
             EncounterTrigger();
         }
+        else if (node.nodeType == NodeType.Boss)
+        {
+            SceneManager.LoadScene("GamePlayScene");
+        }
         //SceneManager.LoadScene(node.nodeType.ToString() + "Scene");
     }
 

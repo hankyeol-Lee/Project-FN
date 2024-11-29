@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 0}
-  nodeType: 2
+  nodeType: 3
   id: 0
   children: []
   parent: {fileID: 0}
