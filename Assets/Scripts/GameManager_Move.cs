@@ -71,57 +71,47 @@ public class GameManager_Move : MonoBehaviour
         }
     }
 
-    private void GetRayCell() 
+    private void GetRayCell()
     {
         if (Input.GetMouseButtonDown(1))
         {
+            // ∑π¿Ãƒ≥Ω∫∆Æ Ω««‡
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray);
 
-            Vector3Int? returnCell = CheckCell(hits);
-            playerCellPos = GetPlayerPos();
+            // ≈∏¿œ »Æ¿Œ »ƒ ¥Ÿ¿Ω «¡∑π¿”ø° ∞Ê∑Œ ≈Ωªˆ Ω√¿€
+            StartCoroutine(DelayedCheckCell(hits));
+        }
+    }
 
-            if (returnCell.HasValue)
+    private IEnumerator DelayedCheckCell(RaycastHit2D[] hits)
+    {
+        // «— «¡∑π¿” ¥Î±‚
+        yield return null;
+
+        // CheckCell »£√‚
+        Vector3Int? returnCell = CheckCell(hits);
+        playerCellPos = GetPlayerPos();
+
+        if (returnCell.HasValue)
+        {
+            targetCell = returnCell.Value;
+
+            // ∞Ê∑Œ ∞ËªÍ π◊ ƒ⁄∑Á∆æ Ω√¿€
+            HashSet<Hex> obstacles = new HashSet<Hex>();
+            List<Vector3Int> playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell, obstacles);
+
+            if (playerPath != null && playerPath.Count > 0 && UI_EnergyBar.Instance.GetPlayerEnergy() >= playerPath.Count)
             {
-                HashSet<Hex> obstacles = new HashSet<Hex>();
-                targetCell = returnCell.Value;
-                List<Vector3Int> playerPath = new List<Vector3Int>();
-                //tilemap.SetTile(targetCell, tile);
-                //List<Vector3Int> playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell, obstacles);
-                if (is_P_Moving)
-                {
-                    StopAllCoroutines(); // ±‚¡∏ ƒ⁄∑Á∆æ ¡ﬂ¥‹
-                    is_P_Moving = false; // ¿Ãµø ªÛ≈¬ √ ±‚»≠
-                    return;
-                }
-                if (!is_P_Moving)
-                {
-                    playerPath = HexClass.HexPathfinding.FindPath(playerCellPos, targetCell, obstacles);
-                    currentTargetCell = targetCell;
-                    is_P_Moving = true;
-                }
-                //playerPath = HexClass.HexPathfinding.FindPath(currentTargetCell, targetCell, obstacles);
-
-                //decreasecost
-                if (UI_EnergyBar.Instance.GetPlayerEnergy() < playerPath.Count)
-                {
-                    playerPath = null;
-                    StopAllCoroutines();
-                    return;
-                }
-                else
-                {
-                    Debug.Log(playerPath);
-                    UI_EnergyBar.Instance.DecreaseHealth(playerPath.Count - 1);
-                    StartCoroutine(MovePath(playerPath));
-                }
+                UI_EnergyBar.Instance.DecreaseHealth(playerPath.Count - 1);
+                StartCoroutine(MovePath(playerPath));
             }
         }
     }
 
-
     Vector3Int? CheckCell(RaycastHit2D[] hit) // ray hitÔøΩÔøΩÔøΩÔøΩ cellÔøΩÔøΩ ÔøΩ…∑ÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩ‘ºÔøΩ. cellÔøΩÔøΩ ÔøΩÔøΩ ÔøΩœ≥ÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩ.
     {
+        
         foreach (var cell in hit)
         {
             if (cell.collider.CompareTag(cellTag)) // cellTagÔøΩÔøΩ ÔøΩÔøΩƒ°ÔøΩœ∏ÔøΩ
@@ -148,22 +138,37 @@ public class GameManager_Move : MonoBehaviour
 
     public IEnumerator MovePath(List<Vector3Int> path)
     {
+        // æ÷¥œ∏ﬁ¿Ãº« √ ±‚»≠ ∫¥∑ƒ √≥∏Æ
         p_animation = player.GetComponent<SkeletonAnimation>();
-        SkeletonDataAsset skeletonDataAsset = Resources.Load<SkeletonDataAsset>("PlayerAnimation/Move");
-        p_animation.skeletonDataAsset = skeletonDataAsset;
+        SkeletonDataAsset moveAnim = Resources.Load<SkeletonDataAsset>("PlayerAnimation/Move");
+        p_animation.skeletonDataAsset = moveAnim;
         p_animation.Initialize(true);
+
         foreach (var cell in path)
         {
-            playerCellPos = GetPlayerPos();
-            Vector3 startWorldPos = tilemap.CellToWorld(playerCellPos); // ÔøΩ√∑ÔøΩÔøΩÃæÓ∞° ÔøΩ÷¥ÔøΩ ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩﬂæÔøΩ ÔøΩÔøΩ«•ÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ. 
-            Vector3 endWorldPos = tilemap.CellToWorld(cell); // cell. ÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ ÔøΩﬂæÔøΩÔøΩÔøΩ«•ÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ.
-            //Debug.DrawLine(startWorldPos, endWorldPos);
-            yield return MoveCell(player,startWorldPos, endWorldPos);
+            Vector3 startWorldPos = player.transform.position;
+            Vector3 endWorldPos = tilemap.CellToWorld(cell);
+
+            float elapsedTime = 0f;
+            float duration = 0.27f; // ¿Ãµø º”µµ ¡ı∞° (±‚¡∏ 0.4444f -> 0.2f)
+
+            while (elapsedTime < duration)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = elapsedTime / duration;
+                player.transform.position = Vector3.Lerp(startWorldPos, endWorldPos, t);
+                yield return null; // «— «¡∑π¿” ¥Î±‚
+            }
+
+            player.transform.position = endWorldPos;
         }
-        is_P_Moving = false;
-        skeletonDataAsset = Resources.Load<SkeletonDataAsset>("PlayerAnimation/Idle");
-        p_animation.skeletonDataAsset = skeletonDataAsset;
+
+        // Idle æ÷¥œ∏ﬁ¿Ãº« ∫π±Õ
+        SkeletonDataAsset idleAnim = Resources.Load<SkeletonDataAsset>("PlayerAnimation/Idle");
+        p_animation.skeletonDataAsset = idleAnim;
         p_animation.Initialize(true);
+
+        is_P_Moving = false; // ¿Ãµø ªÛ≈¬ √ ±‚»≠
     }
 
 
