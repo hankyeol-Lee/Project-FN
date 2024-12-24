@@ -140,70 +140,62 @@ namespace HexClass // pathfinding 메소드는 다른 객체에서도 사용 가능하도록, name
     {
         public static List<Vector3Int> FindPath(Vector3Int playerPosition, Vector3Int mousePosition, HashSet<Hex> obstacles)
         {
-            Hex start = new Hex(playerPosition); // 플레이어 위치에 있는 hex를 start라고 저장
-            Hex goal = new Hex(mousePosition); // 마우스로 찍은, 목표 지점을 goal이라는 hex로 저장
+            Hex start = new Hex(playerPosition);
+            Hex goal = new Hex(mousePosition);
 
-            Dictionary<Hex, Hex> cameFrom = new Dictionary<Hex, Hex>(); // 현재 hex와 그 전 hex를 저장하는 딕셔너리
-            Dictionary<Hex, int> costSoFar = new Dictionary<Hex, int>(); // 몇 칸이 걸리는지 저장하는 딕셔너리
+            Dictionary<Hex, Hex> cameFrom = new Dictionary<Hex, Hex>();
+            Dictionary<Hex, int> costSoFar = new Dictionary<Hex, int>();
 
-            PriorityQueue<Hex> frontier = new PriorityQueue<Hex>(); // frontier라는 우선순위 큐 생성.
-            frontier.Enqueue(start, 0); // 큐의 첫번째 원소로 start를 넣음.
+            PriorityQueue<Hex> frontier = new PriorityQueue<Hex>();
+            frontier.Enqueue(start, 0);
 
             cameFrom[start] = null;
             costSoFar[start] = 0;
 
             while (frontier.Count > 0)
             {
-                Hex current = frontier.Dequeue(); // 현재 hex, 즉 노드는 큐의 제일 첫번재 값. 첫번째 시행은 현재 위치를 가리킴.
+                Hex current = frontier.Dequeue();
 
-                if (current.Equals(goal)) // 만약 현재와 goal이 똑같을 경우, 위치에 도달했으므로 종료.
-                    break;
+                if (current.Equals(goal)) break;
 
-                List<Hex> neighbors = current.GetNeighbors();
-                foreach (Hex next in neighbors) // 이웃한 노드를 조사.
+                foreach (Hex next in current.GetNeighbors(GameManager.Instance.tilemap))
                 {
-                    // 장애물 검사
                     Vector3Int nextCell = next.ToVector3Int();
 
-                    if (!GameManager.Instance.tilemap.HasTile(nextCell) || obstacles.Contains(next)) // 장애물이면 무시
-                        continue;
+                    if (obstacles.Contains(next)) continue;
 
                     int newCost = costSoFar[current] + 1;
-                    if (!costSoFar.TryGetValue(next, out int existingCost) || newCost < existingCost) // 노드를 처음 방문하거나 또는 기존 경로의 비용보다 더 작을 경우
+                    if (!costSoFar.TryGetValue(next, out int existingCost) || newCost < existingCost)
                     {
-                        costSoFar[next] = newCost; // 얼마나 걸리는지 업데이트.
-                        int priority = newCost + Hex.Heuristic(next, goal); // 우선순위 설정. 휴리스틱 함수를 이용해 다음칸과 목표까지 얼마나 걸리는지 체크
-                        frontier.Enqueue(next, priority); // 우선순위 큐에 넣음.
-                        cameFrom[next] = current; // 어디서 왔는지를 저장함.
+                        costSoFar[next] = newCost;
+                        int priority = newCost + Hex.Heuristic(next, goal);
+                        frontier.Enqueue(next, priority);
+                        cameFrom[next] = current;
                     }
                 }
             }
 
-            List<Vector3Int> path = new List<Vector3Int>(); // 이동경로를 저장할 path 리스트 생성.
-            Hex temp = goal;
-
-            if (!cameFrom.ContainsKey(goal)) // 목표에 도달하지 못한 경우 체크
+            if (!cameFrom.ContainsKey(goal))
             {
                 Debug.LogError("경로를 찾을 수 없습니다.");
                 return null;
             }
 
+            List<Vector3Int> path = new List<Vector3Int>();
+            Hex temp = goal;
             while (temp != null)
             {
-                path.Add(temp.ToVector3Int());
+                path.Insert(0, temp.ToVector3Int());
                 temp = cameFrom[temp];
             }
 
-            path.Reverse();
-            
             return path;
         }
 
 
     }
 
-
-    public class PriorityQueue<T> //우선순위 큐 클래스. 선입후출의 구조를 가지고 있지만, Enqueue할때 따로 sort하게 됨.
+    public class PriorityQueue<T>
     {
         private List<KeyValuePair<T, int>> elements = new List<KeyValuePair<T, int>>();
 
